@@ -1,0 +1,183 @@
+<!-- Bonos -->
+<section id="sec-bonos" class="card-section">
+  <div class="tarjeta-encabezado">
+    <span class="number-section">08</span>
+    <h2 class="title-section">Bonos</h2>
+  </div>
+
+  <!-- 1. Los 3 bonos agrupados en la MISMA FILA horizontal -->
+  <div class="fila-auto-3">
+    <div id="bloque-bono-crecimiento">
+      <label class="option-radius" for="activa_bono_crecimiento">
+        <input
+          type="checkbox"
+          id="activa_bono_crecimiento"
+          name="activa_bono_crecimiento"
+          value="si"
+          {% if form_data.get('activa_bono_crecimiento') %}checked{% endif %}
+          class="{% if errores.get('activa_bono_crecimiento') %}input-error{% endif %}"
+        />
+        {% if errores.get('activa_bono_crecimiento') %}
+        <span class="mensaje-error">{{ errores['activa_bono_crecimiento'] }}</span>
+        {% endif %}
+        <span>Bono de Crecimiento</span>
+      </label>
+    </div>
+
+    <div id="bloque-bono-mercadotecnia">
+      <label class="option-radius" for="activa_bono_mercadotecnia">
+        <input
+          type="checkbox"
+          id="activa_bono_mercadotecnia"
+          name="activa_bono_mercadotecnia"
+          value="si"
+          {% if form_data.get('activa_bono_mercadotecnia') %}checked{% endif %}
+          class="{% if errores.get('activa_bono_mercadotecnia') %}input-error{% endif %}"
+        />
+        {% if errores.get('activa_bono_mercadotecnia') %}
+        <span class="mensaje-error">{{ errores['activa_bono_mercadotecnia'] }}</span>
+        {% endif %}
+        <span>Bono de Mercadotecnia</span>
+      </label>
+    </div>
+
+    <div id="bloque-nuevas_aperturas">
+      <label class="option-radius" for="activa_bono_nuevas_aperturas">
+        <input
+          type="checkbox"
+          id="activa_bono_nuevas_aperturas"
+          name="activa_bono_nuevas_aperturas"
+          value="si"
+          {% if form_data.get('activa_bono_nuevas_aperturas') %}checked{% endif %}
+          class="{% if errores.get('activa_bono_nuevas_aperturas') %}input-error{% endif %}"
+        />
+        {% if errores.get('activa_bono_nuevas_aperturas') %}
+        <span class="mensaje-error">{{ errores['activa_bono_nuevas_aperturas'] }}</span>
+        {% endif %}
+        <span>Bono de Nuevas Aperturas</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- 2. Campos de monto (aparecerán abajo en su respectiva fila al activarlos) -->
+<!-- 2. Panel individual para Bono de Crecimiento -->
+  <div id="monto-bono-crecimiento" class="panel-condicional {% if not form_data.get('activa_bono_crecimiento') %}oculto{% endif %}">
+    <div class="fila-auto-3">
+      <div>
+        <p>Bono de Crecimiento</p>
+        <label for="monto_bono_crecimiento">Monto</label>
+        <input
+          type="number"
+          id="monto_bono_crecimiento"
+          name="monto_bono_crecimiento"
+          placeholder="Ej. 50000"
+          value="{{ form_data.get('monto_bono_crecimiento', '') }}"
+          class="{% if errores.get('monto_bono_crecimiento') %}input-error{% endif %}"
+        />
+        {% if errores.get('monto_bono_crecimiento') %}
+        <span class="mensaje-error">{{ errores['monto_bono_crecimiento'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- 2b. Panel individual para Bono de Mercadotecnia -->
+  <div id="monto-bono-mercadotecnia" class="panel-condicional {% if not form_data.get('activa_bono_mercadotecnia') %}oculto{% endif %}">
+    <div class="fila-auto-3">
+      <div>
+        <p>Bono de Mercadotecnia</p>
+        <label for="monto_bono_mercadotecnia">Monto</label>
+        <input
+          type="number"
+          id="monto_bono_mercadotecnia"
+          name="monto_bono_mercadotecnia"
+          placeholder="Ej. 50000"
+          value="{{ form_data.get('monto_bono_mercadotecnia', '') }}"
+          class="{% if errores.get('monto_bono_mercadotecnia') %}input-error{% endif %}"
+        />
+        {% if errores.get('monto_bono_mercadotecnia') %}
+        <span class="mensaje-error">{{ errores['monto_bono_mercadotecnia'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Panel para Bono de Nuevas Aperturas (agrupa Posterior/Previo + los 5 campos detallados) -->
+  <div id="panel-bono-nuevas-aperturas" class="panel-condicional {% if not form_data.get('activa_bono_nuevas_aperturas') %}oculto{% endif %}">
+    <p>Bono de Nuevas Aperturas</p>
+    <p><strong>Seleccione si es previo o posterior</strong></p>
+    <div id="bloque-bono-nuevas_aperturas" class="fila-auto-3">
+      <div>
+        
+        <label class="option-radius" for="tipo_nuevas_aperturas_posterior">
+          <input
+            type="radio"
+            id="tipo_nuevas_aperturas_posterior"
+            name="tipo_nuevas_aperturas"
+            value="posterior"
+            {% if form_data.get('tipo_nuevas_aperturas') == 'posterior' %}checked{% endif %}
+            class="{% if errores.get('tipo_nuevas_aperturas') %}input-error{% endif %}"
+          />
+          {% if errores.get('tipo_nuevas_aperturas') %}
+          <span class="mensaje-error">{{ errores['tipo_nuevas_aperturas'] }}</span>
+          {% endif %}
+          <span>Posterior</span>
+        </label>
+      </div>
+      <div>
+        <label class="option-radius" for="tipo_nuevas_aperturas_previo">
+          <input
+            type="radio"
+            id="tipo_nuevas_aperturas_previo"
+            name="tipo_nuevas_aperturas"
+            value="previo"
+            {% if form_data.get('tipo_nuevas_aperturas') == 'previo' %}checked{% endif %}
+            class="{% if errores.get('tipo_nuevas_aperturas') %}input-error{% endif %}"
+          />
+          {% if errores.get('tipo_nuevas_aperturas') %}
+          <span class="mensaje-error">{{ errores['tipo_nuevas_aperturas'] }}</span>
+          {% endif %}
+          <span>Previo</span>
+        </label>
+      </div>
+    </div>
+
+    <div id="bloque-inf-aperturas-previo" class="fila-auto-3">
+      <div>
+        <label for="monto_nuevas_aperturas">Monto Bono Nuevas Aperturas</label>
+        <input type="number" id="monto_nuevas_aperturas" name="monto_nuevas_aperturas" placeholder="Ej. 50000" value="{{ form_data.get('monto_nuevas_aperturas', '') }}" class="{% if errores.get('monto_nuevas_aperturas') %}input-error{% endif %}" />
+        {% if errores.get('monto_nuevas_aperturas') %}
+        <span class="mensaje-error">{{ errores['monto_nuevas_aperturas'] }}</span>
+        {% endif %}
+      </div>
+      <div>
+        <label for="num_establecimientos">Número de establecimientos</label>
+        <input type="number" id="num_establecimientos" name="num_establecimientos" placeholder="Ej. 3" value="{{ form_data.get('num_establecimientos', '') }}" class="{% if errores.get('num_establecimientos') %}input-error{% endif %}" />
+        {% if errores.get('num_establecimientos') %}
+        <span class="mensaje-error">{{ errores['num_establecimientos'] }}</span>
+        {% endif %}
+      </div>
+      <div>
+        <label for="meses_apertura">Meses para abrir los establecimientos</label>
+        <input type="number" id="meses_apertura" name="meses_apertura" placeholder="Ej. 6" value="{{ form_data.get('meses_apertura', '') }}" class="{% if errores.get('meses_apertura') %}input-error{% endif %}" />
+        {% if errores.get('meses_apertura') %}
+        <span class="mensaje-error">{{ errores['meses_apertura'] }}</span>
+        {% endif %}
+      </div>
+      <div>
+        <label for="maximo_bono">Apoyo máximo por establecimiento</label>
+        <input type="number" id="maximo_bono" name="maximo_bono" placeholder="Ej. 20000" value="{{ form_data.get('maximo_bono', '') }}" class="{% if errores.get('maximo_bono') %}input-error{% endif %}" />
+        {% if errores.get('maximo_bono') %}
+        <span class="mensaje-error">{{ errores['maximo_bono'] }}</span>
+        {% endif %}
+      </div>
+      <div>
+        <label for="periodo_amortizacion">Periodo de amortización (meses)</label>
+        <input type="number" id="periodo_amortizacion" name="periodo_amortizacion" placeholder="Ej. 12" value="{{ form_data.get('periodo_amortizacion', '') }}" class="{% if errores.get('periodo_amortizacion') %}input-error{% endif %}" />
+        {% if errores.get('periodo_amortizacion') %}
+        <span class="mensaje-error">{{ errores['periodo_amortizacion'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

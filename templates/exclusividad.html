@@ -1,0 +1,54 @@
+<!-- Exclusividad -->
+<section id="sec-exclusividad" class="card-section">
+  <div class="tarjeta-encabezado">
+    <span class="number-section">07</span>
+    <h2 class="title-section">Exclusividad</h2>
+  </div>
+
+  <div class="fila-auto-3">
+    <div>
+      <label class="option-radius" for="exclusividad_1">
+      <input
+        type="radio"
+        id="exclusividad_1"
+        name="exclusividad"
+        value="1"
+        {% if form_data.get('exclusividad') == '1' %}checked{% endif %}
+        class="{% if errores.get('exclusividad') %}input-error{% endif %}"
+      />
+      <span>Exclusividad</span>
+      </label>
+    </div>
+
+    <div>
+      <label class="option-radius" for="exclusividad_2">
+        <input
+          type="radio"
+          id="exclusividad_2"
+          name="exclusividad"
+          value="2"
+          {% if form_data.get('exclusividad') == '2' %}checked{% endif %}
+          class="{% if errores.get('exclusividad') %}input-error{% endif %}"
+        />
+        <span>Semi-Exclusividad</span>
+      </label>
+    </div>
+
+    <div>
+      <label class="option-radius" for="exclusividad_3">
+        <input
+          type="radio"
+          id="exclusividad_3"
+          name="exclusividad"
+          value="3"
+          {% if form_data.get('exclusividad') == '3' %}checked{% endif %}
+          class="{% if errores.get('exclusividad') %}input-error{% endif %}"
+        />
+        <span>Ninguna</span>
+      </label>
+      {% if errores.get('exclusividad') %}
+      <span class="mensaje-error">{{ errores['exclusividad'] }}</span>
+      {% endif %}
+    </div>
+  </div>
+</section>

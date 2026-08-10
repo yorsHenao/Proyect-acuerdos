@@ -1,0 +1,39 @@
+<!-- Correos de Contacto -->
+<section id="sec-contactos" class="card-section">
+  <div class="tarjeta-encabezado">
+    <span class="number-section">11</span>
+    <h2 class="title-section">Correos de Contacto</h2>
+  </div>
+
+  <div class="fila-auto-3">
+  <div>
+    <label for="correo_comercial">Correo comercial (Rappi)</label>
+    <input
+      type="email"
+      id="correo_comercial"
+      name="correo_comercial"
+      placeholder="ejemplo@rappi.com"
+      value="{{ form_data.get('correo_comercial', '') }}"
+      class="{% if errores.get('correo_comercial') %}input-error{% endif %}"
+    />
+    {% if errores.get('correo_comercial') %}
+    <span class="mensaje-error">{{ errores['correo_comercial'] }}</span>
+    {% endif %}
+  </div>
+
+  <div>
+    <label for="correo_aliado">Correo aliado</label>
+    <input
+      type="email"
+      id="correo_aliado"
+      name="correo_aliado"
+      placeholder="legal@aliado.com"
+      value="{{ form_data.get('correo_aliado', '') }}"
+      class="{% if errores.get('correo_aliado') %}input-error{% endif %}"
+    />
+    {% if errores.get('correo_aliado') %}
+    <span class="mensaje-error">{{ errores['correo_aliado'] }}</span>
+    {% endif %}
+  </div>
+  </div>
+</section>

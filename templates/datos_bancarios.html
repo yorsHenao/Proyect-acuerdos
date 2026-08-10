@@ -1,0 +1,55 @@
+<!-- Datos Bancarios -->
+<section id="sec-datos-bancarios" class="card-section">
+  <div class="tarjeta-encabezado">
+    <span class="number-section">12</span>
+    <h2 class="title-section">Datos Bancarios</h2>
+  </div>
+
+  <div class="fila-auto-3">
+<div>
+    <label for="n_clabe">Clabe Interbancaria</label>
+    <input
+      type="text"
+      id="n_clabe"
+      name="n_clabe"
+      placeholder="18 dígitos"
+      value="{{ form_data.get('n_clabe', '') }}"
+      class="{% if errores.get('n_clabe') %}input-error{% endif %}"
+    />
+    {% if errores.get('n_clabe') %}
+    <span class="mensaje-error">{{ errores['n_clabe'] }}</span>
+    {% endif %}
+  </div> 
+
+  <div>
+    <label for="n_cuenta">Número de Cuenta</label>
+    <input
+      type="text"
+      id="n_cuenta"
+      name="n_cuenta"
+      placeholder="Ej. 0123456789"
+      value="{{ form_data.get('n_cuenta', '') }}"
+      class="{% if errores.get('n_cuenta') %}input-error{% endif %}"
+    />
+    {% if errores.get('n_cuenta') %}
+    <span class="mensaje-error">{{ errores['n_cuenta'] }}</span>
+    {% endif %}
+  </div>
+
+  
+  <div>
+    <label for="banco">Banco</label>
+    <input
+      type="text"
+      id="banco"
+      name="banco"
+      placeholder="Ej. BBVA, Santander..."
+      value="{{ form_data.get('banco', '') }}"
+      class="{% if errores.get('banco') %}input-error{% endif %}"
+    />
+    {% if errores.get('banco') %}
+    <span class="mensaje-error">{{ errores['banco'] }}</span>
+    {% endif %}
+  </div>
+  </div>
+</section>

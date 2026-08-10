@@ -1,0 +1,173 @@
+<!-- Información de la persona jurídica -->
+<section id="bloque-juridica" class="card-section {% if form_data.get('tipo_persona') != 'juridica' %}oculto{% endif %}">
+
+
+  <div class="fila-auto-3 bloque-juridica">
+    <div>
+      <label for="razon_social_juridica">Razón Social</label>
+      <input
+        type="text"
+        id="razon_social_juridica"
+        name="razon_social_juridica"
+        placeholder="Ej. Alimentos S.A. de C.V."
+        value="{{ form_data.get('razon_social_juridica', '') }}"
+        class="{% if errores.get('razon_social_juridica') %}input-error{% endif %}"
+      />
+      {% if errores.get('razon_social_juridica') %}
+      <span class="mensaje-error">{{ errores['razon_social_juridica'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="rfc_juridica">RFC</label>
+      <input
+        type="text"
+        id="rfc_juridica"
+        name="rfc_juridica"
+        placeholder="ABCD1234"
+        value="{{ form_data.get('rfc_juridica', '') }}"
+        class="{% if errores.get('rfc_juridica') %}input-error{% endif %}"
+      />
+      {% if errores.get('rfc_juridica') %}
+      <span class="mensaje-error">{{ errores['rfc_juridica'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="representante_legal_juridica">Representante Legal</label>
+      <input
+        type="text"
+        id="representante_legal_juridica"
+        name="representante_legal_juridica"
+        placeholder="Ej. Juan Rodríguez"
+        value="{{ form_data.get('representante_legal_juridica', '') }}"
+        class="{% if errores.get('representante_legal_juridica') %}input-error{% endif %}"
+      />
+      {% if errores.get('representante_legal_juridica') %}
+      <span class="mensaje-error">{{ errores['representante_legal_juridica'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="direccion_juridica">Dirección</label>
+      <input
+        type="text"
+        id="direccion_juridica"
+        name="direccion_juridica"
+        placeholder="Ej. Av. Paseo de la Reforma 123"
+        value="{{ form_data.get('direccion_juridica', '') }}"
+        class="{% if errores.get('direccion_juridica') %}input-error{% endif %}"
+      />
+      {% if errores.get('direccion_juridica') %}
+      <span class="mensaje-error">{{ errores['direccion_juridica'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="marca_juridica">Marca</label>
+      <input
+        type="text"
+        id="marca_juridica"
+        name="marca_juridica"
+        placeholder="Ej. Tacos El Buen Sazón"
+        value="{{ form_data.get('marca_juridica', '') }}"
+        class="{% if errores.get('marca_juridica') %}input-error{% endif %}"
+      />
+      {% if errores.get('marca_juridica') %}
+      <span class="mensaje-error">{{ errores['marca_juridica'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="n_acta_constitutiva">Número de Escritura</label>
+      <input
+        type="text"
+        id="n_acta_constitutiva"
+        name="n_acta_constitutiva"
+        placeholder="Ej. 1123"
+        value="{{ form_data.get('n_acta_constitutiva', '') }}"
+        class="{% if errores.get('n_acta_constitutiva') %}input-error{% endif %}"
+      />
+      {% if errores.get('n_acta_constitutiva') %}
+      <span class="mensaje-error">{{ errores['n_acta_constitutiva'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="fecha_acta_constitutiva">Fecha de Escritura</label>
+      <input
+        type="date"
+        id="fecha_acta_constitutiva"
+        name="fecha_acta_constitutiva"
+        value="{{ form_data.get('fecha_acta_constitutiva', '') }}"
+        class="{% if errores.get('fecha_acta_constitutiva') %}input-error{% endif %}"
+      />
+      {% if errores.get('fecha_acta_constitutiva') %}
+      <span class="mensaje-error">{{ errores['fecha_acta_constitutiva'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="notario">Nombre del Notario</label>
+      <input
+        type="text"
+        id="notario"
+        name="notario"
+        placeholder="Ej. Notario Juan Rodríguez"
+        value="{{ form_data.get('notario', '') }}"
+        class="{% if errores.get('notario') %}input-error{% endif %}"
+      />
+      {% if errores.get('notario') %}
+      <span class="mensaje-error">{{ errores['notario'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="numero_notaria">Número de Notaría</label>
+      <input
+        type="text"
+        id="numero_notaria"
+        name="numero_notaria"
+        placeholder="Ej. 45"
+        value="{{ form_data.get('numero_notaria', '') }}"
+        class="{% if errores.get('numero_notaria') %}input-error{% endif %}"
+      />
+      {% if errores.get('numero_notaria') %}
+      <span class="mensaje-error">{{ errores['numero_notaria'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="ubicacion_notaria">Ubicación Notaría</label>
+      <input
+        type="text"
+        id="ubicacion_notaria"
+        name="ubicacion_notaria"
+        placeholder="Ej. Av. Paseo de la Reforma 123"
+        value="{{ form_data.get('ubicacion_notaria', '') }}"
+        class="{% if errores.get('ubicacion_notaria') %}input-error{% endif %}"
+      />
+      {% if errores.get('ubicacion_notaria') %}
+      <span class="mensaje-error">{{ errores['ubicacion_notaria'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="n_folio_mercantil">Número de Folio Mercantil</label>
+      <input
+        type="text"
+        id="n_folio_mercantil"
+        name="n_folio_mercantil"
+        placeholder="Ej. 1123"
+        value="{{ form_data.get('n_folio_mercantil', '') }}"
+        class="{% if errores.get('n_folio_mercantil') %}input-error{% endif %}"
+      />
+      {% if errores.get('n_folio_mercantil') %}
+      <span class="mensaje-error">{{ errores['n_folio_mercantil'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="fecha_folio_mercantil">Fecha de Folio Mercantil</label>
+      <input
+        type="date"
+        id="fecha_folio_mercantil"
+        name="fecha_folio_mercantil"
+        value="{{ form_data.get('fecha_folio_mercantil', '') }}"
+        class="{% if errores.get('fecha_folio_mercantil') %}input-error{% endif %}"
+      />
+      {% if errores.get('fecha_folio_mercantil') %}
+      <span class="mensaje-error">{{ errores['fecha_folio_mercantil'] }}</span>
+      {% endif %}
+    </div>
+  </div>
+</section>

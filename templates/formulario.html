@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="/static/boton.js" defer></script>
+    <script src="/static/resumen.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/formulario.css" />
+
+    <title>Generador de Acuerdos de Cooperación</title>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="header-content">
+        <span class="log-text">Rappi</span>
+        <div class="linea-divisoria"></div>
+        <h1 class="main-title">Configuración del Acuerdo de Cooperación</h1>
+      </div>
+    </header>
+
+    <aside class="menu-lateral">
+      <div class="menu-header">
+        <p class="menu-title">Secciones</p>
+      </div>
+
+      <nav class="menu-nav">
+        <a href="#sec-persona" class=" item-menu item-menu-activo">
+          <span class="menu-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-user"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+            </svg>
+          </span>
+          Tipo de Persona</a
+        >
+
+        <a href="#sec-vigencia" class="item-menu">
+          <span class="menu-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12"
+              />
+              <path d="M16 3l0 4" />
+              <path d="M8 3l0 4" />
+              <path d="M4 11l16 0" />
+              <path d="M8 15h2v2h-2l0 -2" />
+            </svg>
+          </span>
+          Vigencia</a
+        >
+        <a href="#sec-ads" class="item-menu">
+          <span class="menu-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-speakerphone"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M18 8a3 3 0 0 1 0 6" />
+              <path d="M10 8v11a1 1 0 0 1 -1 1h-1a1 1 0 0 1 -1 -1v-5" />
+              <path
+                d="M12 8l4.524 -3.77a.9 .9 0 0 1 1.476 .692v12.156a.9 .9 0 0 1 -1.476 .692l-4.524 -3.77h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h8"
+              />
+            </svg>
+          </span>
+          ADS</a
+        >
+        <a href="#sec-comision" class="item-menu">
+          <span class="menu-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-tax"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M9 14l6 -6" />
+              <path
+                d="M9 8.5a.5 .5 0 1 0 1 0a.5 .5 0 1 0 -1 0"
+                fill="currentColor"
+              />
+              <path
+                d="M14 13.5a.5 .5 0 1 0 1 0a.5 .5 0 1 0 -1 0"
+                fill="currentColor"
+              />
+              <path
+                d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2"
+              />
+            </svg>
+          </span>
+          Comisión</a
+        >
+        <a href="#sec-exclusividad" class="item-menu">
+          <span class="menu-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-shield-check"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06"
+              />
+              <path d="M15 19l2 2l4 -4" />
+            </svg>
+          </span>
+          Exclusividad</a
+        >
+        <a href="#sec-bonos" class="item-menu">
+          <span class="menu-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-moneybag-move"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M9.5 3h5a1.5 1.5 0 0 1 1.5 1.5a3.5 3.5 0 0 1 -3.5 3.5h-1a3.5 3.5 0 0 1 -3.5 -3.5a1.5 1.5 0 0 1 1.5 -1.5"
+              />
+              <path
+                d="M12.5 21h-4.5a4 4 0 0 1 -4 -4v-1a8 8 0 0 1 14.946 -3.971"
+              />
+              <path d="M16 19h6" />
+              <path d="M19 16l3 3l-3 3" />
+            </svg>
+          </span>
+          Bonos</a
+        >
+        <a href="#sec-fondos" class="item-menu">
+          <span class="menu-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-wallet"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12"
+              />
+              <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
+            </svg>
+          </span>
+          Fondos</a
+        >
+        <a href="#sec-compromisos" class="item-menu">
+          <span class="menu-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-checklist"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8"
+              />
+              <path d="M14 19l2 2l4 -4" />
+              <path d="M9 8h4" />
+              <path d="M9 12h2" />
+            </svg>
+          </span>
+          Compromisos Adicionales</a
+        >
+        <a href="#sec-contactos" class="item-menu">
+          <span class="menu-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-address-book"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2"
+              />
+              <path d="M10 16h6" />
+              <path d="M11 11a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+              <path d="M4 8h3" />
+              <path d="M4 12h3" />
+              <path d="M4 16h3" />
+            </svg>
+          </span>
+          Contactos</a
+        >
+        <a href="#sec-datos-bancarios" class="item-menu">
+          <span class="menu-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-building-bank"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M3 21l18 0" />
+              <path d="M3 10l18 0" />
+              <path d="M5 6l7 -3l7 3" />
+              <path d="M4 10l0 11" />
+              <path d="M20 10l0 11" />
+              <path d="M8 14l0 3" />
+              <path d="M12 14l0 3" />
+              <path d="M16 14l0 3" />
+            </svg>
+          </span>
+          Datos Bancarios</a
+        >
+      </nav>
+    </aside>
+
+    <div class="contenido-principal">
+      <form action="/generar" method="POST" id="form-acuerdo">
+        {% if errores is defined and errores.get('_general') %}
+          <div class="banner-error">
+            <p>{{ errores.get('_general') }}</p>
+          </div>
+        {% endif %}
+        {% include "tipo_persona.html" %} {% include "persona_fisica.html" %} {%
+        include "persona_juridica.html" %} {% include "vigencia.html" %} {%
+        include "ads.html" %} {% include "comision.html" %} {% include
+        "exclusividad.html" %} {% include "bonos.html" %} {% include
+        "fondos.html" %} {% include "compromisos.html" %} {% include
+        "contactos.html" %} {% include "datos_bancarios.html" %}
+        <button type="button"  id="btn-abrir-resumen" class="btn-generar">Generar Acuerdo</button>
+      </form>
+    </div>
+    <div id="modal-resumen" class="modal-overlay oculto">
+  <div class="modal-caja">
+    <h2>Resumen del Acuerdo</h2>
+    <ul id="resumen-lista" class="resumen-lista"></ul>
+    <div class="modal-acciones">
+      <button type="button" id="btn-cancelar-resumen" class="btn-secundario">Volver a editar</button>
+      <button type="submit" form="form-acuerdo" class="btn-generar">Confirmar y Generar</button>
+    </div>
+  </div>
+</div>
+  </body>
+</html>

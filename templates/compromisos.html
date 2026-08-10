@@ -1,0 +1,206 @@
+<!-- Compromisos Adicionales -->
+<section id="sec-compromisos" class="card-section">
+  <div class="tarjeta-encabezado">
+    <span class="number-section">10</span>
+    <h2 class="title-section">Compromisos Adicionales</h2>
+  </div>
+
+  <div class="fila-auto-3">
+    <!-- Descuento en Menú -->
+    <div>
+      <label class="option-radius" for="activa_descuento_menu">
+        <input
+          type="checkbox"
+          id="activa_descuento_menu"
+          name="activa_descuento_menu"
+          value="si"
+          {% if form_data.get('activa_descuento_menu') %}checked{% endif %}
+          class="{% if errores.get('activa_descuento_menu') %}input-error{% endif %}"
+        />
+        {% if errores.get('activa_descuento_menu') %}
+        <span class="mensaje-error">{{ errores['activa_descuento_menu'] }}</span>
+        {% endif %}
+        <span>Descuento en Menú</span>
+      </label>
+    </div>
+
+    <!-- Mark Down -->
+    <div>
+      <label class="option-radius" for="activa_mark_down">
+        <input
+          type="checkbox"
+          id="activa_mark_down"
+          name="activa_mark_down"
+          value="si"
+          {% if form_data.get('activa_mark_down') %}checked{% endif %}
+          class="{% if errores.get('activa_mark_down') %}input-error{% endif %}"
+        />
+        {% if errores.get('activa_mark_down') %}
+        <span class="mensaje-error">{{ errores['activa_mark_down'] }}</span>
+        {% endif %}
+        <span>Mark Down</span>
+      </label>
+    </div>
+
+    <!-- Publicaciones en Redes -->
+    <div>
+      <label class="option-radius" for="activa_publicaciones_redes">
+        <input
+          type="checkbox"
+          id="activa_publicaciones_redes"
+          name="activa_publicaciones_redes"
+          value="si"
+          {% if form_data.get('activa_publicaciones_redes') %}checked{% endif %}
+          class="{% if errores.get('activa_publicaciones_redes') %}input-error{% endif %}"
+        />
+        {% if errores.get('activa_publicaciones_redes') %}
+        <span class="mensaje-error">{{ errores['activa_publicaciones_redes'] }}</span>
+        {% endif %}
+        <span>Publicaciones en Redes</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="fila-auto-3">
+    <!-- Platillos Top Seller -->
+    <div>
+      <label class="option-radius" for="activa_platillos_top_seller">
+        <input
+          type="checkbox"
+          id="activa_platillos_top_seller"
+          name="activa_platillos_top_seller"
+          value="si"
+          {% if form_data.get('activa_platillos_top_seller') %}checked{% endif %}
+          class="{% if errores.get('activa_platillos_top_seller') %}input-error{% endif %}"
+        />
+        {% if errores.get('activa_platillos_top_seller') %}
+        <span class="mensaje-error">{{ errores['activa_platillos_top_seller'] }}</span>
+        {% endif %}
+        <span>Platillos Top Seller</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Información de los Compromisos Adicionales -->
+  <div id="info-descuento-menu" class="panel-condicional {% if not form_data.get('activa_descuento_menu') %}oculto{% endif %}">
+    <p>Descuento en Menú</p>
+    <div class="fila-auto-3">
+      <div>
+        <label for="n_descuento_menu">Porcentaje de descuento</label>
+        <input
+          type="number"
+          id="n_descuento_menu"
+          name="n_descuento_menu"
+          placeholder="Ej. 10"
+          value="{{ form_data.get('n_descuento_menu', '') }}"
+          class="{% if errores.get('n_descuento_menu') %}input-error{% endif %}"
+        />
+        {% if errores.get('n_descuento_menu') %}
+        <span class="mensaje-error">{{ errores['n_descuento_menu'] }}</span>
+        {% endif %}
+      </div>
+      <div>
+        <label for="n_meses_descuento_menu">Cantidad de meses</label>
+        <input
+          type="number"
+          id="n_meses_descuento_menu"
+          name="n_meses_descuento_menu"
+          placeholder="Ej. 3"
+          value="{{ form_data.get('n_meses_descuento_menu', '') }}"
+          class="{% if errores.get('n_meses_descuento_menu') %}input-error{% endif %}"
+        />
+        {% if errores.get('n_meses_descuento_menu') %}
+        <span class="mensaje-error">{{ errores['n_meses_descuento_menu'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div id="info-mark-down" class="panel-condicional {% if not form_data.get('activa_mark_down') %}oculto{% endif %}">
+    <p>Mark Down</p>
+    <div class="fila-auto-3">
+      <div>
+        <label for="n_descuento_mark_down">Porcentaje de inversión</label>
+        <input
+          type="number"
+          id="n_descuento_mark_down"
+          name="n_descuento_mark_down"
+          placeholder="Ej. 50"
+          value="{{ form_data.get('n_descuento_mark_down', '') }}"
+          class="{% if errores.get('n_descuento_mark_down') %}input-error{% endif %}"
+        />
+        {% if errores.get('n_descuento_mark_down') %}
+        <span class="mensaje-error">{{ errores['n_descuento_mark_down'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div id="info-publicaciones-redes" class="panel-condicional {% if not form_data.get('activa_publicaciones_redes') %}oculto{% endif %}">
+    <p>Publicaciones en Redes</p>
+    <div class="fila-auto-3">
+      <div>
+        <label for="n_descuento_redes">Cantidad de publicaciones</label>
+        <input
+          type="number"
+          id="n_descuento_redes"
+          name="n_descuento_redes"
+          placeholder="Ej. 4"
+          value="{{ form_data.get('n_descuento_redes', '') }}"
+          class="{% if errores.get('n_descuento_redes') %}input-error{% endif %}"
+        />
+        {% if errores.get('n_descuento_redes') %}
+        <span class="mensaje-error">{{ errores['n_descuento_redes'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div id="info-top-seller" class="panel-condicional {% if not form_data.get('activa_platillos_top_seller') %}oculto{% endif %}">
+    <p>Platillos Top Seller</p>
+    <div class="fila-auto-3">
+      <div>
+        <label for="n_cantidad_platillos">Cantidad de platillos</label>
+        <input
+          type="number"
+          id="n_cantidad_platillos"
+          name="n_cantidad_platillos"
+          placeholder="Ej. 5"
+          value="{{ form_data.get('n_cantidad_platillos', '') }}"
+          class="{% if errores.get('n_cantidad_platillos') %}input-error{% endif %}"
+        />
+        {% if errores.get('n_cantidad_platillos') %}
+        <span class="mensaje-error">{{ errores['n_cantidad_platillos'] }}</span>
+        {% endif %}
+      </div>
+      <div>
+        <label for="n_descuento_platillos">Porcentaje de descuento</label>
+        <input
+          type="number"
+          id="n_descuento_platillos"
+          name="n_descuento_platillos"
+          placeholder="Ej. 15"
+          value="{{ form_data.get('n_descuento_platillos', '') }}"
+          class="{% if errores.get('n_descuento_platillos') %}input-error{% endif %}"
+        />
+        {% if errores.get('n_descuento_platillos') %}
+        <span class="mensaje-error">{{ errores['n_descuento_platillos'] }}</span>
+        {% endif %}
+      </div>
+      <div>
+        <label for="n_meses_descuento_platillos">Cantidad de meses</label>
+        <input
+          type="number"
+          id="n_meses_descuento_platillos"
+          name="n_meses_descuento_platillos"
+          placeholder="Ej. 3"
+          value="{{ form_data.get('n_meses_descuento_platillos', '') }}"
+          class="{% if errores.get('n_meses_descuento_platillos') %}input-error{% endif %}"
+        />
+        {% if errores.get('n_meses_descuento_platillos') %}
+        <span class="mensaje-error">{{ errores['n_meses_descuento_platillos'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

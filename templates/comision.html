@@ -1,0 +1,151 @@
+<!-- Esquema de Comisión -->
+<section id="sec-comision" class="card-section">
+  <div class="tarjeta-encabezado">
+    <span class="number-section">06</span>
+    <h2 class="title-section">Esquema de Comisión</h2>
+  </div>
+
+  <!-- 1. Selección Principal: Fija o Escalonada -->
+  <div class="fila-auto-3">
+    <div>
+      <label class="option-radius" for="tipo_comision_fija">
+        <input
+          type="radio"
+          id="tipo_comision_fija"
+          name="tipo_comision"
+          value="fija"
+          {% if form_data.get('tipo_comision') == 'fija' %}checked{% endif %}
+          class="{% if errores.get('tipo_comision') %}input-error{% endif %}"
+        />
+        Fija
+      </label>
+    </div>
+    <div>
+      <label class="option-radius" for="tipo_comision_escalonada">
+        <input
+          type="radio"
+          id="tipo_comision_escalonada"
+          name="tipo_comision"
+          value="escalonada"
+          {% if form_data.get('tipo_comision') == 'escalonada' %}checked{% endif %}
+          class="{% if errores.get('tipo_comision') %}input-error{% endif %}"
+        />
+        Escalonada
+      </label>
+    </div>
+    {% if errores.get('tipo_comision') %}
+    <div style="grid-column: 1 / -1;">
+      <span class="mensaje-error">{{ errores['tipo_comision'] }}</span>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- 2. Bloque para Comisión Fija -->
+  <div id="bloque-comision-fija" class="{% if form_data.get('tipo_comision') != 'fija' %}oculto{% endif %}">
+    <div class="fila-auto-3">
+      <div>
+        <label for="n_comision_fija">Porcentaje de comisión fija</label>
+        <input
+          type="number"
+          id="n_comision_fija"
+          name="n_comision_fija"
+          placeholder="Ej. 18"
+          value="{{ form_data.get('n_comision_fija', '') }}"
+          class="{% if errores.get('n_comision_fija') %}input-error{% endif %}"
+        />
+        {% if errores.get('n_comision_fija') %}
+        <span class="mensaje-error">{{ errores['n_comision_fija'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Bloque para Comisión Escalonada -->
+  <div id="bloque-c-escalonada" class="{% if form_data.get('tipo_comision') != 'escalonada' %}oculto{% endif %}">
+    <!-- Lista desplegable para elegir modalidad -->
+    <div class="fila-auto-3">
+      <div>
+        <label for="modalidad_escalonada">Modalidad de la escala</label>
+        <select id="modalidad_escalonada" name="modalidad_escalonada" class="{% if errores.get('modalidad_escalonada') %}input-error{% endif %}">
+          <option value="" {% if not form_data.get('modalidad_escalonada') %}selected{% endif %}>Selecciona una opción</option>
+          <option value="mes" {% if form_data.get('modalidad_escalonada') == 'mes' %}selected{% endif %}>Por mes</option>
+          <option value="ordenes" {% if form_data.get('modalidad_escalonada') == 'ordenes' %}selected{% endif %}>Por órdenes</option>
+          <option value="ventas" {% if form_data.get('modalidad_escalonada') == 'ventas' %}selected{% endif %}>Por ventas</option>
+        </select>
+        {% if errores.get('modalidad_escalonada') %}
+        <span class="mensaje-error">{{ errores['modalidad_escalonada'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Campos para definir los datos del escalón -->
+    <div class="escalon fila-auto-3" data-escalon="0">
+      <div>
+        <label>¿Es el último escalón?</label>
+        <div class="fila-si-no">
+          <label
+            class="option-radius option-radius-compacta"
+            for="escalon_0_es_ultimo_no"
+          >
+            <input
+              type="radio"
+              id="escalon_0_es_ultimo_no"
+              name="escalon_0_es_ultimo"
+              value="no"
+              {% if form_data.get('escalon_0_es_ultimo') == 'no' or not form_data.get('escalon_0_es_ultimo') %}checked{% endif %}
+              class="{% if errores.get('escalon_0_es_ultimo') %}input-error{% endif %}"
+            />
+            No
+          </label>
+          <label
+            class="option-radius option-radius-compacta"
+            for="escalon_0_es_ultimo_si"
+          >
+            <input
+              type="radio"
+              id="escalon_0_es_ultimo_si"
+              name="escalon_0_es_ultimo"
+              value="si"
+              {% if form_data.get('escalon_0_es_ultimo') == 'si' %}checked{% endif %}
+              class="{% if errores.get('escalon_0_es_ultimo') %}input-error{% endif %}"
+            />
+            Sí
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label for="escalon_0_fin">mes final del escalón</label>
+        <input
+          type="number"
+          id="escalon_0_fin"
+          name="escalon_0_fin"
+          placeholder="Dejar vacío si es el último escalón"
+          value="{{ form_data.get('escalon_0_fin', '') }}"
+          class="{% if errores.get('escalon_0_fin') %}input-error{% endif %}"
+        />
+        {% if errores.get('escalon_0_fin') %}
+        <span class="mensaje-error">{{ errores['escalon_0_fin'] }}</span>
+        {% endif %}
+      </div>
+
+      <div>
+        <label for="escalon_0_porcentaje">Porcentaje</label>
+        <input
+          type="number"
+          id="escalon_0_porcentaje"
+          name="escalon_0_porcentaje"
+          placeholder="Ej. 18"
+          value="{{ form_data.get('escalon_0_porcentaje', '') }}"
+          class="{% if errores.get('escalon_0_porcentaje') %}input-error{% endif %}"
+        />
+        {% if errores.get('escalon_0_porcentaje') %}
+        <span class="mensaje-error">{{ errores['escalon_0_porcentaje'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Botón para agregar escalones -->
+    <button type="button" id="agregar_escalon" class="option-radius">Agregar escalón</button>
+  </div>
+</section>

@@ -1,0 +1,123 @@
+<!-- Fondos -->
+<section id="sec-fondos" class="card-section">
+  <div class="tarjeta-encabezado">
+    <span class="number-section">09</span>
+    <h2 class="title-section">Fondos</h2>
+  </div>
+
+  <div class="fila-auto-3">
+    <!-- Fondo de Mercadotecnia -->
+    <div>
+      <label class="option-radius" for="activa_fondo_mercadotecnia">
+        <input
+          type="checkbox"
+          id="activa_fondo_mercadotecnia"
+          name="activa_fondo_mercadotecnia"
+          value="si"
+          {% if form_data.get('activa_fondo_mercadotecnia') %}checked{% endif %}
+          class="{% if errores.get('activa_fondo_mercadotecnia') %}input-error{% endif %}"
+        />
+        {% if errores.get('activa_fondo_mercadotecnia') %}
+        <span class="mensaje-error">{{ errores['activa_fondo_mercadotecnia'] }}</span>
+        {% endif %}
+        <span>Fondo de Mercadotecnia</span>
+      </label>
+    </div>
+    <!-- Fondo de Mercadotecnia OOH -->
+    <div>
+      <label class="option-radius" for="activa_fondo_mercadotecnia_ooh">
+        <input
+          type="checkbox"
+          id="activa_fondo_mercadotecnia_ooh"
+          name="activa_fondo_mercadotecnia_ooh"
+          value="si"
+          {% if form_data.get('activa_fondo_mercadotecnia_ooh') %}checked{% endif %}
+          class="{% if errores.get('activa_fondo_mercadotecnia_ooh') %}input-error{% endif %}"
+        />
+        {% if errores.get('activa_fondo_mercadotecnia_ooh') %}
+        <span class="mensaje-error">{{ errores['activa_fondo_mercadotecnia_ooh'] }}</span>
+        {% endif %}
+        <span>Fondo de Mercadotecnia OOH</span>
+      </label>
+    </div>
+    
+    <!-- Línea de Nuevas Aperturas -->
+    <div>
+      <label class="option-radius" for="activa_linea_nuevas_aperturas">
+        <input
+          type="checkbox"
+          id="activa_linea_nuevas_aperturas"
+          name="activa_linea_nuevas_aperturas"
+          value="si"
+          {% if form_data.get('activa_linea_nuevas_aperturas') %}checked{% endif %}
+          class="{% if errores.get('activa_linea_nuevas_aperturas') %}input-error{% endif %}"
+        />
+        {% if errores.get('activa_linea_nuevas_aperturas') %}
+        <span class="mensaje-error">{{ errores['activa_linea_nuevas_aperturas'] }}</span>
+        {% endif %}
+        <span>Línea de Nuevas Aperturas</span>
+      </label>
+    </div>
+  </div>
+
+  <!--Montos-->
+  <div id="monto-fondo-mercadotecnia" class="panel-condicional {% if not form_data.get('activa_fondo_mercadotecnia') %}oculto{% endif %}">
+    <div class="fila-auto-3">
+      <div>
+        <p>Fondo de Mercadotecnia</p>
+        <label for="monto_fondo_mercadotecnia">Monto</label>
+        <input
+          type="number"
+          id="monto_fondo_mercadotecnia"
+          name="monto_fondo_mercadotecnia"
+          placeholder="Ej. 30000"
+          value="{{ form_data.get('monto_fondo_mercadotecnia', '') }}"
+          class="{% if errores.get('monto_fondo_mercadotecnia') %}input-error{% endif %}"
+        />
+        {% if errores.get('monto_fondo_mercadotecnia') %}
+        <span class="mensaje-error">{{ errores['monto_fondo_mercadotecnia'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div id="monto-fondo-mercadotecnia-ooh" class="panel-condicional {% if not form_data.get('activa_fondo_mercadotecnia_ooh') %}oculto{% endif %}">
+    <div class="fila-auto-3">
+      <div>
+        <p>Fondo de Mercadotecnia OOH</p>
+        <label for="monto_fondo_mercadotecnia_ooh">Monto</label>
+        <input
+          type="number"
+          id="monto_fondo_mercadotecnia_ooh"
+          name="monto_fondo_mercadotecnia_ooh"
+          placeholder="Ej. 30000"
+          value="{{ form_data.get('monto_fondo_mercadotecnia_ooh', '') }}"
+          class="{% if errores.get('monto_fondo_mercadotecnia_ooh') %}input-error{% endif %}"
+        />
+        {% if errores.get('monto_fondo_mercadotecnia_ooh') %}
+        <span class="mensaje-error">{{ errores['monto_fondo_mercadotecnia_ooh'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div id="monto-nuevas-aperturas" class="panel-condicional {% if not form_data.get('activa_linea_nuevas_aperturas') %}oculto{% endif %}">
+    <div class="fila-auto-3">
+      <div>
+        <p>Línea de Nuevas Aperturas</p>
+        <label for="monto_linea_nuevas_aperturas">Monto</label>
+        <input
+          type="number"
+          id="monto_linea_nuevas_aperturas"
+          name="monto_linea_nuevas_aperturas"
+          placeholder="Ej. 30000"
+          value="{{ form_data.get('monto_linea_nuevas_aperturas', '') }}"
+          class="{% if errores.get('monto_linea_nuevas_aperturas') %}input-error{% endif %}"
+        />
+        {% if errores.get('monto_linea_nuevas_aperturas') %}
+        <span class="mensaje-error">{{ errores['monto_linea_nuevas_aperturas'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

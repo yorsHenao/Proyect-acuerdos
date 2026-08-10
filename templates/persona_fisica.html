@@ -1,0 +1,62 @@
+<!-- Información de la persona física -->
+<section id="bloque-fisica" class="card-section {% if form_data.get('tipo_persona') != 'fisica' %}oculto{% endif %}">
+
+  <div class="fila-auto-3 bloque-fisica">
+    <div>
+      <label for="razon_social_fisica">Nombre Completo</label>
+      <input
+        type="text"
+        id="razon_social_fisica"
+        name="razon_social_fisica"
+        placeholder="Ej. Juan Rodríguez"
+        value="{{ form_data.get('razon_social_fisica', '') }}"
+        class="{% if errores.get('razon_social_fisica') %}input-error{% endif %}"
+      />
+      {% if errores.get('razon_social_fisica') %}
+      <span class="mensaje-error">{{ errores['razon_social_fisica'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="rfc_fisica">RFC</label>
+      <input
+        type="text"
+        id="rfc_fisica"
+        name="rfc_fisica"
+        placeholder="Ej. ABCSD34"
+        value="{{ form_data.get('rfc_fisica', '') }}"
+        class="{% if errores.get('rfc_fisica') %}input-error{% endif %}"
+      />
+      {% if errores.get('rfc_fisica') %}
+      <span class="mensaje-error">{{ errores['rfc_fisica'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="direccion_fisica">Dirección</label>
+      <input
+        type="text"
+        id="direccion_fisica"
+        name="direccion_fisica"
+        placeholder="Ej. Calle siempre viva 123"
+        value="{{ form_data.get('direccion_fisica', '') }}"
+        class="{% if errores.get('direccion_fisica') %}input-error{% endif %}"
+      />
+      {% if errores.get('direccion_fisica') %}
+      <span class="mensaje-error">{{ errores['direccion_fisica'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="marca_fisica">Marca</label>
+      <input
+        type="text"
+        id="marca_fisica"
+        name="marca_fisica"
+        placeholder="Ej. Tacos El Buen Sazón"
+        value="{{ form_data.get('marca_fisica', '') }}"
+        class="{% if errores.get('marca_fisica') %}input-error{% endif %}"
+      />
+      {% if errores.get('marca_fisica') %}
+      <span class="mensaje-error">{{ errores['marca_fisica'] }}</span>
+      {% endif %}
+    </div>
+  </div>
+</section>

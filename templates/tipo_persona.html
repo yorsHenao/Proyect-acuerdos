@@ -1,0 +1,38 @@
+<!-- Selector de tipo de persona -->
+<section id="sec-tipo-persona" class="card-section">
+  <div class="tarjeta-encabezado">
+    <span class="number-section">01</span>
+    <h2 class="title-section">Información General</h2>
+  </div>
+
+  <div class="container-radius">
+    <label class="label-inline">Tipo de Persona</label>
+
+    <label class="option-radius" for="tipo_persona_fisica">
+      <input
+        type="radio"
+        id="tipo_persona_fisica"
+        name="tipo_persona"
+        value="fisica"
+        {% if form_data.get('tipo_persona') == 'fisica' %}checked{% endif %}
+        class="{% if errores.get('tipo_persona') %}input-error{% endif %}"
+      />
+      <span>Física</span>
+    </label>
+
+    <label class="option-radius" for="tipo_persona_juridica">
+      <input
+        type="radio"
+        id="tipo_persona_juridica"
+        name="tipo_persona"
+        value="juridica"
+        {% if form_data.get('tipo_persona') == 'juridica' %}checked{% endif %}
+        class="{% if errores.get('tipo_persona') %}input-error{% endif %}"
+      />
+      <span>Jurídica</span>
+    </label>
+    {% if errores.get('tipo_persona') %}
+    <span class="mensaje-error">{{ errores['tipo_persona'] }}</span>
+    {% endif %}
+  </div>
+</section>

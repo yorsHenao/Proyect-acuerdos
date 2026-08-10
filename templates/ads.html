@@ -1,0 +1,41 @@
+<!-- Requerimiento ADS -->
+<section id="sec-ads" class="card-section">
+  <div class="tarjeta-encabezado">
+    <span class="number-section">05</span>
+    <h2 class="title-section">Requiere Ads</h2>
+  </div>
+
+  <div class="fila-auto-3">
+    <div id="bloque-ads">
+      <label class="option-radius" for="tiene_ads">
+        <input
+          type="checkbox"
+          id="tiene_ads"
+          name="tiene_ads"
+          value="si"
+          {% if form_data.get('tiene_ads') %}checked{% endif %}
+        />
+        <span>Aplica ADS</span>
+      </label>
+    </div>
+  </div>
+
+  <div id="porcentaje-ads" class="panel-condicional {% if not form_data.get('tiene_ads') %}oculto{% endif %}">
+    <div class="fila-auto-3">
+      <div>
+        <label for="n_ads">Porcentaje de ADS</label>
+        <input
+          type="number"
+          id="n_ads"
+          name="n_ads"
+          placeholder="Ej. 10"
+          value="{{ form_data.get('n_ads', '') }}"
+          class="{% if errores.get('n_ads') %}input-error{% endif %}"
+        />
+        {% if errores.get('n_ads') %}
+        <span class="mensaje-error">{{ errores['n_ads'] }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+<!-- Vigencia del acuerdo -->
+<section id="sec-vigencia" class="card-section">
+  <div class="tarjeta-encabezado">
+    <span class="number-section">04</span>
+    <h2 class="title-section">Vigencia del Acuerdo</h2>
+  </div>
+
+  <div class="fila-auto-3">
+    <div>
+      <label for="vigencia_meses">Vigencia (meses)</label>
+      <input
+        type="number"
+        id="vigencia_meses"
+        name="vigencia_meses"
+        placeholder="Ej. 12"
+        value="{{ form_data.get('vigencia_meses', '') }}"
+        class="{% if errores.get('vigencia_meses') %}input-error{% endif %}"
+      />
+      {% if errores.get('vigencia_meses') %}
+      <span class="mensaje-error">{{ errores['vigencia_meses'] }}</span>
+      {% endif %}
+    </div>
+  </div>
+</section>

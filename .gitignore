@@ -1,0 +1,11 @@
+# Excluir archivos zip
+*.zip
+
+# Excluir la carpeta "salida_acuerdos"
+/salida_acuerdos/
+
+# Excluir archivos específicos
+__pycache__/
+*.pyc
+inicio.bat
+
