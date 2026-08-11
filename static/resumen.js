@@ -71,7 +71,7 @@ function construirResumen() {
     } else if (comisionRadio.value === "escalonada") {
       const modalidad = document.getElementById("modalidad_escalonada")?.value || "";
       const tramos = document.querySelectorAll("#bloque-c-escalonada .escalon").length;
-      lista.innerHTML += `<li><strong>Comisión:</strong> Escalonada por ${modalidad} (${tramos} tramo${tramos === 1 ? "" : "s"})</li>`;
+      lista.innerHTML += `<li><strong>Comisión:</strong> Escalonada por ${modalidad} (escalonamiento por ${tramos} periodo${tramos === 1 ? "" : "s"})</li>`;
     }
   }
 
@@ -81,11 +81,6 @@ function construirResumen() {
     lista.innerHTML += `<li><strong>Correo(s):</strong> ${correosInput.value}</li>`;
   }
 
-  // 5. Banco (Fijo)
-  const bancoInput = document.getElementById("banco") || document.getElementById("banco_nombre");
-  if (bancoInput && bancoInput.value) {
-    lista.innerHTML += `<li><strong>Banco:</strong> ${bancoInput.value}</li>`;
-  }
 
   // Bloques opcionales (solo si el checkbox está activo)
   RESUMEN_ITEMS.forEach((item) => {

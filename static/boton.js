@@ -306,4 +306,21 @@ document.addEventListener("DOMContentLoaded", () => {
     } 
 })
 
-// resumen antes de generar acuerdo
+// formatear monto
+
+function formatearMiles(input) {
+    input.addEventListener("input", () => {
+        let soloNumeros = input.value.replace(/\D/g, "");
+
+        input.value = soloNumeros.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    });
+}
+
+formatearMiles(document.getElementById("monto_bono_crecimiento"));
+formatearMiles(document.getElementById("monto_bono_mercadotecnia"));
+formatearMiles(document.getElementById("monto_nuevas_aperturas"));
+formatearMiles(document.getElementById("maximo_bono"));
+formatearMiles(document.getElementById("monto_fondo_mercadotecnia"));
+formatearMiles(document.getElementById("monto_fondo_mercadotecnia_ooh"));
+formatearMiles(document.getElementById("monto_linea_nuevas_aperturas"));
+

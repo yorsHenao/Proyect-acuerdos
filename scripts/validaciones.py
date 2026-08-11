@@ -27,6 +27,17 @@ def _no_es_numero(form, campo):
         return True
 
 
+def _no_es_monto(form, campo):
+    valor = form.get(campo, "")
+    if valor is None or valor.strip() == "":
+        return True
+    try:
+        int(valor.replace(".", ""))
+        return False
+    except ValueError:
+        return True
+
+
 def validar_formulario(form):
     errores = {}
 
@@ -126,33 +137,33 @@ def validar_formulario(form):
         errores["exclusividad"] = "Selecciona una opción de exclusividad."
 
     # --- bonos ---
-    if "activa_bono_crecimiento" in form and _no_es_numero(form, "monto_bono_crecimiento"):
+    if "activa_bono_crecimiento" in form and _no_es_monto(form, "monto_bono_crecimiento"):
         errores["monto_bono_crecimiento"] = "Indica el monto del bono de crecimiento."
 
-    if "activa_bono_mercadotecnia" in form and _no_es_numero(form, "monto_bono_mercadotecnia"):
+    if "activa_bono_mercadotecnia" in form and _no_es_monto(form, "monto_bono_mercadotecnia"):
         errores["monto_bono_mercadotecnia"] = "Indica el monto del bono de mercadotecnia."
 
     if "activa_bono_nuevas_aperturas" in form:
         if _falta(form, "tipo_nuevas_aperturas"):
             errores["tipo_nuevas_aperturas"] = "Selecciona el tipo de bono de nuevas aperturas."
-        for campo, etiqueta in [
-            ("monto_nuevas_aperturas", "Indica el monto del bono de nuevas aperturas."),
-            ("num_establecimientos", "Indica el número de establecimientos."),
-            ("meses_apertura", "Indica los meses para abrir los establecimientos."),
-            ("maximo_bono", "Indica el apoyo máximo por establecimiento."),
-            ("periodo_amortizacion", "Indica el periodo de amortización."),
+        for campo, etiqueta, validador in [
+            ("monto_nuevas_aperturas", "Indica el monto del bono de nuevas aperturas.", _no_es_monto),
+            ("num_establecimientos", "Indica el número de establecimientos.", _no_es_numero),
+            ("meses_apertura", "Indica los meses para abrir los establecimientos.", _no_es_numero),
+            ("maximo_bono", "Indica el apoyo máximo por establecimiento.", _no_es_monto),
+            ("periodo_amortizacion", "Indica el periodo de amortización.", _no_es_numero),
         ]:
-            if _no_es_numero(form, campo):
+            if validador(form, campo):
                 errores[campo] = etiqueta
 
     # --- fondos ---
-    if "activa_fondo_mercadotecnia" in form and _no_es_numero(form, "monto_fondo_mercadotecnia"):
+    if "activa_fondo_mercadotecnia" in form and _no_es_monto(form, "monto_fondo_mercadotecnia"):
         errores["monto_fondo_mercadotecnia"] = "Indica el monto del fondo de mercadotecnia."
 
-    if "activa_fondo_mercadotecnia_ooh" in form and _no_es_numero(form, "monto_fondo_mercadotecnia_ooh"):
+    if "activa_fondo_mercadotecnia_ooh" in form and _no_es_monto(form, "monto_fondo_mercadotecnia_ooh"):
         errores["monto_fondo_mercadotecnia_ooh"] = "Indica el monto del fondo de mercadotecnia OOH."
 
-    if "activa_linea_nuevas_aperturas" in form and _no_es_numero(form, "monto_linea_nuevas_aperturas"):
+    if "activa_linea_nuevas_aperturas" in form and _no_es_monto(form, "monto_linea_nuevas_aperturas"):
         errores["monto_linea_nuevas_aperturas"] = "Indica el monto de la línea de nuevas aperturas."
 
     # --- compromisos adicionales ---

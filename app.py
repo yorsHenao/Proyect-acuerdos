@@ -9,6 +9,10 @@ def fecha_larga(fecha_iso: str) -> str:
     """Convierte 'YYYY-MM-DD' (input type=date) a texto en español."""
     return fecha(datetime.strptime(fecha_iso, "%Y-%m-%d").date())
 
+
+def entero_monto(valor: str) -> int:
+    return int(valor.replace(".", ""))
+
 app = Flask(__name__)
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -108,33 +112,33 @@ def generar():
     # --- bonos ---
     datos["aplica_bono_crecimiento"] = "activa_bono_crecimiento" in request.form
     if datos["aplica_bono_crecimiento"]:
-        datos["monto_bono_crecimiento"] = int(request.form["monto_bono_crecimiento"])
+        datos["monto_bono_crecimiento"] = entero_monto(request.form["monto_bono_crecimiento"])
 
     datos["aplica_bono_mercadotecnia"] = "activa_bono_mercadotecnia" in request.form
     if datos["aplica_bono_mercadotecnia"]:
-        datos["monto_bono_mercadotecnia"] = int(request.form["monto_bono_mercadotecnia"])
+        datos["monto_bono_mercadotecnia"] = entero_monto(request.form["monto_bono_mercadotecnia"])
 
     datos["aplica_bono_nuevas_aperturas"] = "activa_bono_nuevas_aperturas" in request.form
     if datos["aplica_bono_nuevas_aperturas"]:
         datos["tipo_nuevas_aperturas"] = request.form["tipo_nuevas_aperturas"]
-        datos["monto_nuevas_aperturas"] = int(request.form["monto_nuevas_aperturas"])
+        datos["monto_nuevas_aperturas"] = entero_monto(request.form["monto_nuevas_aperturas"])
         datos["num_establecimientos"] = int(request.form["num_establecimientos"])
         datos["meses_apertura"] = int(request.form["meses_apertura"])
-        datos["maximo_bono"] = int(request.form["maximo_bono"])
+        datos["maximo_bono"] = entero_monto(request.form["maximo_bono"])
         datos["periodo_amortizacion"] = int(request.form["periodo_amortizacion"])
 
     # --- fondos ---
     datos["aplica_fondo_mercadotecnia"] = "activa_fondo_mercadotecnia" in request.form
     if datos["aplica_fondo_mercadotecnia"]:
-        datos["monto_fondo_mercadotecnia"] = int(request.form["monto_fondo_mercadotecnia"])
+        datos["monto_fondo_mercadotecnia"] = entero_monto(request.form["monto_fondo_mercadotecnia"])
 
     datos["aplica_fondo_mercadotecnia_ooh"] = "activa_fondo_mercadotecnia_ooh" in request.form
     if datos["aplica_fondo_mercadotecnia_ooh"]:
-        datos["monto_fondo_mercadotecnia_ooh"] = int(request.form["monto_fondo_mercadotecnia_ooh"])
+        datos["monto_fondo_mercadotecnia_ooh"] = entero_monto(request.form["monto_fondo_mercadotecnia_ooh"])
 
     datos["aplica_linea_nuevas_aperturas"] = "activa_linea_nuevas_aperturas" in request.form
     if datos["aplica_linea_nuevas_aperturas"]:
-        datos["monto_linea_nuevas_aperturas"] = int(request.form["monto_linea_nuevas_aperturas"])
+        datos["monto_linea_nuevas_aperturas"] = entero_monto(request.form["monto_linea_nuevas_aperturas"])
 
     # --- compromisos adicionales ---
     datos["aplica_descuento_menu"] = "activa_descuento_menu" in request.form
