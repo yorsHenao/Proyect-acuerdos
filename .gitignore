@@ -2,7 +2,7 @@
 *.zip
 
 # Excluir la carpeta "salida_acuerdos"
-/salida_acuerdos/
+scripts/salida_acuerdos/
 
 # Excluir archivos específicos
 __pycache__/

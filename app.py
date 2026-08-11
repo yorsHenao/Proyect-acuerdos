@@ -1,5 +1,7 @@
 from pathlib import Path
 from flask import Flask, render_template, request, send_file, redirect, url_for, session
+import os
+import io
 from datetime import datetime
 from scripts.generar_acuerdo import generar_acuerdo, fecha
 from scripts.validaciones import validar_formulario
@@ -15,6 +17,7 @@ def entero_monto(valor: str) -> int:
 
 app = Flask(__name__)
 BASE_DIR = Path(__file__).resolve().parent
+
 
 app.secret_key = "pruebas123"  # Necesario para usar session, pero no es seguro para producción
 
@@ -174,16 +177,30 @@ def generar():
     try:
         plantilla = BASE_DIR / "formatos" / PLANTILLAS[(datos["tipo_persona"], datos["tiene_ads"])]
         salida = generar_acuerdo(datos, plantilla)
-    except ValueError as e:
+
+        with open(salida, "rb") as f:
+            contenido = f.read()
+        
+        try:
+            os.remove(salida)
+        except Exception as e:
+            print(f"Error al eliminar el archivo: {e}")
+    
+    except (ValueError, FileNotFoundError, PermissionError) as e:
         return render_template(
             "formulario.html",
             errores={"_general": str(e)},
             form_data=request.form,
         )
+    return send_file(
+        io.BytesIO(contenido),
+        as_attachment=True,
+        download_name=salida.name,
+        mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    )
 
-    return send_file(salida, as_attachment=True)
 
     
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1")
