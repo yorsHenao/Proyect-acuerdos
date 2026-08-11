@@ -4,7 +4,9 @@ from scripts.formatear_monto import formatear_monto
 
 def procesar_bono_crecimiento(aplica, monto, activas, contexto):
     if not aplica:
+        activas["activa_bono_crecimiento"] = False
         return
+    activas["activa_bono_crecimiento"] = True
     contexto["N_BONO_CRECIMIENTO"] = formatear_monto(monto)
     contexto["N_BONO_CRECIMIENTO_NUMERO"] = monto
     contexto["VALOR_BONO_CRECIMIENTO"] = numero_a_letras(monto)
@@ -12,7 +14,9 @@ def procesar_bono_crecimiento(aplica, monto, activas, contexto):
 
 def procesar_bono_mercadotecnia(aplica, monto, activas, contexto):
     if not aplica:
+        activas["activa_bono_mercadotecnia"] = False
         return
+    activas["activa_bono_mercadotecnia"] = True
     contexto["N_BONO_MERCADOTECNIA"] = formatear_monto(monto)
     contexto["N_BONO_MERCADOTECNIA_NUMERO"] = monto
     contexto["VALOR_BONO_MERCADOTECNIA"] = numero_a_letras(monto)
