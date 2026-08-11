@@ -37,6 +37,8 @@ from scripts.datos_personas import (
     procesar_datos_persona_juridica,
 )
 
+from scripts.incumplimientos import construir_lista_bonos_fondos
+
 BASE_DIR = Path(__file__).resolve().parent
 
 
@@ -207,7 +209,9 @@ def generar_acuerdo(datos, plantilla, salida_path=None):
     )
     procesar_resumen_compromisos_adicionales(activas)
 
+
     resolver_dependencias(activas)
+    contexto["LISTA_BONOS_FONDOS"] = construir_lista_bonos_fondos(activas)
     asignar_numeracion_clausulas(activas, contexto)
 
     # --- correos ---
