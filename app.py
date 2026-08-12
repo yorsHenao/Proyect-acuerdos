@@ -2,9 +2,12 @@ from pathlib import Path
 from flask import Flask, render_template, request, send_file, redirect, url_for, session
 import os
 import io
+from dotenv import load_dotenv
 from datetime import datetime
 from scripts.generar_acuerdo import generar_acuerdo, fecha
 from scripts.validaciones import validar_formulario
+
+load_dotenv()
 
 
 def fecha_larga(fecha_iso: str) -> str:
@@ -19,7 +22,9 @@ app = Flask(__name__)
 BASE_DIR = Path(__file__).resolve().parent
 
 
-app.secret_key = "pruebas123"  # Necesario para usar session, pero no es seguro para producción
+app.secret_key = os.getenv("SECRET_KEY")
+if not app.secret_key:
+    raise ValueError("La variable de entorno SECRET_KEY es requerida")
 
 @app.route("/")
 def formulario():
