@@ -183,8 +183,6 @@ button_top_seller.addEventListener("change", () => {
 
 // Agregar / Eliminar Escalones de Comisión
 
-
-
 const contenedorEscalones = document.getElementById("bloque-c-escalonada");
 const botonAgregar = document.getElementById("agregar_escalon");
 const escalonMolde = document.querySelector(".escalon");
@@ -264,9 +262,6 @@ contenedorEscalones.addEventListener("change", (evento) => {
 // Scroll Spy - resaltar sección activa en el menú
 // ================================
 
-// ================================
-// Scroll Spy - resaltar sección activa en el menú
-// ================================
 
 const secciones = document.querySelectorAll(".card-section");
 const linksMenu = document.querySelectorAll(".menu-nav a");
@@ -324,6 +319,3 @@ formatearMiles(document.getElementById("monto_fondo_mercadotecnia"));
 formatearMiles(document.getElementById("monto_fondo_mercadotecnia_ooh"));
 formatearMiles(document.getElementById("monto_linea_nuevas_aperturas"));
 
-
-
-// recargar pagina despues del formulario

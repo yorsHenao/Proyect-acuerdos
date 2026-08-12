@@ -54,6 +54,8 @@ def generar():
 
     datos = {}
 
+
+
     #---tipo persona----
 
     datos["tipo_persona"] = request.form["tipo_persona"]
@@ -183,13 +185,11 @@ def generar():
         plantilla = BASE_DIR / "formatos" / PLANTILLAS[(datos["tipo_persona"], datos["tiene_ads"])]
         salida = generar_acuerdo(datos, plantilla)
 
-        with open(salida, "rb") as f:
-            contenido = f.read()
-        
-        try:
-            os.remove(salida)
-        except Exception as e:
-            print(f"Error al eliminar el archivo: {e}")
+        session["archivo_generado"] = str(salida)
+        session["nombre_descarga"] = salida.name
+
+
+        session["form_data"] = dict(request.form)
     
     except (ValueError, FileNotFoundError, PermissionError) as e:
         return render_template(
@@ -197,15 +197,53 @@ def generar():
             errores={"_general": str(e)},
             form_data=request.form,
         )
+    return redirect(url_for("confirmacion"))
+
+@app.route("/confirmacion")
+def confirmacion():
+    ruta_archivo = session.get("archivo_generado")
+    nombre_descarga = session.get("nombre_descarga")
+    if not ruta_archivo:
+        return redirect(url_for("formulario"))
+    return render_template("confirmacion.html", nombre_descarga=nombre_descarga)
+
+
+@app.route("/nuevo")
+def nuevo():
+
+    session.pop("archivo_generado", None)
+    session.pop("nombre_descarga", None)
+
+    session.pop("form_data", None)
+
+    return redirect(url_for("formulario"))
+
+@app.route("/descargar")
+def descargar():
+    ruta_archivo = session.get("archivo_generado")
+    nombre_descarga = session.get("nombre_descarga")
+
+    if not ruta_archivo:
+        return redirect(url_for("formulario"))
+
+    with open(ruta_archivo, "rb") as f:
+        contenido = f.read()
+
+    try:
+        os.remove(ruta_archivo)
+    except Exception as e:
+        print(f"Error al eliminar el archivo: {e}")
+
+    session.pop("archivo_generado", None)
+    session.pop("nombre_descarga", None)
+
     return send_file(
         io.BytesIO(contenido),
         as_attachment=True,
-        download_name=salida.name,
-        mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        download_name=nombre_descarga,
+        mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
 
-
-    
 
 if __name__ == "__main__":
     app.run(debug=os.environ.get("FLASK_DEBUG") == "1")

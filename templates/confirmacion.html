@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="/static/confirmacion.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+  
+    <link rel="stylesheet" href="/static/css/formulario.css" />
+    <title>Acuerdo Generado</title>
+  </head>
+  <body>
+
+    <header class="main-header">
+      <div class="header-content">
+        <span class="log-text">Rappi</span>
+        <div class="linea-divisoria"></div>
+        <h1 class="main-title">Configuración del Acuerdo de Cooperación</h1>
+      </div>
+    </header>
+
+
+    <div style="max-width: 560px; margin: 60px auto; padding: 0 24px;">
+      <div class="card-section" style="text-align: center;">
+        <h2 class="title-section" style="margin-bottom: 12px;">
+          Documento generado correctamente
+        </h2>
+        <p style="margin-bottom: 24px;">
+          Tu acuerdo <strong>{{ nombre_descarga }}</strong> está listo para descargar.
+        </p>
+
+        <div class="modal-acciones" id="btn-descargar-acuerdo" style="justify-content: center;">
+          <!-- dispara la descarga sin salir de esta página -->
+          <a href="{{ url_for('descargar') }}" class="btn-generar" style="text-decoration: none;">
+            Descargar acuerdo
+          </a>
+          <!-- Ruta /nuevo: limpia la sesión y manda al formulario en blanco -->
+          <a href="{{ url_for('nuevo') }}" id="btn-crear-acuerdo" class="btn-secundario oculto" style="text-decoration: none; display: inline-flex; align-items: center;">
+            Crear nuevo acuerdo
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
