@@ -7,7 +7,7 @@ from datetime import datetime
 from scripts.generar_acuerdo import generar_acuerdo, fecha
 from scripts.validaciones import validar_formulario
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
 
 def fecha_larga(fecha_iso: str) -> str:
