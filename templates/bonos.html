@@ -1,11 +1,11 @@
-<!-- Bonos -->
+
 <section id="sec-bonos" class="card-section">
   <div class="tarjeta-encabezado">
     <span class="number-section">08</span>
     <h2 class="title-section">Bonos</h2>
   </div>
 
-  <!-- 1. Los 3 bonos agrupados en la MISMA FILA horizontal -->
+
   <div class="fila-auto-3">
     <div id="bloque-bono-crecimiento">
       <label class="option-radius" for="activa_bono_crecimiento">
@@ -59,8 +59,7 @@
     </div>
   </div>
 
-  <!-- 2. Campos de monto (aparecerán abajo en su respectiva fila al activarlos) -->
-<!-- 2. Panel individual para Bono de Crecimiento -->
+
   <div id="monto-bono-crecimiento" class="panel-condicional {% if not form_data.get('activa_bono_crecimiento') %}oculto{% endif %}">
     <div class="fila-auto-3">
       <div>
@@ -81,7 +80,7 @@
     </div>
   </div>
 
-  <!-- 2b. Panel individual para Bono de Mercadotecnia -->
+
   <div id="monto-bono-mercadotecnia" class="panel-condicional {% if not form_data.get('activa_bono_mercadotecnia') %}oculto{% endif %}">
     <div class="fila-auto-3">
       <div>
@@ -102,7 +101,7 @@
     </div>
   </div>
 
-  <!-- 3. Panel para Bono de Nuevas Aperturas (agrupa Posterior/Previo + los 5 campos detallados) -->
+
   <div id="panel-bono-nuevas-aperturas" class="panel-condicional {% if not form_data.get('activa_bono_nuevas_aperturas') %}oculto{% endif %}">
     <p>Bono de Nuevas Aperturas</p>
     <p><strong>Seleccione si es previo o posterior</strong></p>

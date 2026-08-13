@@ -1,11 +1,11 @@
-<!-- Esquema de Comisión -->
+
 <section id="sec-comision" class="card-section">
   <div class="tarjeta-encabezado">
     <span class="number-section">06</span>
     <h2 class="title-section">Esquema de Comisión</h2>
   </div>
 
-  <!-- 1. Selección Principal: Fija o Escalonada -->
+
   <div class="fila-auto-3">
     <div>
       <label class="option-radius" for="tipo_comision_fija">
@@ -40,7 +40,7 @@
     {% endif %}
   </div>
 
-  <!-- 2. Bloque para Comisión Fija -->
+
   <div id="bloque-comision-fija" class="{% if form_data.get('tipo_comision') != 'fija' %}oculto{% endif %}">
     <div class="fila-auto-3">
       <div>
@@ -60,7 +60,7 @@
     </div>
   </div>
 
-  <!-- 3. Bloque para Comisión Escalonada -->
+
   <div id="bloque-c-escalonada" class="{% if form_data.get('tipo_comision') != 'escalonada' %}oculto{% endif %}">
     <!-- Lista desplegable para elegir modalidad -->
     <div class="fila-auto-3">
@@ -78,7 +78,7 @@
       </div>
     </div>
 
-    <!-- Campos para definir los datos del escalón -->
+
     <div class="escalon fila-auto-3" data-escalon="0">
       <div>
         <label>¿Es el último escalón?</label>
@@ -145,7 +145,7 @@
       </div>
     </div>
 
-    <!-- Botón para agregar escalones -->
+
     <button type="button" id="agregar_escalon" class="option-radius">Agregar escalón</button>
   </div>
 </section>

@@ -1,4 +1,4 @@
-// Ocultar tipo de persona
+
 const bloque_fisica = document.getElementById("bloque-fisica");
 const bloque_juridica = document.getElementById("bloque-juridica");
 
@@ -16,7 +16,7 @@ button_juridica.addEventListener("change", () => {
     bloque_juridica.classList.remove("oculto");
 });
 
-//ocultar si no tiene ads
+
 
 const button_ads = document.getElementById("tiene_ads");
 const n_ads = document.getElementById("porcentaje-ads");
@@ -29,7 +29,7 @@ button_ads.addEventListener("change", () => {
     }
 })
 
-// Ocultar comision 
+
 const inf_c_fija = document.getElementById("bloque-comision-fija");
 const inf_c_escalonada = document.getElementById("bloque-c-escalonada");
 
@@ -51,10 +51,7 @@ comision.forEach((radio) => {
     })
 })
 
-//ocultar bonos
-//se olcuto los campos de los valores,
-//bonos nuevas aperturas, se oculto botones para previo y posterios. si se activa bono nuevas aperturas
-// sale para establecer establecimientos y monto
+
 const bono_crecimiento = document.getElementById("monto-bono-crecimiento");
 const bono_mercadotecnia = document.getElementById("monto-bono-mercadotecnia");
 const bono_nuevas_aperturas = document.getElementById("bloque-bono-nuevas-aperturas");
@@ -82,7 +79,7 @@ button_mercadotecnia.addEventListener("change", () => {
     }
 })
 
-//saca el bloque para agregar monto, establecimientos, meses, apoyo maximo, periodo de amortizacion
+
 const panel_nuevas_aperturas = document.getElementById("panel-bono-nuevas-aperturas");
 
 button_nuevas_aperturas.addEventListener("change", () => {
@@ -93,7 +90,6 @@ button_nuevas_aperturas.addEventListener("change", () => {
     }
 })
 
-// Fondos
 
 const bloque_fondo_mercadotecnia = document.getElementById("monto-fondo-mercadotecnia");
 const bloque_fondo_mercadotecnia_ooh = document.getElementById("monto-fondo-mercadotecnia-ooh");
@@ -107,7 +103,7 @@ const button_nuevas_aperturas_fondo = document.getElementById("activa_linea_nuev
 
 button_fondo_mercadotecnia.addEventListener("change", () => {
     if (button_fondo_mercadotecnia.checked) {
-        // Desmarcar el otro checkbox de mercadotecnia
+        
         button_fondo_mercadotecnia_ooh.checked = false;
         bloque_fondo_mercadotecnia_ooh.classList.add("oculto");
         bloque_fondo_mercadotecnia.classList.remove("oculto");
@@ -135,8 +131,6 @@ button_nuevas_aperturas_fondo.addEventListener("change", () => {
     }
 })
 
-
-// compromisos adiccionales
 
 const inf_menu = document.getElementById("info-descuento-menu");
 const inf_mark_down = document.getElementById("info-mark-down");
@@ -181,8 +175,6 @@ button_top_seller.addEventListener("change", () => {
 })
 
 
-// Agregar / Eliminar Escalones de Comisión
-
 const contenedorEscalones = document.getElementById("bloque-c-escalonada");
 const botonAgregar = document.getElementById("agregar_escalon");
 const escalonMolde = document.querySelector(".escalon");
@@ -209,7 +201,7 @@ botonAgregar.addEventListener("click", () => {
         }
     });
 
-    // 3. Modificar Labels
+    
     const labelsClon = nuevoEscalon.querySelectorAll("label");
     labelsClon.forEach((label) => {
         const forOriginal = label.getAttribute("for");
@@ -217,7 +209,7 @@ botonAgregar.addEventListener("click", () => {
             label.setAttribute("for", forOriginal.replace("escalon_0", `escalon_${contadorEscalones}`));
         }
     });
-    // 4. Crear Botón "Eliminar" (Una sola vez por clon)
+    
     const botonEliminar = document.createElement("button");
     botonEliminar.type = "button";
     botonEliminar.textContent = "Eliminar Escalón";
@@ -225,7 +217,7 @@ botonAgregar.addEventListener("click", () => {
 
     nuevoEscalon.appendChild(botonEliminar);
 
-    // 5. Insertar en pantalla y sumar al contador
+    
     contenedorEscalones.insertBefore(nuevoEscalon, botonAgregar);
     contadorEscalones++;
 });
@@ -238,7 +230,7 @@ contenedorEscalones.addEventListener("click", (evento) => {
 })
 
 
-/*Bloqueo "fin del escalonamiento"*/
+
 
 contenedorEscalones.addEventListener("change", (evento) => {
     const esRadioDeultimo = evento.target.name && evento.target.name.endsWith("_es_ultimo");
@@ -257,15 +249,10 @@ contenedorEscalones.addEventListener("change", (evento) => {
 })
 
 
-
-// ================================
-// Scroll Spy - resaltar sección activa en el menú
-// ================================
-
-
+//scrollspy
 const secciones = document.querySelectorAll(".card-section");
 const linksMenu = document.querySelectorAll(".menu-nav a");
-const offsetDeteccion = 100; // px desde el borde superior del viewport, línea de referencia
+const offsetDeteccion = 100; 
 
 function actualizarMenuActivo() {
     let seccionActual = secciones[0];
@@ -287,10 +274,8 @@ function actualizarMenuActivo() {
 
 window.addEventListener("scroll", actualizarMenuActivo);
 window.addEventListener("resize", actualizarMenuActivo);
-actualizarMenuActivo(); // estado inicial al cargar la página
+actualizarMenuActivo(); 
 
-
-// Validacion de formulario
 
 document.addEventListener("DOMContentLoaded", () => {
     const primerError = Array.from(document.querySelectorAll(".input-error"))
@@ -301,7 +286,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } 
 })
 
-// formatear monto
 
 function formatearMiles(input) {
     input.addEventListener("input", () => {

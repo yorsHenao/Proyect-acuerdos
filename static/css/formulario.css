@@ -5,7 +5,7 @@
 
 body {
     margin: 0;
-    padding-top: 80px; /* Ajusta el valor según la altura del encabezado */
+    padding-top: 80px; 
     background-color: #f8f9fa;
     font-family: 'Inter', sans-serif;
 }
@@ -20,7 +20,7 @@ body {
 
     background-color: #fff;
     border-bottom: 1px solid #e2e8f0;
-    z-index: 1000; /*prioridad para flotar en el formulario */
+    z-index: 1000; 
 }
 
 .header-content {
@@ -49,8 +49,6 @@ body {
     font-weight: 600;
     margin: 0;
 }
-
-/*Menu lateral*/
 
 .menu-lateral {
     position: fixed;
@@ -98,13 +96,13 @@ body {
     transition: all 0.2s ease;
 }
 
-/*efecto mouse encima de un item de menu*/
+
 .item-menu:hover {
     background-color: #f1f5f9;
     color: #1e293b;
 }
 
-/*estado del item activo*/
+
 .item-menu-activo {
     background-color: #ffdad3;
     color: #b41f00;
@@ -125,7 +123,7 @@ body {
     height: 100%;
 }
 
-/* formulario */
+
 
 .contenido-principal {
     margin-left: 292px;
@@ -146,8 +144,7 @@ form{
     padding: 32px;
     margin-bottom: 15px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    scroll-margin-top: 80px; /*cuando el user haga scroll hacia abajo, 
-    se mueva 80px hacia arriba*/
+    scroll-margin-top: 80px; 
 
 }
 
@@ -158,7 +155,6 @@ form{
     margin-bottom: 24px;
 }
 
-/* estilo de los números de la sección*/
 
 .number-section{
     width: 32px;
@@ -190,7 +186,7 @@ label {
 
 }
 
-/*estilo de los parrafos*/
+
 p {
     font-size: 14px;
     color: #475569;
@@ -233,7 +229,7 @@ input:read-only {
     cursor: not-allowed;
 }
 
-/* 1. Alinea el texto "Tipo de Persona" horizontalmente con los botones */
+
 .container-radius {
   display: flex;
   align-items: center;
@@ -251,13 +247,13 @@ input:read-only {
   letter-spacing: 1px;
 }
 
-/* 2. OCULTA el circulito nativo del radio */
+
 .option-radius input[type="radio"],
 .option-radius input[type="checkbox"] {
   display: none;
 }
 
-/* 3. Aplica los estilos cuando la opción esté SELECCIONADA */
+
 .option-radius:has(input:checked) {
   background-color: #ffdad3;
   border-color: #ff441f;
@@ -303,26 +299,24 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
-/*Alineacion campos de columnas*/
 
-/* Fila flexible con máximo 3 campos por fila */
 .fila-auto-3 {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 20px;
 }
-/* Regla para CADA campo dentro de .fila-auto-3 */
+
 .fila-auto-3 > div {
-  flex: 0 0 calc(25% - 16px); /* Intenta ocupar un tercio (33.3%) del ancho como máximo */
-  min-width: 150px;             /* Ancho mínimo para que en celulares no se aplasten */
+  flex: 0 0 calc(25% - 16px); 
+  min-width: 150px;            
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-/* Panel condiciones extras */
+
 .panel-condicional {
     background-color: #f1f5f9;
     border: 1px solid #e2e8f0;
@@ -332,7 +326,7 @@ input[type="checkbox"] {
 }
 
 
-/*boton generar acuerdo*/
+
 
 .btn-generar {
     display: block;
@@ -361,7 +355,7 @@ input[type="checkbox"] {
     transform: scale(0.98);
 }
 
-/* Estilos para la fila de opciones "Sí" y "No" */
+
 .fila-si-no {
     display: flex;
     gap: 8px;
@@ -373,7 +367,7 @@ input[type="checkbox"] {
     font-size: 13px;
 }
 
-/* ---- Validación de formulario ---- */
+
 .banner-error {
     background-color: #ffdad3;
     color: #b41f00;
@@ -399,7 +393,7 @@ input[type="checkbox"] {
 }
 
 
-/* ---- Modal de Resumen ---- */
+
 .modal-overlay {
     position: fixed;
     inset: 0;
