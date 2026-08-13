@@ -1,0 +1,32 @@
+name: test_and_build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test_and_build:
+
+    # crea un contenedor en linux , que se va a ejecutar para las pruebas
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.13
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.13"
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        
+    - name: Comprueba que la aplicación se importa correctamente
+      env:
+        SECRET_KEY: ci-dummy-secret
+      run: |
+        python -c "import app"
