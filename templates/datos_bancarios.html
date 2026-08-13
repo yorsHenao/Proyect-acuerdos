@@ -27,7 +27,7 @@
       type="text"
       id="n_cuenta"
       name="n_cuenta"
-      placeholder="Ej. 0123456789"
+      placeholder="10 digitos"
       value="{{ form_data.get('n_cuenta', '') }}"
       class="{% if errores.get('n_cuenta') %}input-error{% endif %}"
     />
@@ -43,7 +43,7 @@
       type="text"
       id="banco"
       name="banco"
-      placeholder="Ej. BBVA, Santander..."
+      placeholder="Ej. BBVA..."
       value="{{ form_data.get('banco', '') }}"
       class="{% if errores.get('banco') %}input-error{% endif %}"
     />

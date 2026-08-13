@@ -1,5 +1,5 @@
 """
-Validación del formulario de generación de acuerdos (flujo Flask).
+Validación del formulario de generación de acuerdoS.
 
 Revisa request.form ANTES de construir el diccionario `datos`, replicando
 las mismas condiciones que usa app.py, y devuelve un diccionario de errores:
@@ -9,9 +9,19 @@ Si el diccionario devuelto está vacío, el formulario es válido y se puede
 continuar con la generación del acuerdo.
 """
 
+import re
+
+CORREO_REGEX = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+def _correo_invalido(form, campo):
+    
+    valor = form.get(campo, "")
+    if valor is None or valor.strip() == "":
+        return True
+    return not CORREO_REGEX.match(valor.strip())
 
 def _falta(form, campo):
-    """True si el campo no vino en el form o vino vacío (solo espacios)."""
+    
     valor = form.get(campo, "")
     return valor is None or valor.strip() == ""
 
@@ -21,8 +31,8 @@ def _no_es_numero(form, campo):
     if valor is None or valor.strip() == "":
         return True
     try:
-        float(valor)
-        return False
+        numero = float(valor)
+        return numero < 0  
     except ValueError:
         return True
 
@@ -32,11 +42,31 @@ def _no_es_monto(form, campo):
     if valor is None or valor.strip() == "":
         return True
     try:
-        int(valor.replace(".", ""))
-        return False
+        monto = int(valor.replace(".", ""))
+        return monto < 0  
     except ValueError:
         return True
 
+
+# limite de caracteres para campos de texto
+def _demasiado_largo(form, campo, maximo):
+    """True si el campo supera el máximo de caracteres permitido."""
+    valor = form.get(campo, "")
+    return len(valor) > maximo
+
+CAMPOS_CORTOS = [
+    "razon_social_fisica", "razon_social_juridica",
+    "rfc_fisica", "rfc_juridica",
+    "marca_fisica", "marca_juridica",
+    "representante_legal_juridica",
+    "notario", "numero_notaria",
+    "n_acta_constitutiva", "n_folio_mercantil",
+]
+
+CAMPOS_LARGOS = [
+    "direccion_fisica", "direccion_juridica",
+    "ubicacion_notaria",
+]
 
 def validar_formulario(form):
     errores = {}
@@ -45,7 +75,7 @@ def validar_formulario(form):
     tipo_persona = form.get("tipo_persona")
     if tipo_persona not in ("fisica", "juridica"):
         errores["tipo_persona"] = "Selecciona el tipo de persona."
-        tipo_persona = None  # no seguimos validando lo que depende de esto
+        tipo_persona = None  #
 
     if tipo_persona == "fisica":
         for campo, etiqueta in [
@@ -74,6 +104,15 @@ def validar_formulario(form):
         ]:
             if _falta(form, campo):
                 errores[campo] = etiqueta
+
+    # --- longitud máxima de campos de texto libre ---
+    for campo in CAMPOS_CORTOS:
+        if not _falta(form, campo) and _demasiado_largo(form, campo, 100):
+            errores[campo] = "Este campo no puede superar los 100 caracteres."
+
+    for campo in CAMPOS_LARGOS:
+        if not _falta(form, campo) and _demasiado_largo(form, campo, 200):
+            errores[campo] = "Este campo no puede superar los 200 caracteres."
 
     # --- vigencia ---
     if _falta(form, "vigencia_meses"):
@@ -191,8 +230,13 @@ def validar_formulario(form):
     # --- correos ---
     if _falta(form, "correo_comercial"):
         errores["correo_comercial"] = "El correo comercial es obligatorio."
+    elif _correo_invalido(form, "correo_comercial"):
+        errores["correo_comercial"] = "Ingresa un correo comercial válido."
+
     if _falta(form, "correo_aliado"):
         errores["correo_aliado"] = "El correo del aliado es obligatorio."
+    elif _correo_invalido(form, "correo_aliado"):
+        errores["correo_aliado"] = "Ingresa un correo del aliado válido."
 
     # --- datos bancarios ---
     if _falta(form, "n_clabe"):

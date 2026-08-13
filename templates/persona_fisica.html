@@ -8,7 +8,6 @@
         type="text"
         id="razon_social_fisica"
         name="razon_social_fisica"
-        placeholder="Ej. Juan Rodríguez"
         value="{{ form_data.get('razon_social_fisica', '') }}"
         class="{% if errores.get('razon_social_fisica') %}input-error{% endif %}"
       />
@@ -22,7 +21,6 @@
         type="text"
         id="rfc_fisica"
         name="rfc_fisica"
-        placeholder="Ej. ABCSD34"
         value="{{ form_data.get('rfc_fisica', '') }}"
         class="{% if errores.get('rfc_fisica') %}input-error{% endif %}"
       />
@@ -36,7 +34,6 @@
         type="text"
         id="direccion_fisica"
         name="direccion_fisica"
-        placeholder="Ej. Calle siempre viva 123"
         value="{{ form_data.get('direccion_fisica', '') }}"
         class="{% if errores.get('direccion_fisica') %}input-error{% endif %}"
       />
@@ -50,7 +47,6 @@
         type="text"
         id="marca_fisica"
         name="marca_fisica"
-        placeholder="Ej. Tacos El Buen Sazón"
         value="{{ form_data.get('marca_fisica', '') }}"
         class="{% if errores.get('marca_fisica') %}input-error{% endif %}"
       />

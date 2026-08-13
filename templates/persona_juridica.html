@@ -9,7 +9,6 @@
         type="text"
         id="razon_social_juridica"
         name="razon_social_juridica"
-        placeholder="Ej. Alimentos S.A. de C.V."
         value="{{ form_data.get('razon_social_juridica', '') }}"
         class="{% if errores.get('razon_social_juridica') %}input-error{% endif %}"
       />
@@ -17,13 +16,13 @@
       <span class="mensaje-error">{{ errores['razon_social_juridica'] }}</span>
       {% endif %}
     </div>
+
     <div>
       <label for="rfc_juridica">RFC</label>
       <input
         type="text"
         id="rfc_juridica"
         name="rfc_juridica"
-        placeholder="ABCD1234"
         value="{{ form_data.get('rfc_juridica', '') }}"
         class="{% if errores.get('rfc_juridica') %}input-error{% endif %}"
       />
@@ -31,27 +30,13 @@
       <span class="mensaje-error">{{ errores['rfc_juridica'] }}</span>
       {% endif %}
     </div>
-    <div>
-      <label for="representante_legal_juridica">Representante Legal</label>
-      <input
-        type="text"
-        id="representante_legal_juridica"
-        name="representante_legal_juridica"
-        placeholder="Ej. Juan Rodríguez"
-        value="{{ form_data.get('representante_legal_juridica', '') }}"
-        class="{% if errores.get('representante_legal_juridica') %}input-error{% endif %}"
-      />
-      {% if errores.get('representante_legal_juridica') %}
-      <span class="mensaje-error">{{ errores['representante_legal_juridica'] }}</span>
-      {% endif %}
-    </div>
+
     <div>
       <label for="direccion_juridica">Dirección</label>
       <input
         type="text"
         id="direccion_juridica"
         name="direccion_juridica"
-        placeholder="Ej. Av. Paseo de la Reforma 123"
         value="{{ form_data.get('direccion_juridica', '') }}"
         class="{% if errores.get('direccion_juridica') %}input-error{% endif %}"
       />
@@ -59,27 +44,28 @@
       <span class="mensaje-error">{{ errores['direccion_juridica'] }}</span>
       {% endif %}
     </div>
+
     <div>
-      <label for="marca_juridica">Marca</label>
+      <label for="representante_legal_juridica">Representante Legal</label>
       <input
         type="text"
-        id="marca_juridica"
-        name="marca_juridica"
-        placeholder="Ej. Tacos El Buen Sazón"
-        value="{{ form_data.get('marca_juridica', '') }}"
-        class="{% if errores.get('marca_juridica') %}input-error{% endif %}"
+        id="representante_legal_juridica"
+        name="representante_legal_juridica"
+        value="{{ form_data.get('representante_legal_juridica', '') }}"
+        class="{% if errores.get('representante_legal_juridica') %}input-error{% endif %}"
       />
-      {% if errores.get('marca_juridica') %}
-      <span class="mensaje-error">{{ errores['marca_juridica'] }}</span>
+      {% if errores.get('representante_legal_juridica') %}
+      <span class="mensaje-error">{{ errores['representante_legal_juridica'] }}</span>
       {% endif %}
     </div>
+
+
     <div>
       <label for="n_acta_constitutiva">Número de Escritura</label>
       <input
         type="text"
         id="n_acta_constitutiva"
         name="n_acta_constitutiva"
-        placeholder="Ej. 1123"
         value="{{ form_data.get('n_acta_constitutiva', '') }}"
         class="{% if errores.get('n_acta_constitutiva') %}input-error{% endif %}"
       />
@@ -106,7 +92,6 @@
         type="text"
         id="notario"
         name="notario"
-        placeholder="Ej. Notario Juan Rodríguez"
         value="{{ form_data.get('notario', '') }}"
         class="{% if errores.get('notario') %}input-error{% endif %}"
       />
@@ -120,7 +105,6 @@
         type="text"
         id="numero_notaria"
         name="numero_notaria"
-        placeholder="Ej. 45"
         value="{{ form_data.get('numero_notaria', '') }}"
         class="{% if errores.get('numero_notaria') %}input-error{% endif %}"
       />
@@ -134,7 +118,6 @@
         type="text"
         id="ubicacion_notaria"
         name="ubicacion_notaria"
-        placeholder="Ej. Av. Paseo de la Reforma 123"
         value="{{ form_data.get('ubicacion_notaria', '') }}"
         class="{% if errores.get('ubicacion_notaria') %}input-error{% endif %}"
       />
@@ -148,7 +131,6 @@
         type="text"
         id="n_folio_mercantil"
         name="n_folio_mercantil"
-        placeholder="Ej. 1123"
         value="{{ form_data.get('n_folio_mercantil', '') }}"
         class="{% if errores.get('n_folio_mercantil') %}input-error{% endif %}"
       />
@@ -167,6 +149,19 @@
       />
       {% if errores.get('fecha_folio_mercantil') %}
       <span class="mensaje-error">{{ errores['fecha_folio_mercantil'] }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <label for="marca_juridica">Marca</label>
+      <input
+        type="text"
+        id="marca_juridica"
+        name="marca_juridica"
+        value="{{ form_data.get('marca_juridica', '') }}"
+        class="{% if errores.get('marca_juridica') %}input-error{% endif %}"
+      />
+      {% if errores.get('marca_juridica') %}
+      <span class="mensaje-error">{{ errores['marca_juridica'] }}</span>
       {% endif %}
     </div>
   </div>

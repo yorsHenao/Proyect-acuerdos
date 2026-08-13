@@ -438,11 +438,33 @@ input[type="checkbox"] {
 }
 
 .btn-secundario {
-    background: transparent;
-    border: 1px solid #ccc;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
     border-radius: 8px;
-    padding: 10px 18px;
+    padding: 12px 24px;
+    color: #1f2937;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-secundario:hover {
+    border-color: #ff441f;
+    color: #ff441f;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    transform: translateY(-1px);
+}
+
+.btn-secundario:active {
+    transform: scale(0.98);
 }
 
 .boton-eliminar-escalon {

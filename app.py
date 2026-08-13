@@ -226,8 +226,17 @@ def descargar():
     if not ruta_archivo:
         return redirect(url_for("formulario"))
 
-    with open(ruta_archivo, "rb") as f:
-        contenido = f.read()
+    try:
+        with open(ruta_archivo, "rb") as f:
+            contenido = f.read()
+    except FileNotFoundError:
+        session.pop("archivo_generado", None)
+        session.pop("nombre_descarga", None)
+        return render_template(
+            "formulario.html",
+            errores={"_general": "Este enlace de descarga ya no está disponible. Genera el acuerdo nuevamente."},
+            form_data={},
+        )
 
     try:
         os.remove(ruta_archivo)

@@ -33,13 +33,13 @@
           Tu acuerdo <strong>{{ nombre_descarga }}</strong> está listo para descargar.
         </p>
 
-        <div class="modal-acciones" id="btn-descargar-acuerdo" style="justify-content: center;">
+        <div class="modal-acciones" style="justify-content: center;">
 
-          <a href="{{ url_for('descargar') }}" class="btn-generar" style="text-decoration: none;">
+          <a href="{{ url_for('descargar') }}" id="btn-descargar-acuerdo" class="btn-generar" style="text-decoration: none;">
             Descargar acuerdo
           </a>
 
-          <a href="{{ url_for('nuevo') }}" id="btn-crear-acuerdo" class="btn-secundario oculto" style="text-decoration: none; display: inline-flex; align-items: center;">
+          <a href="{{ url_for('nuevo') }}" id="btn-crear-acuerdo" class="btn-secundario oculto">
             Crear nuevo acuerdo
           </a>
         </div>
