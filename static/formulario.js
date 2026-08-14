@@ -249,20 +249,42 @@ contenedorEscalones.addEventListener("change", (evento) => {
 })
 
 
-//scrollspy
-const secciones = document.querySelectorAll(".card-section");
+// scrollspy
 const linksMenu = document.querySelectorAll(".menu-nav a");
-const offsetDeteccion = 100; 
+const offsetDeteccion = 120;
+
+function obtenerSeccionesMenuVisibles() {
+    return Array.from(linksMenu)
+        .map((link) => {
+            const href = link.getAttribute("href");
+            return href ? document.querySelector(href) : null;
+        })
+        .filter((seccion) => seccion && !seccion.classList.contains("oculto"));
+}
 
 function actualizarMenuActivo() {
-    let seccionActual = secciones[0];
+    const seccionesVisibles = obtenerSeccionesMenuVisibles();
+    if (seccionesVisibles.length === 0) {
+        return;
+    }
 
-    secciones.forEach((seccion) => {
+    // La línea de referencia se adapta al alto de pantalla.
+    const lineaReferencia = Math.max(offsetDeteccion, window.innerHeight * 0.35);
+    let seccionActual = seccionesVisibles[0];
+
+    seccionesVisibles.forEach((seccion) => {
         const top = seccion.getBoundingClientRect().top;
-        if (top - offsetDeteccion <= 0) {
+        if (top <= lineaReferencia) {
             seccionActual = seccion;
         }
     });
+
+    // Si ya estamos al final del documento, activar la última sección visible.
+    const alturaDocumento = document.documentElement.scrollHeight;
+    const fondoViewport = window.scrollY + window.innerHeight;
+    if (fondoViewport >= alturaDocumento - 2) {
+        seccionActual = seccionesVisibles[seccionesVisibles.length - 1];
+    }
 
     linksMenu.forEach((link) => link.classList.remove("item-menu-activo"));
 
@@ -272,9 +294,23 @@ function actualizarMenuActivo() {
     }
 }
 
+linksMenu.forEach((link) => {
+    link.addEventListener("click", (evento) => {
+        const href = link.getAttribute("href");
+        const seccion = href ? document.querySelector(href) : null;
+        if (!seccion) {
+            return;
+        }
+
+        evento.preventDefault();
+        const topObjetivo = seccion.getBoundingClientRect().top + window.scrollY - 84;
+        window.scrollTo({ top: topObjetivo, behavior: "smooth" });
+    });
+});
+
 window.addEventListener("scroll", actualizarMenuActivo);
 window.addEventListener("resize", actualizarMenuActivo);
-actualizarMenuActivo(); 
+actualizarMenuActivo();
 
 
 document.addEventListener("DOMContentLoaded", () => {
