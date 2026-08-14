@@ -1,15 +1,12 @@
-"""
-Validación del formulario de generación de acuerdoS.
-
-Revisa request.form ANTES de construir el diccionario `datos`, replicando
-las mismas condiciones que usa app.py, y devuelve un diccionario de errores:
-    { "nombre_campo_html": "Mensaje para el usuario" }
-
-Si el diccionario devuelto está vacío, el formulario es válido y se puede
-continuar con la generación del acuerdo.
-"""
 
 import re
+
+REGEX_NOMBRES = re.compile(r"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\-\s]+$")
+REGEX_RAZON_SOCIAL = re.compile(r"^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.,&\-\s]+$")
+REGEX_DIRECCION = re.compile(r"^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.,#/\-\s]+$")
+REGEX_RFC = re.compile(r"^[A-Z0-9]+$")
+REGEX_ALFANUMERICO = re.compile(r"^[a-zA-Z0-9\-/\s]+$")
+REGEX_CORREO = re.compile(r"^[a-zA-Z0-9@._+\-]+$")
 
 CORREO_REGEX = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
@@ -46,6 +43,18 @@ def _no_es_monto(form, campo):
         return monto < 0  
     except ValueError:
         return True
+
+
+def _no_cumple_formato(form, campo, patron):
+    valor = form.get(campo, "")
+    if valor is None or valor.strip() == "":
+        return False  # el campo vacio ya lo marca _falta, no lo dupliques aqui
+
+    valor_limpio = valor.strip()
+    if patron is REGEX_RFC:
+        valor_limpio = valor_limpio.upper()
+
+    return patron.fullmatch(valor_limpio) is None
 
 
 # limite de caracteres para campos de texto
@@ -87,6 +96,21 @@ def validar_formulario(form):
             if _falta(form, campo):
                 errores[campo] = etiqueta
 
+        if _falta(form, "razon_social_fisica"):
+            errores["razon_social_fisica"] = "La razón social es obligatoria."
+        elif _no_cumple_formato(form, "razon_social_fisica", REGEX_NOMBRES):
+            errores["razon_social_fisica"] = "El nombre solo puede contener letras."
+
+        if _falta(form, "rfc_fisica"):
+            errores["rfc_fisica"] = "El RFC es obligatorio."
+        elif _no_cumple_formato(form, "rfc_fisica", REGEX_RFC):
+            errores["rfc_fisica"] = "El RFC solo puede contener letras mayúsculas y números."
+
+        if _falta(form, "direccion_fisica"):
+            errores["direccion_fisica"] = "La dirección es obligatoria."
+        elif _no_cumple_formato(form, "direccion_fisica", REGEX_DIRECCION):
+            errores["direccion_fisica"] = "La dirección tiene caracteres no permitidos."
+
     elif tipo_persona == "juridica":
         for campo, etiqueta in [
             ("razon_social_juridica", "La razón social es obligatoria."),
@@ -104,6 +128,46 @@ def validar_formulario(form):
         ]:
             if _falta(form, campo):
                 errores[campo] = etiqueta
+
+        if _falta(form, "razon_social_juridica"):
+            errores["razon_social_juridica"] = "La razón social es obligatoria."
+        elif _no_cumple_formato(form, "razon_social_juridica", REGEX_RAZON_SOCIAL):
+            errores["razon_social_juridica"] = "La razón social tiene caracteres no permitidos."
+
+        if _falta(form, "rfc_juridica"):
+            errores["rfc_juridica"] = "El RFC es obligatorio."
+        elif _no_cumple_formato(form, "rfc_juridica", REGEX_RFC):
+            errores["rfc_juridica"] = "El RFC solo puede contener letras mayúsculas y números."
+
+        if _falta(form, "representante_legal_juridica"):
+            errores["representante_legal_juridica"] = "El representante legal es obligatorio."
+        elif _no_cumple_formato(form, "representante_legal_juridica", REGEX_NOMBRES):
+            errores["representante_legal_juridica"] = "El nombre solo puede contener letras."
+
+        if _falta(form, "direccion_juridica"):
+            errores["direccion_juridica"] = "La dirección es obligatoria."
+        elif _no_cumple_formato(form, "direccion_juridica", REGEX_DIRECCION):
+            errores["direccion_juridica"] = "La dirección tiene caracteres no permitidos."
+
+        if _falta(form, "n_acta_constitutiva"):
+            errores["n_acta_constitutiva"] = "El número de acta constitutiva es obligatorio."
+        elif _no_cumple_formato(form, "n_acta_constitutiva", REGEX_ALFANUMERICO):
+            errores["n_acta_constitutiva"] = "El número de acta tiene caracteres no permitidos."
+
+        if _falta(form, "notario"):
+            errores["notario"] = "El nombre del notario es obligatorio."
+        elif _no_cumple_formato(form, "notario", REGEX_NOMBRES):
+            errores["notario"] = "El nombre solo puede contener letras."
+
+        if _falta(form, "ubicacion_notaria"):
+            errores["ubicacion_notaria"] = "La ubicación de la notaría es obligatoria."
+        elif _no_cumple_formato(form, "ubicacion_notaria", REGEX_DIRECCION):
+            errores["ubicacion_notaria"] = "La ubicación tiene caracteres no permitidos."
+
+        if _falta(form, "n_folio_mercantil"):
+            errores["n_folio_mercantil"] = "El número de folio mercantil es obligatorio."
+        elif _no_cumple_formato(form, "n_folio_mercantil", REGEX_ALFANUMERICO):
+            errores["n_folio_mercantil"] = "El folio mercantil tiene caracteres no permitidos."
 
     # --- longitud máxima de campos de texto libre ---
     for campo in CAMPOS_CORTOS:
@@ -230,11 +294,15 @@ def validar_formulario(form):
     # --- correos ---
     if _falta(form, "correo_comercial"):
         errores["correo_comercial"] = "El correo comercial es obligatorio."
+    elif _no_cumple_formato(form, "correo_comercial", REGEX_CORREO):
+        errores["correo_comercial"] = "El correo comercial tiene un formato inválido."
     elif _correo_invalido(form, "correo_comercial"):
         errores["correo_comercial"] = "Ingresa un correo comercial válido."
 
     if _falta(form, "correo_aliado"):
         errores["correo_aliado"] = "El correo del aliado es obligatorio."
+    elif _no_cumple_formato(form, "correo_aliado", REGEX_CORREO):
+        errores["correo_aliado"] = "El correo del aliado tiene un formato inválido."
     elif _correo_invalido(form, "correo_aliado"):
         errores["correo_aliado"] = "Ingresa un correo del aliado válido."
 
@@ -245,5 +313,7 @@ def validar_formulario(form):
         errores["n_cuenta"] = "El número de cuenta es obligatorio."
     if _falta(form, "banco"):
         errores["banco"] = "El banco es obligatorio."
+    elif _no_cumple_formato(form, "banco", REGEX_NOMBRES):
+        errores["banco"] = "El banco solo puede contener letras."
 
     return errores

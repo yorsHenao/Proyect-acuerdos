@@ -303,3 +303,5 @@ formatearMiles(document.getElementById("monto_fondo_mercadotecnia"));
 formatearMiles(document.getElementById("monto_fondo_mercadotecnia_ooh"));
 formatearMiles(document.getElementById("monto_linea_nuevas_aperturas"));
 
+
+
