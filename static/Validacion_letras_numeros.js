@@ -63,7 +63,7 @@ restringirCaracteres("correo_aliado", regexCorreo, 120);
 
 // Datos bancarios
 limiteNumeros("n_clabe", 18);
-limiteNumeros("n_cuenta", 10);
+limiteNumeros("n_cuenta", 16);
 restringirCaracteres("banco", regexRazonesSociales, 100);
 
 // Campos dinamicos de comision escalonada (creados al clonar escalones)
