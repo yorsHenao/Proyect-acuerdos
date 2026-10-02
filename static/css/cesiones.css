@@ -1,0 +1,127 @@
+/* ==========================================================================
+   Cesiones CSS - Formulario de Cesión de Derechos
+   ========================================================================== */
+
+@import 'base.css';
+
+.cesiones-container {
+    max-width: 820px;
+    margin: 32px auto 80px auto;
+    padding: 0 20px;
+}
+
+.cesiones-form {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+}
+
+.radio-group-tipo {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.radio-card-tipo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.radio-card-tipo:hover {
+    border-color: #cbd5e1;
+    background-color: #f8fafc;
+}
+
+.radio-card-tipo.seleccionado {
+    border-color: var(--color-primary);
+    background-color: #fff9f8;
+    color: var(--color-primary-dark);
+}
+
+.radio-card-tipo input[type="radio"] {
+    accent-color: var(--color-primary);
+    width: 18px;
+    height: 18px;
+    margin: 0;
+}
+
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+@media (max-width: 640px) {
+    .form-grid-2 {
+        grid-template-columns: 1fr;
+    }
+    .radio-group-tipo {
+        flex-direction: column;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.form-label .required {
+    color: var(--color-primary);
+}
+
+.form-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: var(--font-main);
+    color: var(--color-text-main);
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 68, 31, 0.15);
+}
+
+.form-input::placeholder {
+    color: #94a3b8;
+}
+
+.form-input-help {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.form-actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border);
+}

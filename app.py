@@ -4,8 +4,10 @@ import os
 import io
 from dotenv import load_dotenv
 from datetime import datetime
+
 from scripts.generar_acuerdo import generar_acuerdo, fecha
-from scripts.validaciones import validar_formulario
+from scripts.generar_cesiones import generar_cesion, PLANTILLAS_CESIONES
+from scripts.validaciones import validar_formulario, validar_formulario_cesion
 
 load_dotenv(Path(__file__).resolve().parent / ".env")
 
@@ -18,24 +20,18 @@ def fecha_larga(fecha_iso: str) -> str:
 def entero_monto(valor: str) -> int:
     return int(valor.replace(".", ""))
 
+
 app = Flask(__name__)
 BASE_DIR = Path(__file__).resolve().parent
-
 
 app.secret_key = os.getenv("SECRET_KEY")
 if not app.secret_key:
     raise ValueError("La variable de entorno SECRET_KEY es requerida")
 
-@app.route("/")
-def formulario():
-    errores = session.pop("errores", {})
-    form_data = session.pop("form_data", {})
-    return render_template("formulario.html", errores=errores, form_data=form_data)
-
 PERSONA_FISICA = "fisica"
 PERSONA_JURIDICA = "juridica"
 
-PLANTILLAS = {
+PLANTILLAS_ACUERDO = {
     (PERSONA_FISICA, False):   "acuerdo_sin_ads_persona_fisica.docx",
     (PERSONA_FISICA, True):    "acuerdo_con_ads_persona_fisica.docx",
     (PERSONA_JURIDICA, False): "acuerdo_sin_ads_juridica.docx",
@@ -43,21 +39,36 @@ PLANTILLAS = {
 }
 
 
+# ==============================================================================
+# 1. RUTA PRINCIPAL (SELECTOR DE DOCUMENTOS)
+# ==============================================================================
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
+# ==============================================================================
+# 2. FLUJO: ACUERDO DE COOPERACIÓN
+# ==============================================================================
+@app.route("/acuerdos")
+def formulario_acuerdo():
+    errores = session.pop("errores", {})
+    form_data = session.pop("form_data", {})
+    return render_template("formulario.html", errores=errores, form_data=form_data)
+
+
 @app.route("/generar", methods=["POST"])
+@app.route("/acuerdos/generar", methods=["POST"])
 def generar():
     errores = validar_formulario(request.form)
     if errores:
         session["errores"] = errores
-        # Convertir form data a diccionario normal para guardar en sesión
         session["form_data"] = dict(request.form)
-        return redirect(url_for("formulario"))
+        return redirect(url_for("formulario_acuerdo"))
 
     datos = {}
 
-
-
-    #---tipo persona----
-
+    # --- tipo persona ----
     datos["tipo_persona"] = request.form["tipo_persona"]
 
     if datos["tipo_persona"] == PERSONA_FISICA:
@@ -65,7 +76,6 @@ def generar():
         datos["rfc"] = request.form["rfc_fisica"]
         datos["direccion"] = request.form["direccion_fisica"]
         datos["marca"] = request.form["marca_fisica"]
-
     else:
         datos["razon_social"] = request.form["razon_social_juridica"]
         datos["rfc"] = request.form["rfc_juridica"]
@@ -80,15 +90,15 @@ def generar():
         datos["n_folio"] = request.form["n_folio_mercantil"]
         datos["fecha_folio_mercantil"] = fecha_larga(request.form["fecha_folio_mercantil"])
 
-    #---- vigencia ----
+    # ---- vigencia ----
     datos["vigencia"] = int(request.form["vigencia_meses"])
 
-    #--- ads ----
+    # --- ads ----
     datos["tiene_ads"] = "tiene_ads" in request.form
     if datos["tiene_ads"]:
         datos["n_ads"] = int(request.form["n_ads"])
 
-    #--- comision ---
+    # --- comision ---
     datos["tipo_comision"] = request.form["tipo_comision"]
 
     if datos["tipo_comision"] == "escalonada":
@@ -116,7 +126,7 @@ def generar():
             indice += 1
         datos["tramos_comision"] = tramos
 
-        # --- exclusividad ---
+    # --- exclusividad ---
     datos["exclusividad"] = request.form["exclusividad"]
 
     # --- bonos ---
@@ -180,17 +190,16 @@ def generar():
     datos["n_cuenta"] = request.form["n_cuenta"]
     datos["banco"] = request.form["banco"]
 
-# --- elegir plantilla y generar ---
+    # --- elegir plantilla y generar ---
     try:
-        plantilla = BASE_DIR / "formatos" / PLANTILLAS[(datos["tipo_persona"], datos["tiene_ads"])]
+        plantilla = BASE_DIR / "formatos" / PLANTILLAS_ACUERDO[(datos["tipo_persona"], datos["tiene_ads"])]
         salida = generar_acuerdo(datos, plantilla)
 
         session["archivo_generado"] = str(salida)
         session["nombre_descarga"] = salida.name
-
-
+        session["tipo_documento"] = "acuerdo"
         session["form_data"] = dict(request.form)
-    
+
     except (ValueError, FileNotFoundError, PermissionError) as e:
         return render_template(
             "formulario.html",
@@ -199,32 +208,94 @@ def generar():
         )
     return redirect(url_for("confirmacion"))
 
+
+# ==============================================================================
+# 3. FLUJO: CESIÓN DE DERECHOS
+# ==============================================================================
+@app.route("/cesiones")
+def formulario_cesion():
+    errores = session.pop("errores", {})
+    form_data = session.pop("form_data", {})
+    return render_template("formulario_cesiones.html", errores=errores, form_data=form_data)
+
+
+@app.route("/cesiones/generar", methods=["POST"])
+def generar_cesion_post():
+    errores = validar_formulario_cesion(request.form)
+    if errores:
+        session["errores"] = errores
+        session["form_data"] = dict(request.form)
+        return redirect(url_for("formulario_cesion"))
+
+    datos = dict(request.form)
+
+    try:
+        nombre_plantilla = PLANTILLAS_CESIONES[(datos["tipo_cedente"], datos["tipo_cesionario"])]
+        plantilla = BASE_DIR / "formatos" / "formatos_cesiones_mx" / nombre_plantilla
+        salida = generar_cesion(datos, plantilla)
+
+        session["archivo_generado"] = str(salida)
+        session["nombre_descarga"] = salida.name
+        session["tipo_documento"] = "cesion"
+        session["form_data"] = dict(request.form)
+
+    except (ValueError, FileNotFoundError, PermissionError) as e:
+        return render_template(
+            "formulario_cesiones.html",
+            errores={"_general": str(e)},
+            form_data=request.form,
+        )
+    return redirect(url_for("confirmacion"))
+
+
+# ==============================================================================
+# 4. FLUJO COMPARTIDO: CONFIRMACIÓN, DESCARGA Y NUEVO
+# ==============================================================================
 @app.route("/confirmacion")
 def confirmacion():
     ruta_archivo = session.get("archivo_generado")
     nombre_descarga = session.get("nombre_descarga")
+    tipo_documento = session.get("tipo_documento", "acuerdo")
+
     if not ruta_archivo:
-        return redirect(url_for("formulario"))
-    return render_template("confirmacion.html", nombre_descarga=nombre_descarga)
+        if tipo_documento == "cesion":
+            return redirect(url_for("formulario_cesion"))
+        return redirect(url_for("formulario_acuerdo"))
+
+    return render_template(
+        "confirmacion.html",
+        nombre_descarga=nombre_descarga,
+        tipo_documento=tipo_documento,
+    )
 
 
 @app.route("/nuevo")
 def nuevo():
+    tipo_documento = session.get("tipo_documento", "acuerdo")
 
     session.pop("archivo_generado", None)
     session.pop("nombre_descarga", None)
-
+    session.pop("tipo_documento", None)
     session.pop("form_data", None)
+    session.pop("errores", None)
 
-    return redirect(url_for("formulario"))
+    if tipo_documento == "cesion":
+        return redirect(url_for("formulario_cesion"))
+    elif tipo_documento == "acuerdo":
+        return redirect(url_for("formulario_acuerdo"))
+    return redirect(url_for("index"))
+
 
 @app.route("/descargar")
 def descargar():
     ruta_archivo = session.get("archivo_generado")
     nombre_descarga = session.get("nombre_descarga")
+    tipo_documento = session.get("tipo_documento", "acuerdo")
 
     if not ruta_archivo:
-        return redirect(url_for("formulario"))
+        if tipo_documento == "cesion":
+            return redirect(url_for("formulario_cesion"))
+        return redirect(url_for("formulario_acuerdo"))
 
     try:
         with open(ruta_archivo, "rb") as f:
@@ -232,16 +303,17 @@ def descargar():
     except FileNotFoundError:
         session.pop("archivo_generado", None)
         session.pop("nombre_descarga", None)
+        vista = "formulario_cesiones.html" if tipo_documento == "cesion" else "formulario.html"
         return render_template(
-            "formulario.html",
-            errores={"_general": "Este enlace de descarga ya no está disponible. Genera el acuerdo nuevamente."},
+            vista,
+            errores={"_general": "Este enlace de descarga ya no está disponible. Genera el documento nuevamente."},
             form_data={},
         )
 
     try:
         os.remove(ruta_archivo)
     except Exception as e:
-        print(f"Error al eliminar el archivo: {e}")
+        print(f"Error al eliminar el archivo temporal: {e}")
 
     session.pop("archivo_generado", None)
     session.pop("nombre_descarga", None)

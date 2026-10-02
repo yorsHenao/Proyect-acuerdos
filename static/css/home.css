@@ -1,0 +1,169 @@
+/* ==========================================================================
+   Home CSS - Selector de Documentos Legales
+   ========================================================================== */
+
+.home-container {
+    max-width: 980px;
+    margin: 40px auto 80px auto;
+    padding: 0 24px;
+}
+
+.home-hero {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+}
+
+.hero-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--color-text-main);
+    margin: 0 0 12px 0;
+    letter-spacing: -0.5px;
+}
+
+.hero-subtitle {
+    font-size: 16px;
+    color: var(--color-text-muted);
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+}
+
+.doc-card {
+    background-color: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.doc-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: transparent;
+    transition: background-color 0.25s ease;
+}
+
+.doc-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: #cbd5e1;
+}
+
+.doc-card:hover::before {
+    background-color: var(--color-primary);
+}
+
+.card-header-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background-color: #fff1ee;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
+}
+
+.doc-card:hover .card-header-icon {
+    transform: scale(1.05);
+}
+
+.card-header-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.card-doc-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin: 0 0 8px 0;
+}
+
+.card-doc-desc {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0 0 20px 0;
+    flex-grow: 1;
+}
+
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.tag-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+.btn-card-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 20px;
+    background-color: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    color: var(--color-text-main);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-card-action:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(255, 68, 31, 0.25);
+}
+
+.btn-card-action svg {
+    transition: transform 0.2s ease;
+}
+
+.btn-card-action:hover svg {
+    transform: translateX(4px);
+}

@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/cesiones.css" />
+    <script src="/static/cesiones.js" defer></script>
+    <script src="/static/Validacion_letras_numeros.js" defer></script>
+    <title>Cesión de Derechos - Rappi México</title>
+  </head>
+  <body>
+    {# Header principal #}
+    <header class="main-header">
+      <div class="header-content">
+        <a href="{{ url_for('index') }}" class="header-nav-link" style="text-decoration: none;">
+          <span class="log-text">Rappi</span>
+        </a>
+        <div class="linea-divisoria"></div>
+        <h1 class="main-title">Configuración de Cesión de Derechos</h1>
+        <div class="header-actions" style="margin-left: auto;">
+          <a href="{{ url_for('index') }}" class="btn-secundario" style="padding: 8px 16px; font-size: 13px; text-decoration: none;">
+            Menú Principal
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="cesiones-container">
+      {# Mensaje de error general si ocurriera #}
+      {% if errores.get('_general') %}
+      <div class="alerta-error">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>{{ errores['_general'] }}</span>
+      </div>
+      {% endif %}
+
+      <form action="{{ url_for('generar_cesion_post') }}" method="POST" class="cesiones-form" novalidate>
+        
+        {# ================================================================= #}
+        {# SECCIÓN 1: DATOS DEL CEDENTE                                     #}
+        {# ================================================================= #}
+        <section class="card-section">
+          <h2 class="title-section">1. Datos del Cedente (Titular Actual)</h2>
+          <p class="subtitle-section">
+            Persona física o moral que cede y transmite la totalidad de su posición contractual y derechos bajo el Acuerdo.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">Tipo de Persona del Cedente <span class="required">*</span></label>
+            <div class="radio-group-tipo">
+              <label class="radio-card-tipo {% if form_data.get('tipo_cedente', 'fisica') == 'fisica' %}seleccionado{% endif %}">
+                <input
+                  type="radio"
+                  name="tipo_cedente"
+                  value="fisica"
+                  {% if form_data.get('tipo_cedente', 'fisica') == 'fisica' %}checked{% endif %}
+                />
+                <span>Persona Física</span>
+              </label>
+
+              <label class="radio-card-tipo {% if form_data.get('tipo_cedente') == 'moral' %}seleccionado{% endif %}">
+                <input
+                  type="radio"
+                  name="tipo_cedente"
+                  value="moral"
+                  {% if form_data.get('tipo_cedente') == 'moral' %}checked{% endif %}
+                />
+                <span>Persona Moral</span>
+              </label>
+            </div>
+            {% if errores.get('tipo_cedente') %}
+            <span class="mensaje-error">{{ errores['tipo_cedente'] }}</span>
+            {% endif %}
+          </div>
+
+          {# Sub-bloque Cedente Persona Física #}
+          <div id="bloque-cedente-fisica" class="{% if form_data.get('tipo_cedente', 'fisica') != 'fisica' %}oculto{% endif %}">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="nombre_cedente" class="form-label">Nombre Completo del Cedente <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="nombre_cedente"
+                  name="nombre_cedente"
+                  class="form-input {% if errores.get('nombre_cedente') %}input-error{% endif %}"
+                  placeholder="Ej. Juan Pérez Hernández"
+                  value="{{ form_data.get('nombre_cedente', '') }}"
+                />
+                {% if errores.get('nombre_cedente') %}
+                <span class="mensaje-error">{{ errores['nombre_cedente'] }}</span>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label for="rfc_cedente_fisica" class="form-label">RFC del Cedente <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="rfc_cedente_fisica"
+                  name="rfc_cedente"
+                  class="form-input {% if errores.get('rfc_cedente') %}input-error{% endif %}"
+                  placeholder="Ej. PEHJ800101AB1"
+                  maxlength="13"
+                  value="{{ form_data.get('rfc_cedente', '') }}"
+                />
+                {% if errores.get('rfc_cedente') and form_data.get('tipo_cedente', 'fisica') == 'fisica' %}
+                <span class="mensaje-error">{{ errores['rfc_cedente'] }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          {# Sub-bloque Cedente Persona Moral #}
+          <div id="bloque-cedente-moral" class="{% if form_data.get('tipo_cedente') != 'moral' %}oculto{% endif %}">
+            <div class="form-group">
+              <label for="razon_social_cedente" class="form-label">Razón Social del Cedente <span class="required">*</span></label>
+              <input
+                type="text"
+                id="razon_social_cedente"
+                name="razon_social_cedente"
+                class="form-input {% if errores.get('razon_social_cedente') %}input-error{% endif %}"
+                placeholder="Ej. Operadora de Alimentos del Norte S.A.P.I. de C.V."
+                value="{{ form_data.get('razon_social_cedente', '') }}"
+              />
+              <span class="form-input-help">Se estandarizará automáticamente el régimen societario y formato en mayúsculas.</span>
+              {% if errores.get('razon_social_cedente') %}
+              <span class="mensaje-error">{{ errores['razon_social_cedente'] }}</span>
+              {% endif %}
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="representante_legal_cedente" class="form-label">Representante Legal <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="representante_legal_cedente"
+                  name="representante_legal_cedente"
+                  class="form-input {% if errores.get('representante_legal_cedente') %}input-error{% endif %}"
+                  placeholder="Ej. Roberto Martínez Sánchez"
+                  value="{{ form_data.get('representante_legal_cedente', '') }}"
+                />
+                {% if errores.get('representante_legal_cedente') %}
+                <span class="mensaje-error">{{ errores['representante_legal_cedente'] }}</span>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label for="rfc_cedente_moral" class="form-label">RFC de la Empresa <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="rfc_cedente_moral"
+                  name="rfc_cedente"
+                  class="form-input {% if errores.get('rfc_cedente') %}input-error{% endif %}"
+                  placeholder="Ej. OAN150203XY9"
+                  maxlength="13"
+                  value="{{ form_data.get('rfc_cedente', '') }}"
+                />
+                {% if errores.get('rfc_cedente') and form_data.get('tipo_cedente') == 'moral' %}
+                <span class="mensaje-error">{{ errores['rfc_cedente'] }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {# ================================================================= #}
+        {# SECCIÓN 2: DATOS DEL CESIONARIO                                  #}
+        {# ================================================================= #}
+        <section class="card-section">
+          <h2 class="title-section">2. Datos del Cesionario (Nuevo Titular)</h2>
+          <p class="subtitle-section">
+            Persona física o moral que adquiere los derechos, asume las obligaciones comerciales y será el titular de la Marca ante Rappi.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">Tipo de Persona del Cesionario <span class="required">*</span></label>
+            <div class="radio-group-tipo">
+              <label class="radio-card-tipo {% if form_data.get('tipo_cesionario', 'fisica') == 'fisica' %}seleccionado{% endif %}">
+                <input
+                  type="radio"
+                  name="tipo_cesionario"
+                  value="fisica"
+                  {% if form_data.get('tipo_cesionario', 'fisica') == 'fisica' %}checked{% endif %}
+                />
+                <span>Persona Física</span>
+              </label>
+
+              <label class="radio-card-tipo {% if form_data.get('tipo_cesionario') == 'moral' %}seleccionado{% endif %}">
+                <input
+                  type="radio"
+                  name="tipo_cesionario"
+                  value="moral"
+                  {% if form_data.get('tipo_cesionario') == 'moral' %}checked{% endif %}
+                />
+                <span>Persona Moral</span>
+              </label>
+            </div>
+            {% if errores.get('tipo_cesionario') %}
+            <span class="mensaje-error">{{ errores['tipo_cesionario'] }}</span>
+            {% endif %}
+          </div>
+
+          {# Sub-bloque Cesionario Persona Física #}
+          <div id="bloque-cesionario-fisica" class="{% if form_data.get('tipo_cesionario', 'fisica') != 'fisica' %}oculto{% endif %}">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="nombre_cesionario" class="form-label">Nombre Completo del Cesionario <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="nombre_cesionario"
+                  name="nombre_cesionario"
+                  class="form-input {% if errores.get('nombre_cesionario') %}input-error{% endif %}"
+                  placeholder="Ej. María García López"
+                  value="{{ form_data.get('nombre_cesionario', '') }}"
+                />
+                {% if errores.get('nombre_cesionario') %}
+                <span class="mensaje-error">{{ errores['nombre_cesionario'] }}</span>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label for="rfc_cesionario_fisica" class="form-label">RFC del Cesionario <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="rfc_cesionario_fisica"
+                  name="rfc_cesionario"
+                  class="form-input {% if errores.get('rfc_cesionario') %}input-error{% endif %}"
+                  placeholder="Ej. GALM850202CD2"
+                  maxlength="13"
+                  value="{{ form_data.get('rfc_cesionario', '') }}"
+                />
+                {% if errores.get('rfc_cesionario') and form_data.get('tipo_cesionario', 'fisica') == 'fisica' %}
+                <span class="mensaje-error">{{ errores['rfc_cesionario'] }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          {# Sub-bloque Cesionario Persona Moral #}
+          <div id="bloque-cesionario-moral" class="{% if form_data.get('tipo_cesionario') != 'moral' %}oculto{% endif %}">
+            <div class="form-group">
+              <label for="razon_social_cesionario" class="form-label">Razón Social del Cesionario <span class="required">*</span></label>
+              <input
+                type="text"
+                id="razon_social_cesionario"
+                name="razon_social_cesionario"
+                class="form-input {% if errores.get('razon_social_cesionario') %}input-error{% endif %}"
+                placeholder="Ej. Grupo Restaurantero de México S.A. de C.V."
+                value="{{ form_data.get('razon_social_cesionario', '') }}"
+              />
+              <span class="form-input-help">Se estandarizará automáticamente el régimen societario y formato en mayúsculas.</span>
+              {% if errores.get('razon_social_cesionario') %}
+              <span class="mensaje-error">{{ errores['razon_social_cesionario'] }}</span>
+              {% endif %}
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="representante_legal_cesionario" class="form-label">Representante Legal <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="representante_legal_cesionario"
+                  name="representante_legal_cesionario"
+                  class="form-input {% if errores.get('representante_legal_cesionario') %}input-error{% endif %}"
+                  placeholder="Ej. Carlos Slim Domit"
+                  value="{{ form_data.get('representante_legal_cesionario', '') }}"
+                />
+                {% if errores.get('representante_legal_cesionario') %}
+                <span class="mensaje-error">{{ errores['representante_legal_cesionario'] }}</span>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label for="rfc_cesionario_moral" class="form-label">RFC de la Empresa <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="rfc_cesionario_moral"
+                  name="rfc_cesionario"
+                  class="form-input {% if errores.get('rfc_cesionario') %}input-error{% endif %}"
+                  placeholder="Ej. GRM180808KL4"
+                  maxlength="13"
+                  value="{{ form_data.get('rfc_cesionario', '') }}"
+                />
+                {% if errores.get('rfc_cesionario') and form_data.get('tipo_cesionario') == 'moral' %}
+                <span class="mensaje-error">{{ errores['rfc_cesionario'] }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {# ================================================================= #}
+        {# SECCIÓN 3: MARCA COMERCIAL OBJETO DE CESIÓN                      #}
+        {# ================================================================= #}
+        <section class="card-section">
+          <h2 class="title-section">3. Marca Comercial</h2>
+          <p class="subtitle-section">
+            Denominación comercial del restaurante o establecimiento objeto del acuerdo que se transmitirá en la Plataforma Rappi.
+          </p>
+
+          <div class="form-group">
+            <label for="marca" class="form-label">Nombre de la Marca <span class="required">*</span></label>
+            <input
+              type="text"
+              id="marca"
+              name="marca"
+              class="form-input {% if errores.get('marca') %}input-error{% endif %}"
+              placeholder="Ej. Tacos Don Beto / Burger Palace"
+              value="{{ form_data.get('marca', '') }}"
+            />
+            {% if errores.get('marca') %}
+            <span class="mensaje-error">{{ errores['marca'] }}</span>
+            {% endif %}
+          </div>
+        </section>
+
+        {# ================================================================= #}
+        {# SECCIÓN 4: DATOS BANCARIOS DEL CESIONARIO (FORMA DE PAGO)        #}
+        {# ================================================================= #}
+        <section class="card-section">
+          <h2 class="title-section">4. Datos Bancarios del Cesionario (Nueva Forma de Pago)</h2>
+          <p class="subtitle-section">
+            Cuenta bancaria donde Rappi dispersará las ventas a partir de la Fecha Efectiva de la cesión (Cláusula Octava).
+          </p>
+
+          <div class="form-group">
+            <label for="banco" class="form-label">Institución Bancaria (Banco) <span class="required">*</span></label>
+            <input
+              type="text"
+              id="banco"
+              name="banco"
+              class="form-input {% if errores.get('banco') %}input-error{% endif %}"
+              placeholder="Ej. BBVA México / Santander / Banorte"
+              value="{{ form_data.get('banco', '') }}"
+            />
+            {% if errores.get('banco') %}
+            <span class="mensaje-error">{{ errores['banco'] }}</span>
+            {% endif %}
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="n_cuenta" class="form-label">Número de Cuenta Bancaria <span class="required">*</span></label>
+              <input
+                type="text"
+                id="n_cuenta"
+                name="n_cuenta"
+                class="form-input {% if errores.get('n_cuenta') %}input-error{% endif %}"
+                placeholder="Ej. 0123456789"
+                value="{{ form_data.get('n_cuenta', '') }}"
+              />
+              {% if errores.get('n_cuenta') %}
+              <span class="mensaje-error">{{ errores['n_cuenta'] }}</span>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="n_clabe" class="form-label">CLABE Interbancaria (18 dígitos) <span class="required">*</span></label>
+              <input
+                type="text"
+                id="n_clabe"
+                name="n_clabe"
+                class="form-input {% if errores.get('n_clabe') %}input-error{% endif %}"
+                placeholder="18 dígitos numéricos"
+                maxlength="18"
+                value="{{ form_data.get('n_clabe', '') }}"
+              />
+              {% if errores.get('n_clabe') %}
+              <span class="mensaje-error">{{ errores['n_clabe'] }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </section>
+
+        {# Barra de acciones inferior #}
+        <div class="form-actions-bar">
+          <a href="{{ url_for('index') }}" class="btn-secundario" style="text-decoration: none;">
+            Cancelar
+          </a>
+          <button type="submit" class="btn-generar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            Generar Cesión (.docx)
+          </button>
+        </div>
+
+      </form>
+    </main>
+  </body>
+</html>

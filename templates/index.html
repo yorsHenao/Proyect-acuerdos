@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/base.css" />
+    <link rel="stylesheet" href="/static/css/home.css" />
+    <title>Generador Legal - Rappi México</title>
+  </head>
+  <body>
+    {# Header institucional Rappi #}
+    <header class="main-header">
+      <div class="header-content">
+        <a href="{{ url_for('index') }}" class="header-nav-link" style="text-decoration: none;">
+          <span class="log-text">Rappi</span>
+        </a>
+        <div class="linea-divisoria"></div>
+        <h1 class="main-title">Generador de Documentos Legales &bull; México</h1>
+      </div>
+    </header>
+
+    <main class="home-container">
+      <div class="home-hero">
+        <div class="hero-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          Módulo Legal Automatizado
+        </div>
+        <h2 class="hero-title">¿Qué documento deseas generar?</h2>
+        <p class="hero-subtitle">
+          Configura y exporta contratos legales oficiales en formato Word (.docx) cumpliendo con los estándares y cláusulas comerciales de Rappi México.
+        </p>
+      </div>
+
+      {# Cuadrícula de opciones de documentos #}
+      <div class="cards-grid">
+        {# Tarjeta 1: Acuerdo de Cooperación #}
+        <div class="doc-card">
+          <div class="card-header-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+              <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+              <path d="M9 9l1 0" />
+              <path d="M9 13l6 0" />
+              <path d="M9 17l6 0" />
+            </svg>
+          </div>
+          <h3 class="card-doc-title">Acuerdo de Cooperación</h3>
+          <p class="card-doc-desc">
+            Contrato principal para dar de alta aliados comerciales (Restaurantes / Tiendas). Incluye comisiones fijas o escalonadas, exclusividad, bonos, fondos de mercadotecnia y compromisos comerciales.
+          </p>
+          <div class="card-tags">
+            <span class="tag-pill">Persona Física / Moral</span>
+            <span class="tag-pill">Con / Sin ADS</span>
+            <span class="tag-pill">Comisiones & Bonos</span>
+          </div>
+          <a href="{{ url_for('formulario_acuerdo') }}" class="btn-card-action">
+            <span>Generar Acuerdo</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+
+        {# Tarjeta 2: Cesión de Derechos #}
+        <div class="doc-card">
+          <div class="card-header-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+            </svg>
+          </div>
+          <h3 class="card-doc-title">Cesión de Derechos</h3>
+          <p class="card-doc-desc">
+            Contrato de cesión de posición contractual y convenio modificatorio para transmitir los derechos y obligaciones de una marca a un nuevo titular (Física o Moral) y actualizar datos de pago.
+          </p>
+          <div class="card-tags">
+            <span class="tag-pill">Cedente & Cesionario</span>
+            <span class="tag-pill">Actualización Bancaria</span>
+            <span class="tag-pill">Traspaso de Marca</span>
+          </div>
+          <a href="{{ url_for('formulario_cesion') }}" class="btn-card-action">
+            <span>Generar Cesión</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

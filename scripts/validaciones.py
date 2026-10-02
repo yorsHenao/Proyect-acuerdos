@@ -317,3 +317,119 @@ def validar_formulario(form):
         errores["banco"] = "El banco solo puede contener letras."
 
     return errores
+
+
+def validar_formulario_cesion(form):
+    errores = {}
+
+    # --- Tipo de Cedente ---
+    tipo_cedente = form.get("tipo_cedente")
+    if tipo_cedente not in ("fisica", "moral"):
+        errores["tipo_cedente"] = "Selecciona el tipo de persona del cedente."
+        tipo_cedente = None
+
+    if tipo_cedente == "fisica":
+        if _falta(form, "nombre_cedente"):
+            errores["nombre_cedente"] = "El nombre del cedente es obligatorio."
+        elif _no_cumple_formato(form, "nombre_cedente", REGEX_NOMBRES):
+            errores["nombre_cedente"] = "El nombre solo puede contener letras."
+        elif _demasiado_largo(form, "nombre_cedente", 100):
+            errores["nombre_cedente"] = "El nombre no puede superar los 100 caracteres."
+
+        if _falta(form, "rfc_cedente"):
+            errores["rfc_cedente"] = "El RFC del cedente es obligatorio."
+        elif _no_cumple_formato(form, "rfc_cedente", REGEX_RFC):
+            errores["rfc_cedente"] = "El RFC solo puede contener letras mayúsculas y números."
+        elif len(form.get("rfc_cedente", "").strip()) not in (12, 13):
+            errores["rfc_cedente"] = "El RFC debe tener 12 o 13 caracteres."
+
+    elif tipo_cedente == "moral":
+        if _falta(form, "razon_social_cedente"):
+            errores["razon_social_cedente"] = "La razón social del cedente es obligatoria."
+        elif _no_cumple_formato(form, "razon_social_cedente", REGEX_RAZON_SOCIAL):
+            errores["razon_social_cedente"] = "La razón social tiene caracteres no permitidos."
+        elif _demasiado_largo(form, "razon_social_cedente", 150):
+            errores["razon_social_cedente"] = "La razón social no puede superar los 150 caracteres."
+
+        if _falta(form, "representante_legal_cedente"):
+            errores["representante_legal_cedente"] = "El representante legal del cedente es obligatorio."
+        elif _no_cumple_formato(form, "representante_legal_cedente", REGEX_NOMBRES):
+            errores["representante_legal_cedente"] = "El nombre solo puede contener letras."
+        elif _demasiado_largo(form, "representante_legal_cedente", 100):
+            errores["representante_legal_cedente"] = "El nombre no puede superar los 100 caracteres."
+
+        if _falta(form, "rfc_cedente"):
+            errores["rfc_cedente"] = "El RFC del cedente es obligatorio."
+        elif _no_cumple_formato(form, "rfc_cedente", REGEX_RFC):
+            errores["rfc_cedente"] = "El RFC solo puede contener letras mayúsculas y números."
+        elif len(form.get("rfc_cedente", "").strip()) not in (12, 13):
+            errores["rfc_cedente"] = "El RFC debe tener 12 o 13 caracteres."
+
+    # --- Tipo de Cesionario ---
+    tipo_cesionario = form.get("tipo_cesionario")
+    if tipo_cesionario not in ("fisica", "moral"):
+        errores["tipo_cesionario"] = "Selecciona el tipo de persona del cesionario."
+        tipo_cesionario = None
+
+    if tipo_cesionario == "fisica":
+        if _falta(form, "nombre_cesionario"):
+            errores["nombre_cesionario"] = "El nombre del cesionario es obligatorio."
+        elif _no_cumple_formato(form, "nombre_cesionario", REGEX_NOMBRES):
+            errores["nombre_cesionario"] = "El nombre solo puede contener letras."
+        elif _demasiado_largo(form, "nombre_cesionario", 100):
+            errores["nombre_cesionario"] = "El nombre no puede superar los 100 caracteres."
+
+        if _falta(form, "rfc_cesionario"):
+            errores["rfc_cesionario"] = "El RFC del cesionario es obligatorio."
+        elif _no_cumple_formato(form, "rfc_cesionario", REGEX_RFC):
+            errores["rfc_cesionario"] = "El RFC solo puede contener letras mayúsculas y números."
+        elif len(form.get("rfc_cesionario", "").strip()) not in (12, 13):
+            errores["rfc_cesionario"] = "El RFC debe tener 12 o 13 caracteres."
+
+    elif tipo_cesionario == "moral":
+        if _falta(form, "razon_social_cesionario"):
+            errores["razon_social_cesionario"] = "La razón social del cesionario es obligatoria."
+        elif _no_cumple_formato(form, "razon_social_cesionario", REGEX_RAZON_SOCIAL):
+            errores["razon_social_cesionario"] = "La razón social tiene caracteres no permitidos."
+        elif _demasiado_largo(form, "razon_social_cesionario", 150):
+            errores["razon_social_cesionario"] = "La razón social no puede superar los 150 caracteres."
+
+        if _falta(form, "representante_legal_cesionario"):
+            errores["representante_legal_cesionario"] = "El representante legal del cesionario es obligatorio."
+        elif _no_cumple_formato(form, "representante_legal_cesionario", REGEX_NOMBRES):
+            errores["representante_legal_cesionario"] = "El nombre solo puede contener letras."
+        elif _demasiado_largo(form, "representante_legal_cesionario", 100):
+            errores["representante_legal_cesionario"] = "El nombre no puede superar los 100 caracteres."
+
+        if _falta(form, "rfc_cesionario"):
+            errores["rfc_cesionario"] = "El RFC del cesionario es obligatorio."
+        elif _no_cumple_formato(form, "rfc_cesionario", REGEX_RFC):
+            errores["rfc_cesionario"] = "El RFC solo puede contener letras mayúsculas y números."
+        elif len(form.get("rfc_cesionario", "").strip()) not in (12, 13):
+            errores["rfc_cesionario"] = "El RFC debe tener 12 o 13 caracteres."
+
+    # --- Marca ---
+    if _falta(form, "marca"):
+        errores["marca"] = "La marca es obligatoria."
+    elif _demasiado_largo(form, "marca", 100):
+        errores["marca"] = "La marca no puede superar los 100 caracteres."
+
+    # --- Datos Bancarios (del cesionario) ---
+    if _falta(form, "banco"):
+        errores["banco"] = "El banco es obligatorio."
+    elif _no_cumple_formato(form, "banco", REGEX_NOMBRES):
+        errores["banco"] = "El banco solo puede contener letras."
+    elif _demasiado_largo(form, "banco", 100):
+        errores["banco"] = "El nombre del banco no puede superar los 100 caracteres."
+
+    if _falta(form, "n_cuenta"):
+        errores["n_cuenta"] = "El número de cuenta es obligatorio."
+    elif _demasiado_largo(form, "n_cuenta", 30):
+        errores["n_cuenta"] = "El número de cuenta no puede superar los 30 caracteres."
+
+    if _falta(form, "n_clabe"):
+        errores["n_clabe"] = "La CLABE interbancaria es obligatoria."
+    elif len(form.get("n_clabe", "").strip()) != 18 or not form.get("n_clabe", "").strip().isdigit():
+        errores["n_clabe"] = "La CLABE debe contener exactamente 18 dígitos numéricos."
+
+    return errores
