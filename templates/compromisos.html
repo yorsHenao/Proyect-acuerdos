@@ -92,6 +92,8 @@
           id="n_descuento_menu"
           name="n_descuento_menu"
           placeholder="Ej. 10"
+          min="10"
+          max="99"
           value="{{ form_data.get('n_descuento_menu', '') }}"
           class="{% if errores.get('n_descuento_menu') %}input-error{% endif %}"
         />
@@ -126,6 +128,8 @@
           id="n_descuento_mark_down"
           name="n_descuento_mark_down"
           placeholder="Ej. 50"
+          min="10"
+          max="99"
           value="{{ form_data.get('n_descuento_mark_down', '') }}"
           class="{% if errores.get('n_descuento_mark_down') %}input-error{% endif %}"
         />
@@ -180,6 +184,8 @@
           id="n_descuento_platillos"
           name="n_descuento_platillos"
           placeholder="Ej. 15"
+          min="10"
+          max="99"
           value="{{ form_data.get('n_descuento_platillos', '') }}"
           class="{% if errores.get('n_descuento_platillos') %}input-error{% endif %}"
         />

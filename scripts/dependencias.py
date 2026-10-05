@@ -5,7 +5,6 @@ def resolver_dependencias(activas):
         activas["activa_bono_nuevas_aperturas"],
         activas["activa_bono_nuevas_aperturas_previo"],
         activas["activa_fondo_mercadotecnia"],
-        activas["activa_fondo_mercadotecnia_ooh"],
         activas["activa_linea_nuevas_aperturas"],
     ])
 

@@ -12,11 +12,10 @@ from scripts.compromisos_adicionales import (
 from scripts.dependencias import resolver_dependencias
 from scripts.solicitar_exclusividad import procesar_exclusividad
 from scripts.numero_a_letras import numero_a_letras
-from scripts.Paginacion import asignar_numeracion_clausulas
+from scripts.Paginacion import asignar_numeracion_clausulas, asignar_numeracion_obligaciones
 
 from scripts.Fondos import (
     procesar_fondo_mercadotecnia,
-    procesar_fondo_mercadotecnia_ooh,
     procesar_linea_nuevas_aperturas,
 )
 from scripts.Bonos import (
@@ -29,7 +28,6 @@ from scripts.comisiones import (
     procesar_comision_fija,
     procesar_comision_por_mes,
     procesar_comision_por_ordenes,
-    procesar_comision_por_ventas,
 )
 from scripts.ads import procesar_ads
 from scripts.datos_personas import (
@@ -64,7 +62,6 @@ def generar_acuerdo(datos, plantilla, salida_path=None):
         "activa_bono_nuevas_aperturas": False,
         "activa_bono_nuevas_aperturas_previo": False,
         "activa_fondo_mercadotecnia": False,
-        "activa_fondo_mercadotecnia_ooh": False,
         "activa_linea_nuevas_aperturas": False,
         "activa_compromisos_adicionales": False,
         "activa_descuento_menu": False,
@@ -117,9 +114,12 @@ def generar_acuerdo(datos, plantilla, salida_path=None):
     elif tipo_comision == "mes":
         procesar_comision_por_mes(datos["tramos_comision"], contexto)
     elif tipo_comision == "ordenes":
-        procesar_comision_por_ordenes(datos["tramos_comision"], contexto)
-    elif tipo_comision == "ventas":
-        procesar_comision_por_ventas(datos["tramos_comision"], contexto)
+        procesar_comision_por_ordenes(
+            datos["ordenes_primer_anio"],
+            datos["max_ordenes"],
+            datos["n_comision_1"],
+            contexto,
+        )
     else:
         raise ValueError("Tipo de comisión no válido")
 
@@ -128,7 +128,13 @@ def generar_acuerdo(datos, plantilla, salida_path=None):
 
     # --- ads ---
     if datos["tiene_ads"]:
-        procesar_ads(activas, datos["n_ads"], contexto)
+        procesar_ads(
+            activas,
+            datos["n_ads"],
+            datos["tipo_ads"],
+            contexto,
+            datos.get("n_ads_rappi"),
+        )
 
     # --- bonos ---
     procesar_bono_crecimiento(
@@ -163,12 +169,6 @@ def generar_acuerdo(datos, plantilla, salida_path=None):
     procesar_fondo_mercadotecnia(
         datos["aplica_fondo_mercadotecnia"],
         datos.get("monto_fondo_mercadotecnia"),
-        activas,
-        contexto,
-    )
-    procesar_fondo_mercadotecnia_ooh(
-        datos["aplica_fondo_mercadotecnia_ooh"],
-        datos.get("monto_fondo_mercadotecnia_ooh"),
         activas,
         contexto,
     )
@@ -212,6 +212,7 @@ def generar_acuerdo(datos, plantilla, salida_path=None):
 
     resolver_dependencias(activas)
     contexto["LISTA_BONOS_FONDOS"] = construir_lista_bonos_fondos(activas)
+    asignar_numeracion_obligaciones(activas, contexto)
     asignar_numeracion_clausulas(activas, contexto)
 
     # --- correos ---

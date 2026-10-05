@@ -97,6 +97,9 @@ def generar():
     datos["tiene_ads"] = "tiene_ads" in request.form
     if datos["tiene_ads"]:
         datos["n_ads"] = int(request.form["n_ads"])
+        datos["tipo_ads"] = request.form["tipo_ads"]
+        if datos["tipo_ads"] == "aliado_y_rappi":
+            datos["n_ads_rappi"] = int(request.form["n_ads_rappi"])
 
     # --- comision ---
     datos["tipo_comision"] = request.form["tipo_comision"]
@@ -106,6 +109,10 @@ def generar():
 
     if datos["tipo_comision"] == "fija":
         datos["n_comision_fija"] = int(request.form["n_comision_fija"])
+    elif datos["tipo_comision"] == "ordenes":
+        datos["ordenes_primer_anio"] = int(request.form["ordenes_primer_anio"])
+        datos["max_ordenes"] = int(request.form["max_ordenes"])
+        datos["n_comision_1"] = int(request.form["n_comision_1"])
     else:
         tramos = []
         indice = 0
@@ -115,13 +122,7 @@ def generar():
                 "es_ultimo": request.form.get(f"escalon_{indice}_es_ultimo") == "si",
             }
             if not tramo["es_ultimo"]:
-                campo_fin = request.form[f"escalon_{indice}_fin"]
-                if datos["tipo_comision"] == "ventas":
-                    tramo["monto_fin"] = float(campo_fin)
-                elif datos["tipo_comision"] == "ordenes":
-                    tramo["orden_fin"] = int(campo_fin)
-                else:
-                    tramo["mes_fin"] = int(campo_fin)
+                tramo["mes_fin"] = int(request.form[f"escalon_{indice}_fin"])
             tramos.append(tramo)
             indice += 1
         datos["tramos_comision"] = tramos
@@ -151,10 +152,6 @@ def generar():
     datos["aplica_fondo_mercadotecnia"] = "activa_fondo_mercadotecnia" in request.form
     if datos["aplica_fondo_mercadotecnia"]:
         datos["monto_fondo_mercadotecnia"] = entero_monto(request.form["monto_fondo_mercadotecnia"])
-
-    datos["aplica_fondo_mercadotecnia_ooh"] = "activa_fondo_mercadotecnia_ooh" in request.form
-    if datos["aplica_fondo_mercadotecnia_ooh"]:
-        datos["monto_fondo_mercadotecnia_ooh"] = entero_monto(request.form["monto_fondo_mercadotecnia_ooh"])
 
     datos["aplica_linea_nuevas_aperturas"] = "activa_linea_nuevas_aperturas" in request.form
     if datos["aplica_linea_nuevas_aperturas"]:
@@ -192,7 +189,7 @@ def generar():
 
     # --- elegir plantilla y generar ---
     try:
-        plantilla = BASE_DIR / "formatos" / PLANTILLAS_ACUERDO[(datos["tipo_persona"], datos["tiene_ads"])]
+        plantilla = BASE_DIR / "formatos" / "New_draft" / PLANTILLAS_ACUERDO[(datos["tipo_persona"], datos["tiene_ads"])]
         salida = generar_acuerdo(datos, plantilla)
 
         session["archivo_generado"] = str(salida)

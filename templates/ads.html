@@ -23,17 +23,50 @@
   <div id="porcentaje-ads" class="panel-condicional {% if not form_data.get('tiene_ads') %}oculto{% endif %}">
     <div class="fila-auto-3">
       <div>
-        <label for="n_ads">Porcentaje de ADS</label>
+        <label for="tipo_ads">Modalidad de ADS</label>
+        <select
+          id="tipo_ads"
+          name="tipo_ads"
+          class="{% if errores.get('tipo_ads') %}input-error{% endif %}"
+        >
+          <option value="" {% if not form_data.get('tipo_ads') %}selected{% endif %}>Selecciona una opción</option>
+          <option value="aliado" {% if form_data.get('tipo_ads') == 'aliado' %}selected{% endif %}>Solo aliado</option>
+          <option value="aliado_y_rappi" {% if form_data.get('tipo_ads') == 'aliado_y_rappi' %}selected{% endif %}>Aliado y Rappi</option>
+        </select>
+        {% if errores.get('tipo_ads') %}
+        <span class="mensaje-error">{{ errores['tipo_ads'] }}</span>
+        {% endif %}
+      </div>
+      <div>
+        <label for="n_ads">Porcentaje de ADS del aliado</label>
         <input
           type="number"
           id="n_ads"
           name="n_ads"
           placeholder="Ej. 10"
+          min="10"
+          max="99"
           value="{{ form_data.get('n_ads', '') }}"
           class="{% if errores.get('n_ads') %}input-error{% endif %}"
         />
         {% if errores.get('n_ads') %}
         <span class="mensaje-error">{{ errores['n_ads'] }}</span>
+        {% endif %}
+      </div>
+      <div id="porcentaje-ads-rappi" class="{% if form_data.get('tipo_ads') != 'aliado_y_rappi' %}oculto{% endif %}">
+        <label for="n_ads_rappi">Porcentaje de ADS de Rappi</label>
+        <input
+          type="number"
+          id="n_ads_rappi"
+          name="n_ads_rappi"
+          placeholder="Ej. 10"
+          min="10"
+          max="99"
+          value="{{ form_data.get('n_ads_rappi', '') }}"
+          class="{% if errores.get('n_ads_rappi') %}input-error{% endif %}"
+        />
+        {% if errores.get('n_ads_rappi') %}
+        <span class="mensaje-error">{{ errores['n_ads_rappi'] }}</span>
         {% endif %}
       </div>
     </div>

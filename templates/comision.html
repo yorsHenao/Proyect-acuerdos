@@ -50,6 +50,8 @@
           id="n_comision_fija"
           name="n_comision_fija"
           placeholder="Ej. 18"
+          min="10"
+          max="99"
           value="{{ form_data.get('n_comision_fija', '') }}"
           class="{% if errores.get('n_comision_fija') %}input-error{% endif %}"
         />
@@ -70,7 +72,6 @@
           <option value="" {% if not form_data.get('modalidad_escalonada') %}selected{% endif %}>Selecciona una opción</option>
           <option value="mes" {% if form_data.get('modalidad_escalonada') == 'mes' %}selected{% endif %}>Por mes</option>
           <option value="ordenes" {% if form_data.get('modalidad_escalonada') == 'ordenes' %}selected{% endif %}>Por órdenes</option>
-          <option value="ventas" {% if form_data.get('modalidad_escalonada') == 'ventas' %}selected{% endif %}>Por ventas</option>
         </select>
         {% if errores.get('modalidad_escalonada') %}
         <span class="mensaje-error">{{ errores['modalidad_escalonada'] }}</span>
@@ -78,6 +79,57 @@
       </div>
     </div>
 
+
+    <div id="bloque-comision-ordenes" class="{% if form_data.get('modalidad_escalonada') != 'ordenes' %}oculto{% endif %}">
+      <div class="fila-auto-3">
+        <div>
+          <label for="ordenes_primer_anio">Porcentaje del primer año</label>
+          <input
+            type="number"
+            id="ordenes_primer_anio"
+            name="ordenes_primer_anio"
+            placeholder="Ej. 18"
+          min="10"
+          max="99"
+            value="{{ form_data.get('ordenes_primer_anio', '') }}"
+            class="{% if errores.get('ordenes_primer_anio') %}input-error{% endif %}"
+          />
+          {% if errores.get('ordenes_primer_anio') %}
+          <span class="mensaje-error">{{ errores['ordenes_primer_anio'] }}</span>
+          {% endif %}
+        </div>
+        <div>
+          <label for="max_ordenes">Máximo de órdenes</label>
+          <input
+            type="number"
+            id="max_ordenes"
+            name="max_ordenes"
+            placeholder="Ej. 500"
+            value="{{ form_data.get('max_ordenes', '') }}"
+            class="{% if errores.get('max_ordenes') %}input-error{% endif %}"
+          />
+          {% if errores.get('max_ordenes') %}
+          <span class="mensaje-error">{{ errores['max_ordenes'] }}</span>
+          {% endif %}
+        </div>
+        <div>
+          <label for="n_comision_1">Take rate de la banda</label>
+          <input
+            type="number"
+            id="n_comision_1"
+            name="n_comision_1"
+            placeholder="Ej. 15"
+            min="10"
+            max="99"
+            value="{{ form_data.get('n_comision_1', '') }}"
+            class="{% if errores.get('n_comision_1') %}input-error{% endif %}"
+          />
+          {% if errores.get('n_comision_1') %}
+          <span class="mensaje-error">{{ errores['n_comision_1'] }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
 
     <div class="escalon fila-auto-3" data-escalon="0">
       <div>
@@ -136,6 +188,8 @@
           id="escalon_0_porcentaje"
           name="escalon_0_porcentaje"
           placeholder="Ej. 18"
+          min="10"
+          max="99"
           value="{{ form_data.get('escalon_0_porcentaje', '') }}"
           class="{% if errores.get('escalon_0_porcentaje') %}input-error{% endif %}"
         />

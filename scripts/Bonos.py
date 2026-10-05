@@ -40,6 +40,8 @@ def procesar_bono_nuevas_aperturas(monto, num_establecimientos, meses, maximo_bo
 
     contexto["NUM_PERIODO_AMORTIZACIÓN"] = periodo_amortizacion
     contexto["PERIODO_AMORTIZACIÓN"] = numero_a_letras(periodo_amortizacion)
+    contexto["N_PLAZO"] = periodo_amortizacion
+    contexto["V_PLAZO"] = numero_a_letras(periodo_amortizacion)
 
 
 def procesar_bono_nuevas_aperturas_previo(monto, num_establecimientos, meses, maximo_bono, periodo_amortizacion, activas, contexto):
@@ -60,3 +62,5 @@ def procesar_bono_nuevas_aperturas_previo(monto, num_establecimientos, meses, ma
 
     contexto["PERIODO_AMORTIZACION"] = periodo_amortizacion
     contexto["N_PERIODO_AMORTIZACION"] = numero_a_letras(periodo_amortizacion)
+    contexto["N_PLAZO"] = periodo_amortizacion
+    contexto["V_PLAZO"] = numero_a_letras(periodo_amortizacion)

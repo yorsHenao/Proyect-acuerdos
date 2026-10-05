@@ -18,9 +18,6 @@ def construir_lista_bonos_fondos(activas):
     if activas.get("activa_fondo_mercadotecnia"):
         nombres.append("Fondo de Mercadotecnia")
 
-    if activas.get("activa_fondo_mercadotecnia_ooh"):
-        nombres.append("Fondo de Mercadotecnia OOH")
-
     if activas.get("activa_linea_nuevas_aperturas"):
         nombres.append("Línea de Crédito Nuevas Aperturas")
 

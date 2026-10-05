@@ -20,6 +20,16 @@ button_juridica.addEventListener("change", () => {
 
 const button_ads = document.getElementById("tiene_ads");
 const n_ads = document.getElementById("porcentaje-ads");
+const tipo_ads = document.getElementById("tipo_ads");
+const porcentaje_ads_rappi = document.getElementById("porcentaje-ads-rappi");
+
+function actualizarAdsRappi() {
+    if (tipo_ads.value === "aliado_y_rappi") {
+        porcentaje_ads_rappi.classList.remove("oculto");
+    } else {
+        porcentaje_ads_rappi.classList.add("oculto");
+    }
+}
 
 button_ads.addEventListener("change", () => {
     if (button_ads.checked) {
@@ -29,9 +39,28 @@ button_ads.addEventListener("change", () => {
     }
 })
 
+tipo_ads.addEventListener("change", actualizarAdsRappi);
+actualizarAdsRappi();
+
 
 const inf_c_fija = document.getElementById("bloque-comision-fija");
 const inf_c_escalonada = document.getElementById("bloque-c-escalonada");
+const modalidadEscalonada = document.getElementById("modalidad_escalonada");
+const bloqueComisionOrdenes = document.getElementById("bloque-comision-ordenes");
+
+function actualizarModalidadEscalonada() {
+    const esOrdenes = modalidadEscalonada.value === "ordenes";
+    bloqueComisionOrdenes.classList.toggle("oculto", !esOrdenes);
+    document.querySelectorAll("#bloque-c-escalonada .escalon, #agregar_escalon").forEach((elemento) => {
+        elemento.classList.toggle("oculto", esOrdenes);
+    });
+    document.querySelectorAll("#bloque-c-escalonada .escalon input").forEach((input) => {
+        input.disabled = esOrdenes;
+    });
+    bloqueComisionOrdenes.querySelectorAll("input").forEach((input) => {
+        input.disabled = !esOrdenes;
+    });
+}
 
 const comision = document.querySelectorAll('input[name="tipo_comision"]');
 
@@ -47,9 +76,13 @@ comision.forEach((radio) => {
 
             inf_c_fija.classList.add("oculto");
             inf_c_escalonada.classList.remove("oculto");
+            actualizarModalidadEscalonada();
         }
     })
 })
+
+modalidadEscalonada.addEventListener("change", actualizarModalidadEscalonada);
+actualizarModalidadEscalonada();
 
 
 const bono_crecimiento = document.getElementById("monto-bono-crecimiento");
@@ -92,34 +125,18 @@ button_nuevas_aperturas.addEventListener("change", () => {
 
 
 const bloque_fondo_mercadotecnia = document.getElementById("monto-fondo-mercadotecnia");
-const bloque_fondo_mercadotecnia_ooh = document.getElementById("monto-fondo-mercadotecnia-ooh");
 const bloque_nuevas_aperturas = document.getElementById("monto-nuevas-aperturas");
 
 
 
 const button_fondo_mercadotecnia = document.getElementById("activa_fondo_mercadotecnia");
-const button_fondo_mercadotecnia_ooh = document.getElementById("activa_fondo_mercadotecnia_ooh");
 const button_nuevas_aperturas_fondo = document.getElementById("activa_linea_nuevas_aperturas");
 
 button_fondo_mercadotecnia.addEventListener("change", () => {
     if (button_fondo_mercadotecnia.checked) {
-        
-        button_fondo_mercadotecnia_ooh.checked = false;
-        bloque_fondo_mercadotecnia_ooh.classList.add("oculto");
         bloque_fondo_mercadotecnia.classList.remove("oculto");
     } else {
         bloque_fondo_mercadotecnia.classList.add("oculto");
-    }
-})
-
-button_fondo_mercadotecnia_ooh.addEventListener("change", () => {
-    if (button_fondo_mercadotecnia_ooh.checked) {
-        // Desmarcar el otro checkbox de mercadotecnia
-        button_fondo_mercadotecnia.checked = false;
-        bloque_fondo_mercadotecnia.classList.add("oculto");
-        bloque_fondo_mercadotecnia_ooh.classList.remove("oculto");
-    } else {
-        bloque_fondo_mercadotecnia_ooh.classList.add("oculto");
     }
 })
 
@@ -336,7 +353,6 @@ formatearMiles(document.getElementById("monto_bono_mercadotecnia"));
 formatearMiles(document.getElementById("monto_nuevas_aperturas"));
 formatearMiles(document.getElementById("maximo_bono"));
 formatearMiles(document.getElementById("monto_fondo_mercadotecnia"));
-formatearMiles(document.getElementById("monto_fondo_mercadotecnia_ooh"));
 formatearMiles(document.getElementById("monto_linea_nuevas_aperturas"));
 
 

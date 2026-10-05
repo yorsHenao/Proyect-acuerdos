@@ -4,7 +4,9 @@
 
 const RESUMEN_ITEMS = [
   { checkbox: "tiene_ads", label: "ADS", campos: [
-      { id: "n_ads", etiqueta: "Porcentaje", sufijo: "%" },
+      { id: "tipo_ads", etiqueta: "Modalidad" },
+      { id: "n_ads", etiqueta: "Porcentaje del aliado", sufijo: "%" },
+      { id: "n_ads_rappi", etiqueta: "Porcentaje de Rappi", sufijo: "%" },
   ]},
   { checkbox: "activa_bono_crecimiento", label: "Bono de Crecimiento", campos: [
       { id: "monto_bono_crecimiento", etiqueta: "Monto", prefijo: "$" },
@@ -21,9 +23,6 @@ const RESUMEN_ITEMS = [
   ]},
   { checkbox: "activa_fondo_mercadotecnia", label: "Fondo de Mercadotecnia", campos: [
       { id: "monto_fondo_mercadotecnia", etiqueta: "Monto", prefijo: "$" },
-  ]},
-  { checkbox: "activa_fondo_mercadotecnia_ooh", label: "Fondo de Mercadotecnia OOH", campos: [
-      { id: "monto_fondo_mercadotecnia_ooh", etiqueta: "Monto", prefijo: "$" },
   ]},
   { checkbox: "activa_linea_nuevas_aperturas", label: "Línea de Nuevas Aperturas", campos: [
       { id: "monto_linea_nuevas_aperturas", etiqueta: "Monto", prefijo: "$" },
@@ -70,8 +69,15 @@ function construirResumen() {
       lista.innerHTML += `<li><strong>Comisión:</strong> Fija, ${valor}%</li>`;
     } else if (comisionRadio.value === "escalonada") {
       const modalidad = document.getElementById("modalidad_escalonada")?.value || "";
-      const tramos = document.querySelectorAll("#bloque-c-escalonada .escalon").length;
-      lista.innerHTML += `<li><strong>Comisión:</strong> Escalonada por ${modalidad} (escalonamiento por ${tramos} periodo${tramos === 1 ? "" : "s"})</li>`;
+      if (modalidad === "ordenes") {
+        const primerAnio = document.getElementById("ordenes_primer_anio")?.value || "";
+        const maxOrdenes = document.getElementById("max_ordenes")?.value || "";
+        const takeRate = document.getElementById("n_comision_1")?.value || "";
+        lista.innerHTML += `<li><strong>Comisión:</strong> Por órdenes, primer año ${primerAnio}%, de 0 a ${maxOrdenes} órdenes al ${takeRate}%</li>`;
+      } else {
+        const tramos = document.querySelectorAll("#bloque-c-escalonada .escalon").length;
+        lista.innerHTML += `<li><strong>Comisión:</strong> Escalonada por ${modalidad} (escalonamiento por ${tramos} periodo${tramos === 1 ? "" : "s"})</li>`;
+      }
     }
   }
 

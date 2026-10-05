@@ -12,16 +12,6 @@ def procesar_fondo_mercadotecnia(aplica, monto, activas, contexto):
     contexto["VALOR_FONDO_MERCADOTECNIA"] = numero_a_letras(monto)
 
 
-def procesar_fondo_mercadotecnia_ooh(aplica, monto, activas, contexto):
-    if not aplica:
-        activas["activa_fondo_mercadotecnia_ooh"] = False
-        return
-    activas["activa_fondo_mercadotecnia_ooh"] = True
-    contexto["N_FONDO_MERCADOTECNIA_OOH"] = formatear_monto(monto)
-    contexto["N_FONDO_MERCADOTECNIA_OOH_NUMERO"] = monto
-    contexto["VALOR_FONDO_MERCADOTECNIA_OOH"] = numero_a_letras(monto)
-
-
 def procesar_linea_nuevas_aperturas(aplica, monto, activas, contexto):
     if not aplica:
         activas["activa_linea_nuevas_aperturas"] = False

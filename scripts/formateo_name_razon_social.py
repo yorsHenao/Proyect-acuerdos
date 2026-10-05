@@ -43,22 +43,22 @@ def formatear_razon_social(texto: str) -> str:
     regimenes = [
         # S. de R.L. de C.V.
         (rf'\bS{SEP}(?:de|DE|De){SEP}R{SEP}L{SEP}(?:de|DE|De){SEP}C{SEP}V\.?(?![A-Za-z])',
-         'S. DE R.L. DE C.V.'),
-        # S.A.P.I de C.V.
+         'S. de R.L. de C.V.'),
+        # S.A.P.I. de C.V.
         (rf'\bS{SEP}A{SEP}P{SEP}I{SEP}(?:de|DE|De){SEP}C{SEP}V\.?(?![A-Za-z])',
-         'S.A.P.I DE C.V.'),
-        # S.A.B de C.V.
+         'S.A.P.I. de C.V.'),
+        # S.A.B. de C.V.
         (rf'\bS{SEP}A{SEP}B{SEP}(?:de|DE|De){SEP}C{SEP}V\.?(?![A-Za-z])',
-         'S.A.B DE C.V.'),
-        # S.A de C.V.
+         'S.A.B. de C.V.'),
+        # S.A. de C.V.
         (rf'\bS{SEP}A{SEP}(?:de|DE|De){SEP}C{SEP}V\.?(?![A-Za-z])',
-         'S.A DE C.V.'),
+         'S.A. de C.V.'),
         # S.A.S.
         (rf'\bS{SEP}A{SEP}S\.?(?![A-Za-z])',
          'S.A.S.'),
         # S. de R.L.
         (rf'\bS{SEP}(?:de|DE|De){SEP}R{SEP}L\.?(?![A-Za-z])',
-         'S. DE R.L.'),
+         'S. de R.L.'),
     ]
 
     for patron, reemplazo in regimenes:
@@ -87,7 +87,7 @@ def formatear_direccion(texto: str) -> str:
         "no": "No.",
         "num": "No.",
         "av": "Av.",
-        "col": "Col.",
+        "col": "Colonia.",
         "apto": "Apto.",
         "dep": "Dep.",
         "depto": "Dep.",

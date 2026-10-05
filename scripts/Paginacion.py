@@ -9,7 +9,6 @@ CATALOGO_CLAUSULAS = [
     ("NUM_BONO_NUEVAS_APERTURAS_POSTERIOR", "activa_bono_nuevas_aperturas"),
     ("NUM_BONO_NUEVAS_APERTURAS_PREVIO", "activa_bono_nuevas_aperturas_previo"),
     ("NUM_FONDO_MERCADOTECNIA", "activa_fondo_mercadotecnia"),
-    ("NUM_FONDO_MERCADOTECNIA_OOH", "activa_fondo_mercadotecnia_ooh"),
     ("NUM_LINEA_NUEVAS_APERTURAS", "activa_linea_nuevas_aperturas"),
     ("NUM_INCUMPLIMIENTO_BONO_Y_FONDO", "activa_incumplimiento_bono_fondo"),
     ("NUM_INCUMPLIMIENTO_EXCLUSIVIDAD_Y_SEMI", "activa_incumplimiento_exclusividad"),
@@ -45,6 +44,37 @@ def numero_a_ordinal(numero):
     }
     return ordinales.get(numero, str(numero))
 
+OBLIGACIONES_CLAUSULA_CUARTA = [
+    ("ROM_ADS", "activa_ads"),
+    ("ROM_DESCUENTO_MENU", "activa_descuento_menu"),
+    ("ROM_MARK_DOWN", "activa_mark_down"),
+    ("ROM_REDES", "activa_publicaciones_redes"),
+    ("ROM_PLATILLOS", "activa_platillos_top_seller"),
+]
+
+_ROMANOS = [
+    (10, "x"), (9, "ix"), (5, "v"), (4, "iv"), (1, "i"),
+]
+
+
+def _a_romano(numero):
+    resto = numero
+    partes = []
+    for valor, simbolo in _ROMANOS:
+        while resto >= valor:
+            partes.append(simbolo)
+            resto -= valor
+    return "".join(partes)
+
+
+def asignar_numeracion_obligaciones(activas, contexto):
+    numero = 18
+    for variable, flag in OBLIGACIONES_CLAUSULA_CUARTA:
+        if activas.get(flag):
+            contexto[variable] = f"({_a_romano(numero)})"
+            numero += 1
+
+
 def asignar_numeracion_clausulas(activas, contexto):
     contador = 14  # Las cláusulas 1 a 13 son fijas en la plantilla
     
@@ -64,7 +94,6 @@ if __name__ == "__main__":
         "activa_bono_nuevas_aperturas": True,
         "activa_bono_nuevas_aperturas_previo": False,
         "activa_fondo_mercadotecnia": True,
-        "activa_fondo_mercadotecnia_ooh": False,
         "activa_linea_nuevas_aperturas": True,
         "activa_compromisos_adicionales": True
     }

@@ -38,30 +38,11 @@ def procesar_comision_por_mes(tramos, contexto):
     contexto["comision_escalonada"] = "\n".join(lineas)
 
 
-def procesar_comision_por_ordenes(tramos, contexto):
-    lineas = []
-    orden_inicio = 1
-
-    for indice, tramo in enumerate(tramos):
-        porcentaje = tramo["porcentaje"]
-        porcentaje_texto = f"{porcentaje}% ({numero_a_letras(porcentaje)} por ciento) más IVA"
-
-        if tramo["es_ultimo"]:
-            periodo = f"A partir de {orden_inicio} órdenes en adelante"
-            lineas.append(f"{ROMANOS[indice]}) {periodo}: {porcentaje_texto}.")
-            break
-
-        orden_fin = tramo["orden_fin"]
-
-        if orden_fin < orden_inicio:
-            raise ValueError(f"El número final de órdenes ({orden_fin}) no puede ser menor al inicial ({orden_inicio}) en el escalón {indice + 1}.")
-
-        periodo = f"{orden_inicio} órdenes" if orden_inicio == orden_fin else f"De {orden_inicio} a {orden_fin} órdenes"
-        lineas.append(f"{ROMANOS[indice]}) {periodo}: {porcentaje_texto}.")
-
-        orden_inicio = orden_fin + 1
-
-    contexto["comision_escalonada_ordenes"] = "\n".join(lineas)
+def procesar_comision_por_ordenes(porcentaje_primer_anio, max_ordenes, porcentaje_banda, contexto):
+    contexto["n_comision_fija"] = porcentaje_primer_anio
+    contexto["valor_comision_fija"] = numero_a_letras(porcentaje_primer_anio)
+    contexto["max_ordenes"] = max_ordenes
+    contexto["n_comision_1"] = porcentaje_banda
 
 
 def procesar_comision_por_ventas(tramos, contexto):
