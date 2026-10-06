@@ -108,6 +108,8 @@
           id="n_meses_descuento_menu"
           name="n_meses_descuento_menu"
           placeholder="Ej. 3"
+          min="1"
+          max="99"
           value="{{ form_data.get('n_meses_descuento_menu', '') }}"
           class="{% if errores.get('n_meses_descuento_menu') %}input-error{% endif %}"
         />

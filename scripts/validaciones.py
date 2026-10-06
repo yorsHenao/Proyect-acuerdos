@@ -294,7 +294,7 @@ def validar_formulario(form):
             ("num_establecimientos", "El número de establecimientos debe tener de 1 a 3 dígitos.", lambda form, campo: _fuera_de_rango(form, campo, 1, 999)),
             ("meses_apertura", "Los meses para abrir establecimientos deben tener de 1 a 3 dígitos.", lambda form, campo: _fuera_de_rango(form, campo, 1, 999)),
             ("maximo_bono", "Indica el apoyo máximo por establecimiento.", _no_es_monto),
-            ("periodo_amortizacion", "Indica el periodo de amortización.", _no_es_numero),
+            ("periodo_amortizacion", "El periodo de amortización debe tener de 1 a 2 dígitos (1 a 99).", lambda form, campo: _fuera_de_rango(form, campo, 1, 99)),
         ]:
             if validador(form, campo):
                 errores[campo] = etiqueta
@@ -310,8 +310,8 @@ def validar_formulario(form):
     if "activa_descuento_menu" in form:
         if _no_es_porcentaje_dos_digitos(form, "n_descuento_menu"):
             errores["n_descuento_menu"] = "El porcentaje de descuento en menú debe tener mínimo 2 dígitos (10 a 99)."
-        if _no_es_numero(form, "n_meses_descuento_menu"):
-            errores["n_meses_descuento_menu"] = "Indica los meses de descuento en menú."
+        if _fuera_de_rango(form, "n_meses_descuento_menu", 1, 99):
+            errores["n_meses_descuento_menu"] = "Los meses de descuento en menú deben estar entre 1 y 99."
 
     if "activa_mark_down" in form and _no_es_porcentaje_dos_digitos(form, "n_descuento_mark_down"):
         errores["n_descuento_mark_down"] = "El porcentaje de mark down debe tener mínimo 2 dígitos (10 a 99)."

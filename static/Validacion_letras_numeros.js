@@ -52,6 +52,8 @@ restringirCaracteres("direccion_juridica", regexDirecciones, 200);
 restringirCaracteres("representante_legal_juridica", regexNombres, 100);
 restringirCaracteres("notario", regexNombres, 100);
 limiteNumeros("numero_notaria", 20);
+
+// Datos contrato
 limiteNumeros("vigencia_meses", 2);
 limiteNumeros("n_ads", 2);
 limiteNumeros("n_ads_rappi", 2);
@@ -67,6 +69,8 @@ limiteNumeros("n_descuento_redes", 2);
 limiteNumeros("n_cantidad_platillos", 3);
 limiteNumeros("n_descuento_platillos", 2);
 limiteNumeros("n_meses_descuento_platillos", 3);
+limiteNumeros("periodo_amortizacion", 2);
+limiteNumeros("n_meses_descuento_menu", 2);
 restringirCaracteres("ubicacion_notaria", regexDirecciones, 200);
 restringirCaracteres("n_folio_mercantil", regexAlfanumerico, 100);
 restringirCaracteres("marca_juridica", regexRazonesSociales, 100);

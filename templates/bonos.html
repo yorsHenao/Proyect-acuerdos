@@ -174,7 +174,7 @@
       </div>
       <div>
         <label for="periodo_amortizacion">Periodo de amortización (meses)</label>
-        <input type="number" id="periodo_amortizacion" name="periodo_amortizacion" placeholder="Ej. 12" value="{{ form_data.get('periodo_amortizacion', '') }}" class="{% if errores.get('periodo_amortizacion') %}input-error{% endif %}" />
+        <input type="number" id="periodo_amortizacion" name="periodo_amortizacion" placeholder="Ej. 12" min="1" max="99" value="{{ form_data.get('periodo_amortizacion', '') }}" class="{% if errores.get('periodo_amortizacion') %}input-error{% endif %}" />
         {% if errores.get('periodo_amortizacion') %}
         <span class="mensaje-error">{{ errores['periodo_amortizacion'] }}</span>
         {% endif %}
