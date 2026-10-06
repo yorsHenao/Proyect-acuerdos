@@ -55,13 +55,13 @@ limiteNumeros("numero_notaria", 20);
 
 // Datos contrato
 limiteNumeros("vigencia_meses", 2);
-limiteNumeros("n_ads", 2);
-limiteNumeros("n_ads_rappi", 2);
+limiteNumeros("n_ads", 1);
+limiteNumeros("n_ads_rappi", 1);
 limiteNumeros("n_comision_fija", 2);
 limiteNumeros("ordenes_primer_anio", 2);
 limiteNumeros("max_ordenes", 3);
 limiteNumeros("n_comision_1", 2);
-limiteNumeros("num_establecimientos", 3);
+limiteNumeros("num_establecimientos", 1);
 limiteNumeros("meses_apertura", 3);
 limiteNumeros("n_descuento_menu", 2);
 limiteNumeros("n_descuento_mark_down", 2);

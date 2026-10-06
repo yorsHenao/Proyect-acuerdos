@@ -416,6 +416,28 @@ function inicializarMontosConComas() {
     });
 }
 
+function prepararFormularioParaEnvio() {
+    const formulario = document.getElementById("form-acuerdo");
+    if (!formulario) {
+        return;
+    }
+    formulario.querySelectorAll("input, select, textarea").forEach((campo) => {
+        campo.disabled = campo.closest(".oculto") !== null;
+    });
+}
+
+document.addEventListener(
+    "click",
+    (evento) => {
+        const boton = evento.target.closest('button[type="submit"][form="form-acuerdo"]');
+        if (!boton) {
+            return;
+        }
+        prepararFormularioParaEnvio();
+    },
+    true
+);
+
 document.addEventListener("DOMContentLoaded", () => {
     inicializarMontosConComas();
     formatearEscritura(document.getElementById("n_acta_constitutiva"));

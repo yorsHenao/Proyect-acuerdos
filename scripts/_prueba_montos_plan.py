@@ -54,7 +54,7 @@ def main():
         html = client.get("/acuerdos").data.decode()
         if "input-monto" not in html:
             errores.append("falta clase input-monto en HTML")
-        if "formulario.js?v=20261005c" not in html:
+        if "formulario.js?v=20261005g" not in html:
             errores.append("falta cache bust formulario.js")
         for campo in (
             "monto_bono_crecimiento",

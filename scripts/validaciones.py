@@ -31,6 +31,14 @@ def _no_es_porcentaje_dos_digitos(form, campo):
     return numero < 10 or numero > 99
 
 
+def _no_es_porcentaje_un_digito(form, campo):
+    valor = form.get(campo, "")
+    if valor is None or not str(valor).strip().isdigit():
+        return True
+    numero = int(str(valor).strip())
+    return numero < 1 or numero > 9
+
+
 def _fuera_de_rango(form, campo, minimo, maximo):
     valor = form.get(campo, "")
     if valor is None or not str(valor).strip().isdigit():
@@ -223,13 +231,13 @@ def validar_formulario(form):
             errores["tipo_ads"] = "Selecciona la modalidad de ADS."
         if _falta(form, "n_ads"):
             errores["n_ads"] = "Indica el porcentaje de ADS."
-        elif _no_es_porcentaje_dos_digitos(form, "n_ads"):
-            errores["n_ads"] = "El porcentaje de ADS debe estar entre 10 y 99."
+        elif _no_es_porcentaje_un_digito(form, "n_ads"):
+            errores["n_ads"] = "El porcentaje de ADS debe ser de un dígito (1 a 9)."
         if form.get("tipo_ads") == "aliado_y_rappi":
             if _falta(form, "n_ads_rappi"):
                 errores["n_ads_rappi"] = "Indica el porcentaje de ADS de Rappi."
-            elif _no_es_porcentaje_dos_digitos(form, "n_ads_rappi"):
-                errores["n_ads_rappi"] = "El porcentaje de ADS de Rappi debe estar entre 10 y 99."
+            elif _no_es_porcentaje_un_digito(form, "n_ads_rappi"):
+                errores["n_ads_rappi"] = "El porcentaje de ADS de Rappi debe ser de un dígito (1 a 9)."
 
     # --- comisión ---
     tipo_comision = form.get("tipo_comision")
@@ -291,7 +299,7 @@ def validar_formulario(form):
             errores["tipo_nuevas_aperturas"] = "Selecciona el tipo de bono de nuevas aperturas."
         for campo, etiqueta, validador in [
             ("monto_nuevas_aperturas", "Indica el monto del bono de nuevas aperturas.", _no_es_monto),
-            ("num_establecimientos", "El número de establecimientos debe tener de 1 a 3 dígitos.", lambda form, campo: _fuera_de_rango(form, campo, 1, 999)),
+            ("num_establecimientos", "El número de establecimientos debe ser de un dígito (1 a 9).", lambda form, campo: _fuera_de_rango(form, campo, 1, 9)),
             ("meses_apertura", "Los meses para abrir establecimientos deben tener de 1 a 3 dígitos.", lambda form, campo: _fuera_de_rango(form, campo, 1, 999)),
             ("maximo_bono", "Indica el apoyo máximo por establecimiento.", _no_es_monto),
             ("periodo_amortizacion", "El periodo de amortización debe tener de 1 a 2 dígitos (1 a 99).", lambda form, campo: _fuera_de_rango(form, campo, 1, 99)),
@@ -313,8 +321,8 @@ def validar_formulario(form):
         if _fuera_de_rango(form, "n_meses_descuento_menu", 1, 99):
             errores["n_meses_descuento_menu"] = "Los meses de descuento en menú deben estar entre 1 y 99."
 
-    if "activa_mark_down" in form and _no_es_porcentaje_dos_digitos(form, "n_descuento_mark_down"):
-        errores["n_descuento_mark_down"] = "El porcentaje de mark down debe tener mínimo 2 dígitos (10 a 99)."
+    if "activa_mark_down" in form and _fuera_de_rango(form, "n_descuento_mark_down", 1, 99):
+        errores["n_descuento_mark_down"] = "El porcentaje de mark down debe estar entre 1 y 99."
 
     if "activa_publicaciones_redes" in form and _fuera_de_rango(form, "n_descuento_redes", 1, 99):
         errores["n_descuento_redes"] = "La cantidad de publicaciones debe estar entre 1 y 99."
