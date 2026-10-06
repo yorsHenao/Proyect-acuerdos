@@ -150,6 +150,8 @@
           id="n_descuento_redes"
           name="n_descuento_redes"
           placeholder="Ej. 4"
+          min="1"
+          max="99"
           value="{{ form_data.get('n_descuento_redes', '') }}"
           class="{% if errores.get('n_descuento_redes') %}input-error{% endif %}"
         />
@@ -170,6 +172,8 @@
           id="n_cantidad_platillos"
           name="n_cantidad_platillos"
           placeholder="Ej. 5"
+          min="1"
+          max="999"
           value="{{ form_data.get('n_cantidad_platillos', '') }}"
           class="{% if errores.get('n_cantidad_platillos') %}input-error{% endif %}"
         />
@@ -200,6 +204,8 @@
           id="n_meses_descuento_platillos"
           name="n_meses_descuento_platillos"
           placeholder="Ej. 3"
+          min="1"
+          max="999"
           value="{{ form_data.get('n_meses_descuento_platillos', '') }}"
           class="{% if errores.get('n_meses_descuento_platillos') %}input-error{% endif %}"
         />

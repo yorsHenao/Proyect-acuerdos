@@ -105,6 +105,8 @@
             id="max_ordenes"
             name="max_ordenes"
             placeholder="Ej. 500"
+            min="1"
+            max="999"
             value="{{ form_data.get('max_ordenes', '') }}"
             class="{% if errores.get('max_ordenes') %}input-error{% endif %}"
           />

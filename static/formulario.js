@@ -329,31 +329,111 @@ window.addEventListener("scroll", actualizarMenuActivo);
 window.addEventListener("resize", actualizarMenuActivo);
 actualizarMenuActivo();
 
+const MAX_DIGITOS_MONTO = 9;
+const IDS_MONTOS = [
+    "monto_bono_crecimiento",
+    "monto_bono_mercadotecnia",
+    "monto_nuevas_aperturas",
+    "maximo_bono",
+    "monto_fondo_mercadotecnia",
+    "monto_linea_nuevas_aperturas",
+];
+
+function posicionTrasDigitos(texto, cantidadDigitos) {
+    if (cantidadDigitos <= 0) {
+        return 0;
+    }
+    let vistos = 0;
+    for (let indice = 0; indice < texto.length; indice += 1) {
+        if (texto[indice] !== ",") {
+            vistos += 1;
+        }
+        if (vistos >= cantidadDigitos) {
+            return indice + 1;
+        }
+    }
+    return texto.length;
+}
+
+function valorMontoFormateado(texto, digitosAntesCursor) {
+    let entero = texto.replace(/\D/g, "").replace(/^0+(?=\d)/, "");
+    if (entero === "") {
+        return { valor: "", cursor: 0 };
+    }
+    if (entero.length > MAX_DIGITOS_MONTO) {
+        entero = entero.slice(0, MAX_DIGITOS_MONTO);
+    }
+    const formateado = entero.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const cursor = digitosAntesCursor === null
+        ? formateado.length
+        : posicionTrasDigitos(formateado, digitosAntesCursor);
+    return { valor: formateado, cursor };
+}
+
+function aplicarFormatoMonto(input, moverCursor) {
+    const cursor = input.selectionStart ?? input.value.length;
+    const digitosAntes = moverCursor
+        ? input.value.slice(0, cursor).replace(/\D/g, "").length
+        : null;
+    const resultado = valorMontoFormateado(input.value, digitosAntes);
+    input.value = resultado.valor;
+    if (moverCursor && typeof input.setSelectionRange === "function") {
+        input.setSelectionRange(resultado.cursor, resultado.cursor);
+    }
+}
+
+function formatearMiles(input) {
+    if (!input || input.dataset.montoFormateado === "si") {
+        return;
+    }
+    input.dataset.montoFormateado = "si";
+    input.addEventListener("input", () => aplicarFormatoMonto(input, true));
+    input.addEventListener("paste", (evento) => {
+        evento.preventDefault();
+        const pegado = (evento.clipboardData || window.clipboardData).getData("text");
+        const inicio = input.selectionStart ?? input.value.length;
+        const fin = input.selectionEnd ?? input.value.length;
+        input.value = input.value.slice(0, inicio) + pegado + input.value.slice(fin);
+        aplicarFormatoMonto(input, true);
+    });
+    if (input.value.trim() !== "") {
+        aplicarFormatoMonto(input, false);
+    }
+}
+
+function inicializarMontosConComas() {
+    const vistos = new Set();
+    document.querySelectorAll(".input-monto").forEach((input) => {
+        formatearMiles(input);
+        vistos.add(input.id);
+    });
+    IDS_MONTOS.forEach((id) => {
+        const input = document.getElementById(id);
+        if (input && !vistos.has(id)) {
+            input.classList.add("input-monto");
+            formatearMiles(input);
+        }
+    });
+}
 
 document.addEventListener("DOMContentLoaded", () => {
+    inicializarMontosConComas();
+    formatearEscritura(document.getElementById("n_acta_constitutiva"));
+
     const primerError = Array.from(document.querySelectorAll(".input-error"))
         .find((el) => el.closest(".oculto") === null);
     if (primerError) {
         primerError.scrollIntoView({ behavior: "smooth", block: "center" });
         primerError.focus();
-    } 
-})
+    }
+});
 
-
-function formatearMiles(input) {
+function formatearEscritura(input) {
     input.addEventListener("input", () => {
-        let soloNumeros = input.value.replace(/\D/g, "");
-
-        input.value = soloNumeros.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        const digitos = input.value.replace(/\D/g, "").replace(/^0+(?=\d)/, "");
+        input.value = digitos.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     });
 }
-
-formatearMiles(document.getElementById("monto_bono_crecimiento"));
-formatearMiles(document.getElementById("monto_bono_mercadotecnia"));
-formatearMiles(document.getElementById("monto_nuevas_aperturas"));
-formatearMiles(document.getElementById("maximo_bono"));
-formatearMiles(document.getElementById("monto_fondo_mercadotecnia"));
-formatearMiles(document.getElementById("monto_linea_nuevas_aperturas"));
 
 
 

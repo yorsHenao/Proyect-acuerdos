@@ -31,13 +31,21 @@ def _no_es_porcentaje_dos_digitos(form, campo):
     return numero < 10 or numero > 99
 
 
+def _fuera_de_rango(form, campo, minimo, maximo):
+    valor = form.get(campo, "")
+    if valor is None or not str(valor).strip().isdigit():
+        return True
+    numero = int(str(valor).strip())
+    return numero < minimo or numero > maximo
+
+
 def _no_es_numero(form, campo):
     valor = form.get(campo, "")
     if valor is None or valor.strip() == "":
         return True
     try:
         numero = float(valor)
-        return numero < 0  
+        return numero < 0
     except ValueError:
         return True
 
@@ -46,11 +54,19 @@ def _no_es_monto(form, campo):
     valor = form.get(campo, "")
     if valor is None or valor.strip() == "":
         return True
-    try:
-        monto = int(valor.replace(".", ""))
-        return monto < 0  
-    except ValueError:
+    texto = valor.strip().replace(",", "")
+    if not re.fullmatch(r"\d+(\.\d{1,2})?", texto):
         return True
+    if "." in texto:
+        entero, decimal = texto.split(".", 1)
+        if int(decimal) != 0:
+            return True
+    else:
+        entero = texto
+    if len(entero) > 9:
+        return True
+    monto = int(entero)
+    return monto < 0
 
 
 def _no_cumple_formato(form, campo, patron):
@@ -159,8 +175,10 @@ def validar_formulario(form):
 
         if _falta(form, "n_acta_constitutiva"):
             errores["n_acta_constitutiva"] = "El número de acta constitutiva es obligatorio."
-        elif _no_cumple_formato(form, "n_acta_constitutiva", REGEX_ALFANUMERICO):
-            errores["n_acta_constitutiva"] = "El número de acta tiene caracteres no permitidos."
+        else:
+            digitos = form.get("n_acta_constitutiva", "").replace(".", "")
+            if not digitos.isdigit():
+                errores["n_acta_constitutiva"] = "El número de acta solo puede contener números."
 
         if _falta(form, "notario"):
             errores["notario"] = "El nombre del notario es obligatorio."
@@ -194,10 +212,8 @@ def validar_formulario(form):
     else:
         try:
             vigencia = int(form.get("vigencia_meses"))
-            if vigencia < 1:
-                errores["vigencia_meses"] = "La vigencia debe ser mayor a 0 meses."
-            elif vigencia > 120:
-                errores["vigencia_meses"] = "La vigencia no puede exceder 120 meses."
+            if vigencia < 1 or vigencia > 99:
+                errores["vigencia_meses"] = "La vigencia debe estar entre 1 y 99 meses."
         except (ValueError, TypeError):
             errores["vigencia_meses"] = "La vigencia debe ser un número válido."
 
@@ -208,12 +224,12 @@ def validar_formulario(form):
         if _falta(form, "n_ads"):
             errores["n_ads"] = "Indica el porcentaje de ADS."
         elif _no_es_porcentaje_dos_digitos(form, "n_ads"):
-            errores["n_ads"] = "El porcentaje de ADS debe tener mínimo 2 dígitos (10 a 99)."
+            errores["n_ads"] = "El porcentaje de ADS debe estar entre 10 y 99."
         if form.get("tipo_ads") == "aliado_y_rappi":
             if _falta(form, "n_ads_rappi"):
                 errores["n_ads_rappi"] = "Indica el porcentaje de ADS de Rappi."
             elif _no_es_porcentaje_dos_digitos(form, "n_ads_rappi"):
-                errores["n_ads_rappi"] = "El porcentaje de ADS de Rappi debe tener mínimo 2 dígitos (10 a 99)."
+                errores["n_ads_rappi"] = "El porcentaje de ADS de Rappi debe estar entre 10 y 99."
 
     # --- comisión ---
     tipo_comision = form.get("tipo_comision")
@@ -230,16 +246,16 @@ def validar_formulario(form):
             if _falta(form, "n_comision_fija"):
                 errores["n_comision_fija"] = "El porcentaje de comisión fija es obligatorio."
             elif _no_es_porcentaje_dos_digitos(form, "n_comision_fija"):
-                errores["n_comision_fija"] = "La comisión fija debe tener mínimo 2 dígitos (10 a 99)."
+                errores["n_comision_fija"] = "La comisión fija debe estar entre 10 y 99."
         elif tipo_comision_final == "ventas":
             errores["modalidad_escalonada"] = "La comisión por ventas no está disponible."
         elif tipo_comision_final == "ordenes":
             if _falta(form, "ordenes_primer_anio") or _no_es_porcentaje_dos_digitos(form, "ordenes_primer_anio"):
-                errores["ordenes_primer_anio"] = "El porcentaje del primer año debe tener mínimo 2 dígitos (10 a 99)."
-            if _falta(form, "max_ordenes") or _no_es_numero(form, "max_ordenes"):
-                errores["max_ordenes"] = "Indica el máximo de órdenes."
+                errores["ordenes_primer_anio"] = "El porcentaje del primer año debe estar entre 10 y 99."
+            if _falta(form, "max_ordenes") or _fuera_de_rango(form, "max_ordenes", 1, 999):
+                errores["max_ordenes"] = "El máximo de órdenes debe tener de 1 a 3 dígitos."
             if _falta(form, "n_comision_1") or _no_es_porcentaje_dos_digitos(form, "n_comision_1"):
-                errores["n_comision_1"] = "El take rate debe tener mínimo 2 dígitos (10 a 99)."
+                errores["n_comision_1"] = "El take rate debe estar entre 10 y 99."
         elif tipo_comision_final == "mes":
             if f"escalon_0_porcentaje" not in form:
                 errores["escalon_0_porcentaje"] = "Agrega al menos un tramo de comisión."
@@ -248,15 +264,15 @@ def validar_formulario(form):
                 while f"escalon_{indice}_porcentaje" in form:
                     campo_pct = f"escalon_{indice}_porcentaje"
                     if _no_es_porcentaje_dos_digitos(form, campo_pct):
-                        errores[campo_pct] = f"El porcentaje del tramo {indice + 1} debe tener mínimo 2 dígitos (10 a 99)."
+                        errores[campo_pct] = f"El porcentaje del tramo {indice + 1} debe estar entre 10 y 99."
 
                     es_ultimo = form.get(f"escalon_{indice}_es_ultimo") == "si"
                     if not es_ultimo:
                         campo_fin = f"escalon_{indice}_fin"
                         if _falta(form, campo_fin):
                             errores[campo_fin] = f"Completa el límite del tramo {indice + 1}."
-                        elif _no_es_numero(form, campo_fin):
-                            errores[campo_fin] = f"El límite del tramo {indice + 1} debe ser un número."
+                        elif _fuera_de_rango(form, campo_fin, 1, 999):
+                            errores[campo_fin] = f"El límite del tramo {indice + 1} debe tener de 1 a 3 dígitos."
                     indice += 1
 
     # --- exclusividad ---
@@ -275,8 +291,8 @@ def validar_formulario(form):
             errores["tipo_nuevas_aperturas"] = "Selecciona el tipo de bono de nuevas aperturas."
         for campo, etiqueta, validador in [
             ("monto_nuevas_aperturas", "Indica el monto del bono de nuevas aperturas.", _no_es_monto),
-            ("num_establecimientos", "Indica el número de establecimientos.", _no_es_numero),
-            ("meses_apertura", "Indica los meses para abrir los establecimientos.", _no_es_numero),
+            ("num_establecimientos", "El número de establecimientos debe tener de 1 a 3 dígitos.", lambda form, campo: _fuera_de_rango(form, campo, 1, 999)),
+            ("meses_apertura", "Los meses para abrir establecimientos deben tener de 1 a 3 dígitos.", lambda form, campo: _fuera_de_rango(form, campo, 1, 999)),
             ("maximo_bono", "Indica el apoyo máximo por establecimiento.", _no_es_monto),
             ("periodo_amortizacion", "Indica el periodo de amortización.", _no_es_numero),
         ]:
@@ -300,16 +316,16 @@ def validar_formulario(form):
     if "activa_mark_down" in form and _no_es_porcentaje_dos_digitos(form, "n_descuento_mark_down"):
         errores["n_descuento_mark_down"] = "El porcentaje de mark down debe tener mínimo 2 dígitos (10 a 99)."
 
-    if "activa_publicaciones_redes" in form and _no_es_numero(form, "n_descuento_redes"):
-        errores["n_descuento_redes"] = "Indica el porcentaje de descuento en redes."
+    if "activa_publicaciones_redes" in form and _fuera_de_rango(form, "n_descuento_redes", 1, 99):
+        errores["n_descuento_redes"] = "La cantidad de publicaciones debe estar entre 1 y 99."
 
     if "activa_platillos_top_seller" in form:
-        if _no_es_numero(form, "n_cantidad_platillos"):
-            errores["n_cantidad_platillos"] = "Indica la cantidad de platillos."
+        if _fuera_de_rango(form, "n_cantidad_platillos", 1, 999):
+            errores["n_cantidad_platillos"] = "La cantidad de platillos debe tener de 1 a 3 dígitos."
         if _no_es_porcentaje_dos_digitos(form, "n_descuento_platillos"):
-            errores["n_descuento_platillos"] = "El porcentaje de descuento en platillos debe tener mínimo 2 dígitos (10 a 99)."
-        if _no_es_numero(form, "n_meses_descuento_platillos"):
-            errores["n_meses_descuento_platillos"] = "Indica los meses de descuento en platillos."
+            errores["n_descuento_platillos"] = "El porcentaje de descuento en platillos debe estar entre 10 y 99."
+        if _fuera_de_rango(form, "n_meses_descuento_platillos", 1, 999):
+            errores["n_meses_descuento_platillos"] = "Los meses de platillos deben tener de 1 a 3 dígitos."
 
     # --- correos ---
     if _falta(form, "correo_comercial"):

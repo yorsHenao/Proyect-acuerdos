@@ -1,2 +1,2 @@
 def formatear_monto(valor):
-    return f"{int(valor):,}".replace(".", ",")
+    return f"{int(valor):,.2f}"

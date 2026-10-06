@@ -36,6 +36,7 @@ def procesar_platillos_top_seller(aplica, cantidad, porcentaje, meses, activas, 
         return
     activas["activa_platillos_top_seller"] = True
     contexto["N_CANTIDAD_PLATILLOS"] = cantidad
+    contexto["VALOR_CANTIDAD_PLATILLOS"] = numero_a_letras(cantidad)
     contexto["N_DESCUENTO_PLATILLOS"] = porcentaje
     contexto["VALOR_DESCUENTO_PLATILLOS"] = numero_a_letras(porcentaje)
     contexto["N_MESES_DESCUENTO_PLATILLOS"] = meses

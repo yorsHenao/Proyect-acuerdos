@@ -18,7 +18,11 @@ def fecha_larga(fecha_iso: str) -> str:
 
 
 def entero_monto(valor: str) -> int:
-    return int(valor.replace(".", ""))
+    texto = valor.strip().replace(",", "")
+    if "." in texto:
+        entero, _decimal = texto.split(".", 1)
+        return int(entero)
+    return int(texto)
 
 
 app = Flask(__name__)
@@ -82,7 +86,7 @@ def generar():
         datos["representante_legal"] = request.form["representante_legal_juridica"]
         datos["direccion"] = request.form["direccion_juridica"]
         datos["marca"] = request.form["marca_juridica"]
-        datos["n_acta_constitutiva"] = request.form["n_acta_constitutiva"]
+        datos["n_acta_constitutiva"] = request.form["n_acta_constitutiva"].replace(".", "")
         datos["fecha_acta_constitutiva"] = fecha_larga(request.form["fecha_acta_constitutiva"])
         datos["notario"] = request.form["notario"]
         datos["numero_notaria"] = request.form["numero_notaria"]

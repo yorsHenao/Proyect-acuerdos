@@ -66,12 +66,13 @@
         <p>Bono de Crecimiento</p>
         <label for="monto_bono_crecimiento">Monto</label>
         <input
-          type="number"
+          type="text"
+          autocomplete="off"
           id="monto_bono_crecimiento"
           name="monto_bono_crecimiento"
-          placeholder="Ej. 50000"
+          placeholder="Ej. 10,000,000"
           value="{{ form_data.get('monto_bono_crecimiento', '') }}"
-          class="{% if errores.get('monto_bono_crecimiento') %}input-error{% endif %}"
+          class="input-monto {% if errores.get('monto_bono_crecimiento') %}input-error{% endif %}"
         />
         {% if errores.get('monto_bono_crecimiento') %}
         <span class="mensaje-error">{{ errores['monto_bono_crecimiento'] }}</span>
@@ -87,12 +88,13 @@
         <p>Bono de Mercadotecnia</p>
         <label for="monto_bono_mercadotecnia">Monto</label>
         <input
-          type="number"
+          type="text"
+          autocomplete="off"
           id="monto_bono_mercadotecnia"
           name="monto_bono_mercadotecnia"
-          placeholder="Ej. 50000"
+          placeholder="Ej. 10,000,000"
           value="{{ form_data.get('monto_bono_mercadotecnia', '') }}"
-          class="{% if errores.get('monto_bono_mercadotecnia') %}input-error{% endif %}"
+          class="input-monto {% if errores.get('monto_bono_mercadotecnia') %}input-error{% endif %}"
         />
         {% if errores.get('monto_bono_mercadotecnia') %}
         <span class="mensaje-error">{{ errores['monto_bono_mercadotecnia'] }}</span>
@@ -144,28 +146,28 @@
     <div id="bloque-inf-aperturas-previo" class="fila-auto-3">
       <div>
         <label for="monto_nuevas_aperturas">Monto Bono Nuevas Aperturas</label>
-        <input type="number" id="monto_nuevas_aperturas" name="monto_nuevas_aperturas" placeholder="Ej. 50000" value="{{ form_data.get('monto_nuevas_aperturas', '') }}" class="{% if errores.get('monto_nuevas_aperturas') %}input-error{% endif %}" />
+        <input type="text" autocomplete="off" id="monto_nuevas_aperturas" name="monto_nuevas_aperturas" placeholder="Ej. 10,000,000" value="{{ form_data.get('monto_nuevas_aperturas', '') }}" class="input-monto {% if errores.get('monto_nuevas_aperturas') %}input-error{% endif %}" />
         {% if errores.get('monto_nuevas_aperturas') %}
         <span class="mensaje-error">{{ errores['monto_nuevas_aperturas'] }}</span>
         {% endif %}
       </div>
       <div>
         <label for="num_establecimientos">Número de establecimientos</label>
-        <input type="number" id="num_establecimientos" name="num_establecimientos" placeholder="Ej. 3" value="{{ form_data.get('num_establecimientos', '') }}" class="{% if errores.get('num_establecimientos') %}input-error{% endif %}" />
+        <input type="number" id="num_establecimientos" name="num_establecimientos" placeholder="Ej. 3" min="1" max="999" value="{{ form_data.get('num_establecimientos', '') }}" class="{% if errores.get('num_establecimientos') %}input-error{% endif %}" />
         {% if errores.get('num_establecimientos') %}
         <span class="mensaje-error">{{ errores['num_establecimientos'] }}</span>
         {% endif %}
       </div>
       <div>
         <label for="meses_apertura">Meses para abrir los establecimientos</label>
-        <input type="number" id="meses_apertura" name="meses_apertura" placeholder="Ej. 6" value="{{ form_data.get('meses_apertura', '') }}" class="{% if errores.get('meses_apertura') %}input-error{% endif %}" />
+        <input type="number" id="meses_apertura" name="meses_apertura" placeholder="Ej. 6" min="1" max="999" value="{{ form_data.get('meses_apertura', '') }}" class="{% if errores.get('meses_apertura') %}input-error{% endif %}" />
         {% if errores.get('meses_apertura') %}
         <span class="mensaje-error">{{ errores['meses_apertura'] }}</span>
         {% endif %}
       </div>
       <div>
         <label for="maximo_bono">Apoyo máximo por establecimiento</label>
-        <input type="number" id="maximo_bono" name="maximo_bono" placeholder="Ej. 20000" value="{{ form_data.get('maximo_bono', '') }}" class="{% if errores.get('maximo_bono') %}input-error{% endif %}" />
+        <input type="text" autocomplete="off" id="maximo_bono" name="maximo_bono" placeholder="Ej. 10,000,000" value="{{ form_data.get('maximo_bono', '') }}" class="input-monto {% if errores.get('maximo_bono') %}input-error{% endif %}" />
         {% if errores.get('maximo_bono') %}
         <span class="mensaje-error">{{ errores['maximo_bono'] }}</span>
         {% endif %}
