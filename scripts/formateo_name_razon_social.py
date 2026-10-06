@@ -69,11 +69,7 @@ def formatear_razon_social(texto: str) -> str:
 
 def formatear_direccion(texto: str) -> str:
     """
-    Formatea una dirección respetando abreviaturas conocidas (Col., Av., No.,
-    C.P, Apto., Dep., Blvd., Fracc., Int., Ext.), sin importar como el
-    usuario las haya escrito (mayúsculas, minúsculas, con o sin puntos).
-    Las palabras normales que solo tienen un punto por ser fin de frase
-    (ej. 'Cuautemoc.') ya NO se convierten en mayúsculas completas.
+    Formatea una dirección respetando abreviaturas
     """
     if not texto:
         return ""
@@ -96,6 +92,15 @@ def formatear_direccion(texto: str) -> str:
         "mza": "Mza.",
         "int": "Int.",
         "ext": "Ext.",
+        "De" : "de",
+        "Del" : "del",
+        "En" : "en",
+        "Por" : "por",
+        "Con" : "con",
+        "Para" : "para",
+        "La" : "la",
+        "Las" : "las",
+        "Los" : "los",
     }
 
     segmentos = texto.split(",")
