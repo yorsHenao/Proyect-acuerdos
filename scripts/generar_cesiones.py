@@ -1,11 +1,10 @@
 import re
+import tempfile
 from datetime import date
 from pathlib import Path
 from docxtpl import DocxTemplate
 
 from scripts.formateo_name_razon_social import formatear_razon_social
-
-BASE_DIR = Path(__file__).resolve().parent
 
 PERSONA_FISICA = "fisica"
 PERSONA_MORAL = "moral"
@@ -102,13 +101,12 @@ def generar_cesion(datos: dict, plantilla_path: Path, salida_path: Path = None) 
     nombre_archivo = f"{fecha(date.today())} Cesión de derechos. Rappi & {id_limpio}.docx"
 
     if salida_path is None:
-        salida = BASE_DIR / "salida_acuerdos" / nombre_archivo
+        salida = Path(tempfile.gettempdir()) / _limpiar_nombre_archivo(nombre_archivo)
     else:
         salida = Path(salida_path)
         if salida.suffix != ".docx":
             salida = salida / nombre_archivo
-
-    salida.parent.mkdir(parents=True, exist_ok=True)
+        salida.parent.mkdir(parents=True, exist_ok=True)
 
     # --- Renderizado con docxtpl ---
     docx = DocxTemplate(str(plantilla_path))

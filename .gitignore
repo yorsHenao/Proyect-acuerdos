@@ -1,8 +1,9 @@
 ﻿# Excluir archivos zip
 *.zip
 
-# Excluir la carpeta "salida_acuerdos"
+# Documentos generados (descargas van al temp del sistema; por si queda algo local)
 scripts/salida_acuerdos/
+salida_acuerdos/
 
 # Microsoft Word (no subir plantillas ni documentos generados)
 *.docx
@@ -16,3 +17,5 @@ __pycache__/
 inicio.bat
 .env
 venv/
+.mypy_cache/
+.cursor/

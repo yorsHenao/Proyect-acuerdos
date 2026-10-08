@@ -1,3 +1,5 @@
+import re
+import tempfile
 from docxtpl import DocxTemplate
 from datetime import date
 from pathlib import Path
@@ -37,9 +39,6 @@ from scripts.datos_personas import (
 
 from scripts.incumplimientos import construir_lista_bonos_fondos
 
-BASE_DIR = Path(__file__).resolve().parent
-
-
 PERSONA_FISICA = "fisica"
 PERSONA_JURIDICA = "juridica"
 
@@ -47,6 +46,10 @@ def fecha(d: date) -> str:
     meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
              "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
     return f"{d.day} de {meses[d.month - 1]} de {d.year}"
+
+
+def _limpiar_nombre_archivo(nombre: str) -> str:
+    return re.sub(r'[\\/*?:"<>|]', "", nombre).strip()
 
 
 def generar_acuerdo(datos, plantilla, salida_path=None):
@@ -229,12 +232,12 @@ def generar_acuerdo(datos, plantilla, salida_path=None):
 
     nombre_acuerdo = f"{fecha(date.today())} Acuerdo de cooperación. Rappi & {contexto['RAZÓN_SOCIAL']}.docx"
     if salida_path is None:
-        salida = BASE_DIR / "salida_acuerdos" / nombre_acuerdo
+        salida = Path(tempfile.gettempdir()) / _limpiar_nombre_archivo(nombre_acuerdo)
     else:
         salida = Path(salida_path)
         if salida.suffix != ".docx":
             salida = salida / nombre_acuerdo
-    salida.parent.mkdir(parents=True, exist_ok=True)
+        salida.parent.mkdir(parents=True, exist_ok=True)
 
     contexto.update(activas)
 
