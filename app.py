@@ -5,7 +5,8 @@ import io
 from dotenv import load_dotenv
 from datetime import datetime
 
-from scripts.generar_acuerdo import generar_acuerdo, fecha
+from scripts.generar_acuerdo import generar_acuerdo
+from scripts.fechas import fecha
 from scripts.generar_cesiones import generar_cesion, PLANTILLAS_CESIONES
 from scripts.validaciones import validar_formulario, validar_formulario_cesion
 

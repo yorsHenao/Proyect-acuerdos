@@ -38,14 +38,10 @@ from scripts.datos_personas import (
 )
 
 from scripts.incumplimientos import construir_lista_bonos_fondos
+from scripts.fechas import fecha
 
 PERSONA_FISICA = "fisica"
 PERSONA_JURIDICA = "juridica"
-
-def fecha(d: date) -> str:
-    meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
-             "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
-    return f"{d.day} de {meses[d.month - 1]} de {d.year}"
 
 
 def _limpiar_nombre_archivo(nombre: str) -> str:

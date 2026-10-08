@@ -1,11 +1,6 @@
 ﻿# Excluir archivos zip
 *.zip
 
-# Documentos generados (descargas van al temp del sistema; por si queda algo local)
-scripts/salida_acuerdos/
-salida_acuerdos/
-
-# Microsoft Word (no subir plantillas ni documentos generados)
 *.docx
 *.doc
 ~$*.docx
