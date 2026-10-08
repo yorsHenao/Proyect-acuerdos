@@ -88,13 +88,15 @@ if __name__ == "__main__":
     activas = {
         "activa_exclusividad": True,
         "activa_semi_exclusividad": False,
+        "activa_ads": True,
         "activa_bono_crecimiento": True,
         "activa_bono_mercadotecnia": False,
-        "activa_bono_nuevas_aperturas": True,
+        "activa_bono_nuevas_aperturas": False,
         "activa_bono_nuevas_aperturas_previo": False,
-        "activa_fondo_mercadotecnia": True,
-        "activa_linea_nuevas_aperturas": True,
-        "activa_compromisos_adicionales": True
+        "activa_fondo_mercadotecnia": False,
+        "activa_linea_nuevas_aperturas": False,
+        "activa_incumplimiento_bono_fondo": True,
+        "activa_incumplimiento_exclusividad": False,
     }
     contexto = {}
     asignar_numeracion_clausulas(activas, contexto)
