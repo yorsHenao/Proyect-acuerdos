@@ -31,6 +31,15 @@ def _no_es_porcentaje_dos_digitos(form, campo):
     return numero < 10 or numero > 99
 
 
+def _no_es_porcentaje_comision(form, campo):
+    """Porcentaje de comisión (fija o escalonada): de 0 a 99."""
+    valor = form.get(campo, "")
+    if valor is None or not str(valor).strip().isdigit():
+        return True
+    numero = int(str(valor).strip())
+    return numero < 0 or numero > 99
+
+
 def _no_es_porcentaje_un_digito(form, campo):
     valor = form.get(campo, "")
     if valor is None or not str(valor).strip().isdigit():
@@ -253,17 +262,17 @@ def validar_formulario(form):
         if tipo_comision_final == "fija":
             if _falta(form, "n_comision_fija"):
                 errores["n_comision_fija"] = "El porcentaje de comisión fija es obligatorio."
-            elif _no_es_porcentaje_dos_digitos(form, "n_comision_fija"):
-                errores["n_comision_fija"] = "La comisión fija debe estar entre 10 y 99."
+            elif _no_es_porcentaje_comision(form, "n_comision_fija"):
+                errores["n_comision_fija"] = "El porcentaje de comisión fija debe estar entre 0 y 99."
         elif tipo_comision_final == "ventas":
             errores["modalidad_escalonada"] = "La comisión por ventas no está disponible."
         elif tipo_comision_final == "ordenes":
-            if _falta(form, "ordenes_primer_anio") or _no_es_porcentaje_dos_digitos(form, "ordenes_primer_anio"):
-                errores["ordenes_primer_anio"] = "El porcentaje del primer año debe estar entre 10 y 99."
+            if _falta(form, "ordenes_primer_anio") or _no_es_porcentaje_comision(form, "ordenes_primer_anio"):
+                errores["ordenes_primer_anio"] = "El porcentaje del primer año debe estar entre 0 y 99."
             if _falta(form, "max_ordenes") or _fuera_de_rango(form, "max_ordenes", 1, 999):
                 errores["max_ordenes"] = "El máximo de órdenes debe tener de 1 a 3 dígitos."
-            if _falta(form, "n_comision_1") or _no_es_porcentaje_dos_digitos(form, "n_comision_1"):
-                errores["n_comision_1"] = "El take rate debe estar entre 10 y 99."
+            if _falta(form, "n_comision_1") or _no_es_porcentaje_comision(form, "n_comision_1"):
+                errores["n_comision_1"] = "El take rate debe estar entre 0 y 99."
         elif tipo_comision_final == "mes":
             if f"escalon_0_porcentaje" not in form:
                 errores["escalon_0_porcentaje"] = "Agrega al menos un tramo de comisión."
@@ -271,8 +280,8 @@ def validar_formulario(form):
                 indice = 0
                 while f"escalon_{indice}_porcentaje" in form:
                     campo_pct = f"escalon_{indice}_porcentaje"
-                    if _no_es_porcentaje_dos_digitos(form, campo_pct):
-                        errores[campo_pct] = f"El porcentaje del tramo {indice + 1} debe estar entre 10 y 99."
+                    if _no_es_porcentaje_comision(form, campo_pct):
+                        errores[campo_pct] = f"El porcentaje del tramo {indice + 1} debe estar entre 0 y 99."
 
                     es_ultimo = form.get(f"escalon_{indice}_es_ultimo") == "si"
                     if not es_ultimo:
@@ -476,4 +485,4 @@ def validar_formulario_cesion(form):
     elif len(form.get("n_clabe", "").strip()) != 18 or not form.get("n_clabe", "").strip().isdigit():
         errores["n_clabe"] = "La CLABE debe contener exactamente 18 dígitos numéricos."
 
-    return errores
+    return errores

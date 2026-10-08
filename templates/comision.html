@@ -46,12 +46,12 @@
       <div>
         <label for="n_comision_fija">Porcentaje de comisión fija</label>
         <input
-          type="number"
+          type="text"
           id="n_comision_fija"
           name="n_comision_fija"
-          placeholder="Ej. 18"
-          min="10"
-          max="99"
+          inputmode="numeric"
+          placeholder="Indique el porcentaje de comisión"
+          autocomplete="off"
           value="{{ form_data.get('n_comision_fija', '') }}"
           class="{% if errores.get('n_comision_fija') %}input-error{% endif %}"
         />
@@ -85,12 +85,12 @@
         <div>
           <label for="ordenes_primer_anio">Porcentaje del primer año</label>
           <input
-            type="number"
+            type="text"
             id="ordenes_primer_anio"
             name="ordenes_primer_anio"
-            placeholder="Ej. 18"
-          min="10"
-          max="99"
+            inputmode="numeric"
+            placeholder="Indique el porcentaje del primer año"
+            autocomplete="off"
             value="{{ form_data.get('ordenes_primer_anio', '') }}"
             class="{% if errores.get('ordenes_primer_anio') %}input-error{% endif %}"
           />
@@ -117,12 +117,12 @@
         <div>
           <label for="n_comision_1">Take rate de la banda</label>
           <input
-            type="number"
+            type="text"
             id="n_comision_1"
             name="n_comision_1"
-            placeholder="Ej. 15"
-            min="10"
-            max="99"
+            inputmode="numeric"
+            placeholder="Indique el take rate de la banda"
+            autocomplete="off"
             value="{{ form_data.get('n_comision_1', '') }}"
             class="{% if errores.get('n_comision_1') %}input-error{% endif %}"
           />
@@ -186,12 +186,12 @@
       <div>
         <label for="escalon_0_porcentaje">Porcentaje</label>
         <input
-          type="number"
+          type="text"
           id="escalon_0_porcentaje"
           name="escalon_0_porcentaje"
-          placeholder="Ej. 18"
-          min="10"
-          max="99"
+          inputmode="numeric"
+          placeholder="Indique el porcentaje del tramo"
+          autocomplete="off"
           value="{{ form_data.get('escalon_0_porcentaje', '') }}"
           class="{% if errores.get('escalon_0_porcentaje') %}input-error{% endif %}"
         />

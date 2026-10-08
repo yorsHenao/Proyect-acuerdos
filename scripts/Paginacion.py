@@ -1,9 +1,10 @@
 
 CATALOGO_CLAUSULAS = [
     # --- Cláusulas condicionales ---
+    # ADS y compromisos adicionales no llevan NUM_* propio en plantilla New_draft:
+    # ADS va en la cláusula 4 (ROM_ADS); compromisos por sub-bloques activa_*.
     ("NUM_EXCLUSIVIDAD", "activa_exclusividad"),
     ("NUM_SEMI_EXCLUSIVIDAD", "activa_semi_exclusividad"),
-    ("NUM_INVERSIÓN_ADS", "activa_ads"),
     ("NUM_BONO_CRECIMIENTO", "activa_bono_crecimiento"),
     ("NUM_BONO_MERCADOTECNIA", "activa_bono_mercadotecnia"),
     ("NUM_BONO_NUEVAS_APERTURAS_POSTERIOR", "activa_bono_nuevas_aperturas"),
@@ -12,8 +13,6 @@ CATALOGO_CLAUSULAS = [
     ("NUM_LINEA_NUEVAS_APERTURAS", "activa_linea_nuevas_aperturas"),
     ("NUM_INCUMPLIMIENTO_BONO_Y_FONDO", "activa_incumplimiento_bono_fondo"),
     ("NUM_INCUMPLIMIENTO_EXCLUSIVIDAD_Y_SEMI", "activa_incumplimiento_exclusividad"),
-    ("NUM_COMPROMISOS_ADICIONALES", "activa_compromisos_adicionales"),
-    
     # --- Cláusulas de cola (siempre se incluyen) ---
     ("NUM_DECLARACIONES_Y_GARANTIAS", None),
     ("NUM_PROPIEDAD_INTELECTUAL", None),

@@ -40,12 +40,12 @@
       <div>
         <label for="n_ads">Porcentaje de ADS del aliado</label>
         <input
-          type="number"
+          type="text"
           id="n_ads"
           name="n_ads"
-          placeholder="Ej. 2"
-          min="1"
-          max="9"
+          inputmode="numeric"
+          placeholder="Ej. 2 (1 a 9)"
+          autocomplete="off"
           value="{{ form_data.get('n_ads', '') }}"
           class="{% if errores.get('n_ads') %}input-error{% endif %}"
         />
@@ -56,12 +56,12 @@
       <div id="porcentaje-ads-rappi" class="{% if form_data.get('tipo_ads') != 'aliado_y_rappi' %}oculto{% endif %}">
         <label for="n_ads_rappi">Porcentaje de ADS de Rappi</label>
         <input
-          type="number"
+          type="text"
           id="n_ads_rappi"
           name="n_ads_rappi"
-          placeholder="Ej. 2"
-          min="1"
-          max="9"
+          inputmode="numeric"
+          placeholder="Ej. 2 (1 a 9)"
+          autocomplete="off"
           value="{{ form_data.get('n_ads_rappi', '') }}"
           class="{% if errores.get('n_ads_rappi') %}input-error{% endif %}"
         />
