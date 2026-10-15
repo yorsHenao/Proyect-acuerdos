@@ -93,8 +93,16 @@ function construirResumen() {
     const checkbox = document.getElementById(item.checkbox);
     if (!checkbox || !checkbox.checked) return;
 
+    const esBonoPrevio =
+      item.checkbox !== "activa_bono_nuevas_aperturas" ||
+      document.querySelector('input[name="tipo_nuevas_aperturas"]:checked')?.value === "previo";
+    const camposPrevioSolo = new Set(["num_establecimientos", "meses_apertura"]);
+
     const detalles = item.campos
       .map((campo) => {
+        if (!esBonoPrevio && camposPrevioSolo.has(campo.id)) {
+          return null;
+        }
         const input = document.getElementById(campo.id);
         const valor = input ? input.value : "";
         if (!valor) return null;

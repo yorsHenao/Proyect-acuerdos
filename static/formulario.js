@@ -89,7 +89,39 @@ const bono_crecimiento = document.getElementById("monto-bono-crecimiento");
 const bono_mercadotecnia = document.getElementById("monto-bono-mercadotecnia");
 const bono_nuevas_aperturas = document.getElementById("bloque-bono-nuevas-aperturas");
 
-const bloque_inf_aperturas = document.getElementById("bloque-inf-aperturas-previo");
+const bloque_campos_aperturas_previo = document.getElementById("bloque-campos-aperturas-previo");
+const input_num_establecimientos = document.getElementById("num_establecimientos");
+const input_meses_apertura = document.getElementById("meses_apertura");
+const radios_tipo_nuevas_aperturas = document.querySelectorAll('input[name="tipo_nuevas_aperturas"]');
+
+function actualizarCamposBonoNuevasAperturasPrevio() {
+    const esPrevio = document.querySelector('input[name="tipo_nuevas_aperturas"]:checked')?.value === "previo";
+    if (!bloque_campos_aperturas_previo) {
+        return;
+    }
+    if (esPrevio) {
+        bloque_campos_aperturas_previo.classList.remove("oculto");
+        if (input_num_establecimientos) {
+            input_num_establecimientos.disabled = false;
+        }
+        if (input_meses_apertura) {
+            input_meses_apertura.disabled = false;
+        }
+    } else {
+        bloque_campos_aperturas_previo.classList.add("oculto");
+        if (input_num_establecimientos) {
+            input_num_establecimientos.disabled = true;
+        }
+        if (input_meses_apertura) {
+            input_meses_apertura.disabled = true;
+        }
+    }
+}
+
+radios_tipo_nuevas_aperturas.forEach((radio) => {
+    radio.addEventListener("change", actualizarCamposBonoNuevasAperturasPrevio);
+});
+actualizarCamposBonoNuevasAperturasPrevio();
 
 const button_crecimiento = document.getElementById("activa_bono_crecimiento");
 const button_mercadotecnia = document.getElementById("activa_bono_mercadotecnia");

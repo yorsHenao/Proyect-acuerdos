@@ -308,13 +308,18 @@ def validar_formulario(form):
             errores["tipo_nuevas_aperturas"] = "Selecciona el tipo de bono de nuevas aperturas."
         for campo, etiqueta, validador in [
             ("monto_nuevas_aperturas", "Indica el monto del bono de nuevas aperturas.", _no_es_monto),
-            ("num_establecimientos", "El número de establecimientos debe ser de un dígito (1 a 9).", lambda form, campo: _fuera_de_rango(form, campo, 1, 9)),
-            ("meses_apertura", "Los meses para abrir establecimientos deben tener de 1 a 3 dígitos.", lambda form, campo: _fuera_de_rango(form, campo, 1, 999)),
             ("maximo_bono", "Indica el apoyo máximo por establecimiento.", _no_es_monto),
             ("periodo_amortizacion", "El periodo de amortización debe tener de 1 a 2 dígitos (1 a 99).", lambda form, campo: _fuera_de_rango(form, campo, 1, 99)),
         ]:
             if validador(form, campo):
                 errores[campo] = etiqueta
+        if form.get("tipo_nuevas_aperturas") == "previo":
+            for campo, etiqueta, validador in [
+                ("num_establecimientos", "El número de establecimientos debe ser de un dígito (1 a 9).", lambda form, campo: _fuera_de_rango(form, campo, 1, 9)),
+                ("meses_apertura", "Los meses para abrir establecimientos deben tener de 1 a 3 dígitos.", lambda form, campo: _fuera_de_rango(form, campo, 1, 999)),
+            ]:
+                if validador(form, campo):
+                    errores[campo] = etiqueta
 
     # --- fondos ---
     if "activa_fondo_mercadotecnia" in form and _no_es_monto(form, "monto_fondo_mercadotecnia"):
@@ -362,6 +367,8 @@ def validar_formulario(form):
     # --- datos bancarios ---
     if _falta(form, "n_clabe"):
         errores["n_clabe"] = "La CLABE es obligatoria."
+    elif len(form.get("n_clabe", "").strip()) != 22 or not form.get("n_clabe", "").strip().isdigit():
+        errores["n_clabe"] = "La CLABE debe contener exactamente 22 dígitos numéricos."
     if _falta(form, "n_cuenta"):
         errores["n_cuenta"] = "El número de cuenta es obligatorio."
     if _falta(form, "banco"):
@@ -482,7 +489,7 @@ def validar_formulario_cesion(form):
 
     if _falta(form, "n_clabe"):
         errores["n_clabe"] = "La CLABE interbancaria es obligatoria."
-    elif len(form.get("n_clabe", "").strip()) != 18 or not form.get("n_clabe", "").strip().isdigit():
-        errores["n_clabe"] = "La CLABE debe contener exactamente 18 dígitos numéricos."
+    elif len(form.get("n_clabe", "").strip()) != 22 or not form.get("n_clabe", "").strip().isdigit():
+        errores["n_clabe"] = "La CLABE debe contener exactamente 22 dígitos numéricos."
 
     return errores

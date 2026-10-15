@@ -5,6 +5,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app import app, entero_monto
+from scripts.formatear_monto import formatear_monto
 from scripts.validaciones import validar_formulario, _no_es_monto
 
 BASE = {
@@ -19,7 +20,7 @@ BASE = {
     "exclusividad": "3",
     "correo_comercial": "a@b.com",
     "correo_aliado": "c@d.com",
-    "n_clabe": "012345678901234567",
+    "n_clabe": "0123456789012345678901",
     "n_cuenta": "1234567890",
     "banco": "Banorte",
 }
@@ -32,6 +33,10 @@ def main():
         errores.append("entero_monto 1,000")
     if entero_monto("500,000,000") != 500_000_000:
         errores.append("entero_monto 500M")
+    if formatear_monto(450000) != "450,000":
+        errores.append("formatear_monto sin decimales")
+    if ".00" in formatear_monto(1000):
+        errores.append("formatear_monto no debe incluir .00")
 
     form_ok = dict(BASE)
     form_ok["activa_bono_crecimiento"] = "si"
@@ -54,7 +59,7 @@ def main():
         html = client.get("/acuerdos").data.decode()
         if "input-monto" not in html:
             errores.append("falta clase input-monto en HTML")
-        if "formulario.js?v=20261005g" not in html:
+        if "formulario.js?v=20261015a" not in html:
             errores.append("falta cache bust formulario.js")
         for campo in (
             "monto_bono_crecimiento",

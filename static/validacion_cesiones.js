@@ -40,5 +40,5 @@ restringirRfc("rfc_cesionario_fisica", 13);
 restringirRfc("rfc_cesionario_moral", 12);
 restringirCaracteres("marca", regexRazonesSociales, 100);
 restringirCaracteres("banco", regexRazonesSociales, 100);
-limiteNumeros("n_clabe", 18);
+limiteNumeros("n_clabe", 22);
 limiteNumeros("n_cuenta", 16);

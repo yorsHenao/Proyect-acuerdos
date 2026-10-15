@@ -80,7 +80,7 @@ restringirCaracteres("correo_comercial", regexCorreo, 120);
 restringirCaracteres("correo_aliado", regexCorreo, 120);
 
 // Datos bancarios
-limiteNumeros("n_clabe", 18);
+limiteNumeros("n_clabe", 22);
 limiteNumeros("n_cuenta", 16);
 restringirCaracteres("banco", regexRazonesSociales, 100);
 

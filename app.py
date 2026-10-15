@@ -148,10 +148,11 @@ def generar():
     if datos["aplica_bono_nuevas_aperturas"]:
         datos["tipo_nuevas_aperturas"] = request.form["tipo_nuevas_aperturas"]
         datos["monto_nuevas_aperturas"] = entero_monto(request.form["monto_nuevas_aperturas"])
-        datos["num_establecimientos"] = int(request.form["num_establecimientos"])
-        datos["meses_apertura"] = int(request.form["meses_apertura"])
         datos["maximo_bono"] = entero_monto(request.form["maximo_bono"])
         datos["periodo_amortizacion"] = int(request.form["periodo_amortizacion"])
+        if datos["tipo_nuevas_aperturas"] == "previo":
+            datos["num_establecimientos"] = int(request.form["num_establecimientos"])
+            datos["meses_apertura"] = int(request.form["meses_apertura"])
 
     # --- fondos ---
     datos["aplica_fondo_mercadotecnia"] = "activa_fondo_mercadotecnia" in request.form

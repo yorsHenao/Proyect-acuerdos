@@ -22,20 +22,14 @@ def procesar_bono_mercadotecnia(aplica, monto, activas, contexto):
     contexto["VALOR_BONO_MERCADOTECNIA"] = numero_a_letras(monto)
 
 
-def procesar_bono_nuevas_aperturas(monto, num_establecimientos, meses, maximo_bono, periodo_amortizacion, activas, contexto):
+def procesar_bono_nuevas_aperturas(monto, maximo_bono, periodo_amortizacion, activas, contexto):
     activas["activa_bono_nuevas_aperturas"] = True
 
     contexto["N_BONO_NUEVAS_APERTURAS"] = formatear_monto(monto)
     contexto["N_BONO_NUEVAS_APERTURAS_NUMERO"] = monto
     contexto["VALOR_BONO_NUEVAS_APERTURAS"] = numero_a_letras(monto)
 
-    contexto["ESTABLECIMIENTOS"] = num_establecimientos
-    contexto["NUM_ESTABLECIMIENTOS"] = numero_a_letras(num_establecimientos)
-
-    contexto["NUM_MESES"] = meses
-    contexto["MESES"] = numero_a_letras(meses)
-
-    contexto["NUM_MAXIMO_BONO"] = maximo_bono
+    contexto["NUM_MAXIMO_BONO"] = formatear_monto(maximo_bono)
     contexto["VALOR_MAXIMO_BONO"] = numero_a_letras(maximo_bono)
 
     contexto["NUM_PERIODO_AMORTIZACIÓN"] = periodo_amortizacion

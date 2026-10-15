@@ -1,2 +1,3 @@
 def formatear_monto(valor):
-    return f"{int(valor):,.2f}"
+    """Miles con comas, sin decimales (las plantillas ya incluyen 00/100)."""
+    return f"{int(valor):,}"

@@ -150,19 +150,24 @@ def generar_acuerdo(datos, plantilla, salida_path=None):
     )
 
     if datos["aplica_bono_nuevas_aperturas"]:
-        args = (
-            datos["monto_nuevas_aperturas"],
-            datos["num_establecimientos"],
-            datos["meses_apertura"],
-            datos["maximo_bono"],
-            datos["periodo_amortizacion"],
-            activas,
-            contexto,
-        )
         if datos["tipo_nuevas_aperturas"] == "posterior":
-            procesar_bono_nuevas_aperturas(*args)
+            procesar_bono_nuevas_aperturas(
+                datos["monto_nuevas_aperturas"],
+                datos["maximo_bono"],
+                datos["periodo_amortizacion"],
+                activas,
+                contexto,
+            )
         else:
-            procesar_bono_nuevas_aperturas_previo(*args)
+            procesar_bono_nuevas_aperturas_previo(
+                datos["monto_nuevas_aperturas"],
+                datos["num_establecimientos"],
+                datos["meses_apertura"],
+                datos["maximo_bono"],
+                datos["periodo_amortizacion"],
+                activas,
+                contexto,
+            )
 
     # --- fondos ---
     procesar_fondo_mercadotecnia(
