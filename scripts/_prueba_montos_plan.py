@@ -20,7 +20,7 @@ BASE = {
     "exclusividad": "3",
     "correo_comercial": "a@b.com",
     "correo_aliado": "c@d.com",
-    "n_clabe": "0123456789012345678901",
+    "n_clabe": "012345678901234567",
     "n_cuenta": "1234567890",
     "banco": "Banorte",
 }

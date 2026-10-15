@@ -142,7 +142,7 @@ def main():
         "aplica_platillos_top_seller": False,
         "correo_comercial": "comercial@rappi.com",
         "correo_aliado": "legal@brewbrew.com",
-        "n_clabe": "0123456789012345678901",
+        "n_clabe": "012345678901234567",
         "n_cuenta": "1234567890",
         "banco": "Banorte",
     }

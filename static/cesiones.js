@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 4. Forzar CLABE a solo digitos y max 22 caracteres
+    // 4. Forzar CLABE a solo digitos y max 18 caracteres
     const inputClabe = document.querySelector('input[name="n_clabe"]');
     if (inputClabe) {
         inputClabe.addEventListener("input", (e) => {
-            e.target.value = e.target.value.replace(/\D/g, "").slice(0, 22);
+            e.target.value = e.target.value.replace(/\D/g, "").slice(0, 18);
         });
     }
 
